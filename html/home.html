@@ -10,6 +10,7 @@
 <link rel="stylesheet" type="text/css" href="../css/showroom.css">
 <script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="../js/smarthomeui.js"></script>
+<script type="text/javascript" src="../js/popUpProcess.js"></script>
 <script type="text/javascript" src="../js/showroom.js"></script>
 <script id="dialog-template-video" type="text/x-dialog-template">
 	<div class="dialog dialog-video">
@@ -285,19 +286,19 @@
 					<legend>사용자 정보</legend>
 					<div class="dialog-content-panel">
 						<div class="field">
-							<input type="text" class="edit" placeholder="이름 (한글, 영문, 12자 이내)">
+							<input type="text" id="name" name="username" class="edit" placeholder="이름 (한글, 영문, 12자 이내)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
-							<input type="text" class="edit" placeholder="사용할 아이디 (이메일)">
+							<input type="text" id="email" name="useremail" class="edit" placeholder="사용할 아이디 (이메일)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
-							<input type="password" class="edit" placeholder="비밀번호 (대소문자 구분 영문, 숫자 포함 8자 이상)">
+							<input type="password" id="pass" name="userpass" class="edit" placeholder="비밀번호 (대소문자 구분 영문, 숫자 포함 8자 이상)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
-							<input type="password" class="edit" placeholder="비밀번호 재입력">
+							<input type="password" id="passre" name="userpassre" class="edit" placeholder="비밀번호 재입력">
 							<p class="err-msg"></p>
 						</div>
 					</div>
@@ -508,62 +509,84 @@
 		 * 이를 통해 전반적인 Dialog 사용법을 설명합니다.
 		 * .btn-signup을 클릭하면 signUp()을 호출하는 것을 시작으로 예제를 구성했습니다.
 		 */
+
+	// home 겹치는 부분 시작	 
 		$('.bt-sign-up').on('click', function() {
 			signUp(true);
 		});
 
 		function signUp() {
 
-			// 회원가입을 시작합니다.
-			goStep1();
+			// // 회원가입을 시작합니다.
+			// goStep1();
 
-			function goStep1() {
+			// function goStep1() {
 
-				/**
-				 * Dialog를 여는 함수입니다.
-				 * templateId는 필수, onOpen과 onClose는 선택입니다.
-				 */
-				U.dialog({
-					/**
-					 * 위 text/x-dialog-template를 type으로 가지는 script element의 id입니다.
-					 * 필요한 template을 찾아 이 함수를 호출하면 Dialog가 화면에 나타납니다.
-					 * */
-					templateId: 'dialog-template-sign-up-step1',
-					/**
-					 * Dialog가 생성되고 DOM에 추가된 후, 사용자에게 보여지기 전에 호출됩니다.
-					 * context로 .dialog의 DOM Element가 전달됩니다.
-					 * 이를 통해 내부에 event listener 등을 추가할 수 있습니다.
-					 * */
-					onOpen: function(context) {
+			// 	/**
+			// 	 * Dialog를 여는 함수입니다.
+			// 	 * templateId는 필수, onOpen과 onClose는 선택입니다.
+			// 	 */
+			// 	U.dialog({
+			// 		/**
+			// 		 * 위 text/x-dialog-template를 type으로 가지는 script element의 id입니다.
+			// 		 * 필요한 template을 찾아 이 함수를 호출하면 Dialog가 화면에 나타납니다.
+			// 		 * */
+			// 		templateId: 'dialog-template-sign-up-step1',
+			// 		/**
+			// 		 * Dialog가 생성되고 DOM에 추가된 후, 사용자에게 보여지기 전에 호출됩니다.
+			// 		 * context로 .dialog의 DOM Element가 전달됩니다.
+			// 		 * 이를 통해 내부에 event listener 등을 추가할 수 있습니다.
+			// 		 * */
+			// 		onOpen: function(context) {
 
-						$(context).find('form').first().on('submit', function() {
+			// 			$('#agree-all').change(function() {
 
-							/**
-							 * 필요한 validation check를 할 수 있습니다.
-							 * 또 필요한 테이터를 다른 곳에 저장해 둘 수 있습니다.
-							 */
+			// 				var checkObj = $("input[type='checkbox']");
 
-								// 두벉째 단계 Dialog로 진입합니다.
-							goStep2();
+			// 				if(checkObj.length == $("input[type='checkbox']:checked").length) {
+			// 					console.log("////chk");
+			// 					checkObj.prop("checked",false);
+			// 				} else {
+			// 					checkObj.prop("checked",true);								
+			// 				}
 
-							return false;
-						});
-					},
-					/**
-					 * Dialog가 사용자에게 사라지기 전에 호출됩니다.
-					 * context로 .dialog의 DOM Element가 전달됩니다.
-					 * 이를 통해 Dialog가 닫히기 전에 필요한 동작을 할 수 있습니다.
-					 * 이 함수가 실행되었다고 해서, 실제로 Dialog가 닫히지는 않습니다.
-					 * 실제로 Dialog를 닫으려면 콜백함수인 finish 호출합니다.
-					 * onClose를 생략했다면 바로 Dialog를 닫습니다.
-					 * */
-					onClose: function(context, finish) {
+			// 				console.log('/////'+$("#dialog_body").children());
+			// 				if(this.checked){
+			// 					$("#dialog_body").children().attr('checked',true);
+			// 				} else {
+			// 					$("#dialog_body").children().attr('checked',false);	
+			// 				}
+			// 				//event.preventDefault();
+			// 			});
 
-						// 여기서는 특별한 처리 없이 바로 finish()를 호출합니다.
-						finish();
-					}
-				});
-			}
+			// 			$(context).find('form').first().on('submit', function() {
+
+			// 				/**
+			// 				 * 필요한 validation check를 할 수 있습니다.
+			// 				 * 또 필요한 테이터를 다른 곳에 저장해 둘 수 있습니다.
+			// 				 */
+
+			// 				// 두째 단계 Dialog로 진입합니다.
+			// 				goStep2();
+
+			// 				return false;
+			// 			});
+			// 		},
+			// 		/**
+			// 		 * Dialog가 사용자에게 사라지기 전에 호출됩니다.
+			// 		 * context로 .dialog의 DOM Element가 전달됩니다.
+			// 		 * 이를 통해 Dialog가 닫히기 전에 필요한 동작을 할 수 있습니다.
+			// 		 * 이 함수가 실행되었다고 해서, 실제로 Dialog가 닫히지는 않습니다.
+			// 		 * 실제로 Dialog를 닫으려면 콜백함수인 finish 호출합니다.
+			// 		 * onClose를 생략했다면 바로 Dialog를 닫습니다.
+			// 		 * */
+			// 		onClose: function(context, finish) {
+
+			// 			// 여기서는 특별한 처리 없이 바로 finish()를 호출합니다.
+			// 			finish();
+			// 		}
+			// 	});
+			// }
 
 			function goStep2() {
 
@@ -794,6 +817,8 @@
 				// NO DEFAULT
 			}
 		}
+			//-- home과 겹치는 부분 종료
+
 
 		/**
 		 * [동영상 Dialog]
