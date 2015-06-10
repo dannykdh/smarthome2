@@ -7,7 +7,7 @@ jQuery(function($) {
 		signUp(true);
 	});
 
-	function signUp() {
+	function signUp() { 
 
 		// 회원가입을 시작합니다.
 		goStep1();
