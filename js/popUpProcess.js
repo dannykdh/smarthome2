@@ -100,21 +100,74 @@ jQuery(function($) {
 				U.dialog({
 					templateId: 'dialog-template-sign-up-step2',
 					onOpen: function(context) {
+
+						$('.bt-next').prop("disabled", false);
+
 						var $context = $(context);
-						var $form = $context.find('form').last().on('submit', function() {
-							goStep3();
-							return false;
+						var $form = $context.find('form');
+						$context.find('.bt-next').on('click', function() {
+
+							var hphone = $.trim($('#hphone').val());
+							var authnum = $.trim($('#authnum').val());							
+
+							$(document).on("keyup", "input:text[numberOnly]", function() {
+								$(this).val($(this).val().replace(/[^0-9]/gi,""));
+								U.invalidate($('#hphone'));	
+							});
+
+							if(hphone == "") {
+								U.invalidate($('#hphone'), '휴대폰 번호 입력해 주세요.');
+								$('#hphone').focus();																				
+								return false;			
+							} else if(authnum == "") {
+								U.invalidate($('#authnum'), '인증번호를 입력해 주세요.');
+								$('#authnum').focus();																				
+								return false;									
+							} else if($.isNumeric(authnum) != true) {
+								U.invalidate($('#authnum'), '숫자만 입력해 주세요.');
+								$('#authnum').focus();	
+								return false;																																											
+							} else {
+								U.invalidate($('#hphone'));	
+								U.invalidate($('#authnum'));		
+
+								if(hphone.length > 10 && $.isNumeric(hphone) == true && authnum.length == 6 && $.isNumeric(authnum) == true) {
+
+									goStep3();
+									return false;	
+								}								
+							}
 						});
-						setTimeout(function() {
-							U.invalidate($form.find('input').first(), '테스트 에러 메시지');
-							setTimeout(function() {
-								U.invalidate($form.find('input').first());
-							}, 1500);
-						}, 1500);
+
+						$context.find('.bt-send-number').on('click', function() {
+
+							var params = {}, url='http://mobiledev.sktsmarthome.com:9002/v1/member/certification', type='GET', dataType = 'json';
+
+							params = {
+								mobileNo : hphone.value
+							};
+
+							$.ajax({
+            					url: url,
+							    type: "GET",
+							    dataType : "json",
+							    data: params,
+							    contentType : "application/json", 
+							    success: function(data) {
+							      console.log('성공 - ', data);
+							    },
+							    error: function(xhr) {
+							      console.log('실패 - ', xhr);
+							    }
+							});
+
+						});
+
 						$context.find('.bt-prev').on('click', function() {
 							goStep1();
 							return false;
 						});
+
 					}
 				});
 			}
@@ -124,16 +177,8 @@ jQuery(function($) {
 					templateId: 'dialog-template-sign-up-step3',
 					onOpen: function(context) {
 						var $context = $(context);
-
-					//U.validate($context.find('form').first().find('input').first());
 						var $form = $context.find('form');
-						//var $form = $context.find('form').last().on('submit', function() {
 						$context.find('.bt-next').on('click', function() {
-
-							var params = {}, url='/v1/member/registerMember', type='GET', dataType = 'json';
-
-							var pattern = /^[a-z]+[a-z0-9_]*$/;
-							var num = /[0-9]/;
 
 							var uname = $.trim($('#name').val());
 							var uemail = $.trim($('#email').val()); 
@@ -143,7 +188,7 @@ jQuery(function($) {
 							if(uname == "") {
 								U.invalidate($('#name'), '이름을 입력해 주세요.');
 								$('#name').focus();	
-								return false;						
+								return false;										
 							} else {
 								U.invalidate($('#name'));	
 							}
@@ -159,7 +204,11 @@ jQuery(function($) {
 							if(upass == "") {
 								U.invalidate($('#pass'), '비밀번호를 입력해 주세요.');
 								$('#pass').focus();	
-								return false;						
+								return false;	
+							} else if(upass.length < 4) {
+								U.invalidate($('#pass'), '비밀번호를 8자 이상 입력해 주세요.');
+								$('#pass').focus();	
+								return false;													
 							} else {
 								U.invalidate($('#pass'));		
 							}	
@@ -167,29 +216,38 @@ jQuery(function($) {
 							if(upassre == "") {
 								U.invalidate($('#passre'), '비밀번호 확인을 입력해 주세요.');
 								$('#passre').focus();		
-								return false;						
+								return false;			
+							} else if($('#pass').val() != $('#passre').val()) {
+								U.invalidate($('#passre'), '비밀번호와 재입력한 비밀번호가 맞지 않습니다.');
+								$('#passre').val('');										
+								$('#passre').focus();		
+								return false;												
 							} else {
 								U.invalidate($('#passre'));	
 							}
 								
-
 							if(uname != "" && uemail != "" && upass != "" && upassre != "") { 
-
-								var ip = "<?=$_SERVER[REMOTE_ADDR]?>";
-
-								alert(ip);
+							//API 통신을 위한 파라미터 값
+							var params = {}, url='/v1/member/registerMember', type='POST', dataType = 'json';
+								var ip = "127.0.0.1"; // 접속 IP구하여 대체해야 함.
 
 								params = {				
-									usrname:uname,
-									usremail:uemail,
-									usrpass:upass,
+									userNickNm:uname,
+									loginId:uemail,
+									loginPwd:upass,
+									userMobileNo:'',
 									pushTknVal:'',
 									dvcTknVal:ip,
-									dvcOsNm:'WEB'
-								};						
+									dvcOsNm:'WEB',
+									certNo:'111111'
+								};
+
+								startJoinTransaction(url, params, type, dataType, function(response){
+									parseJoinTransaction(response);
+								});								
 
 								// 마지막 단계 Dialog로 진입합니다.
-								goFinish();
+								//goFinish();
 								return false;
 							} else {
 								console.log(uname+"/"+uemail+"/"+upass+"/"+upassre);

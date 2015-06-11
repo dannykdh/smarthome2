@@ -3,6 +3,7 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 <title>Home - Smart[Home]</title>
 <meta name="viewport" content="width=1349px,user-scalable=no">
 <link rel="stylesheet" type="text/css" href="../css/base.css">
@@ -244,19 +245,17 @@
 					<legend>인증번호 요청</legend>
 					<div class="dialog-content-panel">
 						<div class="field field-auth-number">
-							<input type="text" class="edit" placeholder="휴대폰 번호(-제외)">
+							<input type="text" class="edit" id="hphone" name="hphone" placeholder="휴대폰 번호(-제외)" numberOnly="true">
 							<input type="submit" class="bt-send-number" value="인증번호 전송">
 							<p class="err-msg"></p>
 						</div>
 					</div>
 				</fieldset>
-			</form>
-			<form>
 				<fieldset>
 					<legend>인증번호 전송</legend>
 					<div class="dialog-content-panel">
 						<div class="field">
-							<input type="text" class="edit" placeholder="인증번호 6자리">
+							<input type="text"  id="authnum" name="authnum" class="edit" placeholder="인증번호 6자리">
 							<p class="err-msg"></p>
 							<p class="remained-time">남은 시간 <strong>00:00</strong></p>
 						</div>
@@ -286,19 +285,19 @@
 					<legend>사용자 정보</legend>
 					<div class="dialog-content-panel">
 						<div class="field">
-							<input type="text" id="name" name="username" class="edit" placeholder="이름 (한글, 영문, 12자 이내)">
+							<input type="text" id="name" name="name" maxlength="12" class="edit" placeholder="이름 (한글, 영문, 12자 이내)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
-							<input type="text" id="email" name="useremail" class="edit" placeholder="사용할 아이디 (이메일)">
+							<input type="text" id="email" name="email" class="edit" placeholder="사용할 아이디 (이메일)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
-							<input type="password" id="pass" name="userpass" class="edit" placeholder="비밀번호 (대소문자 구분 영문, 숫자 포함 8자 이상)">
+							<input type="password" id="pass" name="pass" class="edit" placeholder="비밀번호 (대소문자 구분 영문, 숫자 포함 8자 이상)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
-							<input type="password" id="passre" name="userpassre" class="edit" placeholder="비밀번호 재입력">
+							<input type="password" id="passre" name="passre" class="edit" placeholder="비밀번호 재입력">
 							<p class="err-msg"></p>
 						</div>
 					</div>
