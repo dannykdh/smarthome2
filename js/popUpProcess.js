@@ -249,93 +249,19 @@ jQuery(function($) {
 					findIdOrPassword('id');
 				});
 
+				$context.find('#myPass').keydown( function(){
+					if (event.keyCode == 13) {
+						loginCheckForm($context);
+					}
+				});
+
 				$('button').click(function(){
 					if(this.className == 'bt-log-in') {
-						loginCheckForm();
+						loginCheckForm($context);
 					}
 				});
 			}
 		});
-	}
-
-	function startLoginTransaction(url, params, type, dataType, callback) {
-		var that = this;
-        $.ajax({
-            url: "http://mobiledev.sktsmarthome.com:9002/"+url,
-            data: params,
-            type: type,
-            dataType: dataType,
-            success: function(response) {
-                callback(response);
-            },
-            error: function(xhr, textStatus, errorThrown) {
-                console.log('실패 - ', xhr);
-            }
-        });
-	}
-
-	function parseLoginTransaction(response) {
-		console.log('parseLoginTransaction : ' + response);
-		/*
-			expEndDay: ""
-			loginId: "btb@btb.com"
-			modeSer: ""
-			notifSetYn: ""
-			resultCd: "1"
-			resultMsg: "성공"
-			rnmCertYn: "N"
-			rsdcDefltAddr: null
-			rsdcDetailAddr: null
-			rsdcLatLoca: null
-			rsdcLongLoca: null
-			svrfileUrl: "1"
-			userAuthCd: "GEN"
-			userCertTknVal: "vBVbrb88bK6Ns0EaKsTnPkYxoB3mG4U3HUlSZptaMMzqs1QGUXyrOmRbI5fFQ0cN"
-			userIdEncoded: "e1ygX943/2Wi0eb7NOoxC7AosV+r6FI8"
-			userMobileNo: "01032853908"
-			userNickNm: "비티비테스트"
-		*/
-		if (resultCd && resultMsg) {
-			if (resultCd == '1' && resultMsg == '성공') {
-				// 1. 쿠키에 정보를 저장한다.
-				//	1-1. 아이디
-				//	1-2. 닉네임
-			} else {
-				// 로그인 실패.
-			}
-		} else {
-			// 로그인 실패.
-		}
-	}
-
-	function loginCheckForm() {
-		var $myId = $('#myId');
-		var $myPass = $('#myPass');
-		var params = {}, url='v1/member/login', type='GET', dataType = 'json';
-
-
-		if ($myId.val().length == 0) {
-			alert('아이디(이메일)을 입력하세요');
-			$myId.focus();
-			return false;
-		} else if ($myPass.val().length == 0) {
-			alert('비밀번호 입력하세요');
-			$myPass.focus();
-			return false;
-		} else {
-			params = {				
-				loginId:$myId.val(),
-				loginPwd:$myPass.val(),
-				pushTknVal:'34r234',
-				dvcTknVal:'234r234',
-				dvcOsNm:'d12d12'
-			};
-			startLoginTransaction(url, params, type, dataType, function(response){
-				parseLoginTransaction(response);
-			});
-		}
-
-
 	}
 
 	function findIdOrPassword(target) {
