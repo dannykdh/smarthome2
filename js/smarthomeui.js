@@ -378,6 +378,9 @@ var SmartHomeUI = (function($) {
 		validate: function(el) {
 			validate(true, $(el));
 			repositionDialog();
+		},
+		closeDialog: function() {
+			closeDialog();
 		}
 	};
 

@@ -7,6 +7,10 @@ jQuery(function($) {
 		signUp(true);
 	});
 
+	$('.bt-log-out').on('click', function() {
+		logOut();
+	});
+
 	function signUp() { 
 
 		// 회원가입을 시작합니다.
@@ -253,6 +257,10 @@ jQuery(function($) {
 					if (event.keyCode == 13) {
 						loginCheckForm($context);
 					}
+				});
+
+				$context.find('.bt-log-out').on('click', function() {
+					logOut();
 				});
 
 				$('button').click(function(){

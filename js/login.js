@@ -53,14 +53,19 @@ function loginCheckForm($context) {
 
 }
 
-// 로그인 여부 체크
-function isLoginCheck() {
+// 로그인 실패.
+// 1. 로그인 팝업 commed button 상단에 실패 사유를 노출한다.
+// 2. 아이디 / 패스워드 필드를 초기와 한다.
+// 3. 아이디 필드에 포커싱.
+function loginFail(response) {
+	var $myPass = $('#myPass');
+	var $elPwd = $('.dialog.dialog-log-in').find('form').find('input[type=password]');
 
-}
-
-// 로그 아웃
-function logOut() {
-
+	if (response.resultCd != '1' || response.resultMsg != '성공') {
+		U.invalidate($elPwd, response.resultMsg);
+		$myPass.focus();
+		return false;
+	} 
 }
 
 // 로그인 성공
@@ -102,14 +107,8 @@ function loginComplete(response) {
 
 	setCookieInfo(cookieData);
 	setLoginBeforeAfterUpdate();
-}
-
-// 로그인 실패.
-// 1. 로그인 팝업 commed button 상단에 실패 사유를 노출한다.
-// 2. 아이디 / 패스워드 필드를 초기와 한다.
-// 3. 아이디 필드에 포커싱.
-function loginFail(response) {
-	console.log('response = ' + response);
+	//팝업 닫기
+	U.closeDialog();
 }
 
 // 로그인 성공시 쿠키 정보 세팅
@@ -123,20 +122,77 @@ function setCookieInfo(cookieData) {
 	}
 }
 
+// 로그인 여부 체크
+function isLoginCheck() {
+	var isUserCertTknVal = getCookieInfo('userCertTknVal');
+	if (isUserCertTknVal) {
+		return true;
+	} else {
+		return false;
+	}
+	return false;
+}
+
+// 로그인후 세팅된 쿠키 값을 가져온다.
+function getCookieInfo(cookieName) {
+	var search = cookieName + "=";
+	var cookies = document.cookie;
+
+	if (cookies.length > 0) {
+		startIndex = cookies.indexOf( cookieName );
+		if (startIndex != -1) {
+			startIndex += cookieName.length;
+			endIndex = cookies.indexOf( ";", startIndex );
+			if( endIndex == -1) endIndex = cookies.length;
+			return unescape( cookies.substring( startIndex + 1, endIndex ) );
+		} else {
+			// 쿠키 내에 해당 쿠키가 존재하지 않을 경우
+			return false;
+		}
+	} else {
+		// 쿠키 자체가 없을 경우
+		return false;
+	}
+}
+
+// 로그 아웃
+function logOut() {
+	deleteCookieInfo();
+	setLoginBeforeAfterUpdate();
+}
+
 // 로그아웃 성공시 쿠키 정보 삭제
 function deleteCookieInfo() {
-	var exdate = new Date();
-    var cookies = document.cookie.split(";");	
-    
-    exdate.setDate(exdate.getDate() - 1);
+    var cookies = document.cookie.split(";");
 
-	for (var key in cookies) {
-        document.cookie = key + "=" + (escape(cookies[key]) + "; expires=Thu, 01 Jan 1970 00:00:00 GMT");
-	}
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i];
+        var eqPos = cookie.indexOf("=");
+        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        name = name.trim();
+        
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;";
+    }
 }
 
 // 로그인 전후 Updagte
 function setLoginBeforeAfterUpdate() {
+	// 상단 헤더 영역 로그인 / 아웃 Update
+	var $account_for_guest = $('.account-for-guest.h-bar');; 
+	var $account_for_user = $('.account-for-user.h-bar');;
+	if (isLoginCheck()) {
+		$account_for_guest.hide();
+		$account_for_user.show();
 
+		$account_for_user.find('.gnb-user-name').html(getCookieInfo('userNickNm') + '님')
+	} else {
+		$account_for_guest.show();
+		$account_for_user.hide();
+	}
 }
+
+// 로그인 여부에 따른 gnb-holder Update
+$(document).ready(function() {
+	setLoginBeforeAfterUpdate();
+});
 
