@@ -101,50 +101,45 @@ jQuery(function($) {
 					templateId: 'dialog-template-sign-up-step2',
 					onOpen: function(context) {
 
-						$('.bt-next').prop("disabled", false);
+						//버튼 비활성화 
+						$('.bt-send-number').prop("disabled", true);
+						$('.bt-next').prop("disabled", true);
 
 						var $context = $(context);
 						var $form = $context.find('form');
-						$context.find('.bt-next').on('click', function() {
 
-							var hphone = $.trim($('#hphone').val());
-							var authnum = $.trim($('#authnum').val());							
+						$(document).on("keyup", "input:text[numberOnly]", function() {
+							$(this).val($(this).val().replace(/[^0-9]/gi,""));
+							U.invalidate($('#hphone'));	
+							$('.bt-send-number').prop("disabled", false);
+						});
 
-							$(document).on("keyup", "input:text[numberOnly]", function() {
-								$(this).val($(this).val().replace(/[^0-9]/gi,""));
+						//var hphone = $.trim($('#hphone').val());
+
+						$('#hphone').change(function() {
+							if($('#hphone').val().length >= 10) {
 								U.invalidate($('#hphone'));	
-							});
-
-							if(hphone == "") {
-								U.invalidate($('#hphone'), '휴대폰 번호 입력해 주세요.');
-								$('#hphone').focus();																				
-								return false;			
-							} else if(authnum == "") {
-								U.invalidate($('#authnum'), '인증번호를 입력해 주세요.');
-								$('#authnum').focus();																				
-								return false;									
-							} else if($.isNumeric(authnum) != true) {
-								U.invalidate($('#authnum'), '숫자만 입력해 주세요.');
-								$('#authnum').focus();	
-								return false;																																											
-							} else {
-								U.invalidate($('#hphone'));	
-								U.invalidate($('#authnum'));		
-
-								if(hphone.length > 10 && $.isNumeric(hphone) == true && authnum.length == 6 && $.isNumeric(authnum) == true) {
-
-									goStep3();
-									return false;	
-								}								
 							}
 						});
 
+						//인증번호 전송
 						$context.find('.bt-send-number').on('click', function() {
 
+							if($('#hphone').val() == "" || $('#hphone').val().length < 10) {
+								U.invalidate($('#hphone'), '올바른 휴대폰 번호를 입력 하세요.');
+								$('#hphone').focus();																				
+								return false;
+							} else {
+								U.invalidate($('#hphone'));	
+							}	
+
+  					        console.log('전송중 --- ');
+
 							var params = {}, url='http://mobiledev.sktsmarthome.com:9002/v1/member/certification', type='GET', dataType = 'json';
+							var hphone = $.trim($('#hphone').val());
 
 							params = {
-								mobileNo : hphone.value
+								mobileNo : hphone
 							};
 
 							$.ajax({
@@ -161,6 +156,37 @@ jQuery(function($) {
 							    }
 							});
 
+						});
+
+						$('#authnum').change(function() {
+							if($('#authnum').val().length >= 6) {
+								$('.bt-next').prop("disabled", false);
+								U.invalidate($('#authnum'));	
+							}
+						});						
+
+						//다음 단계로 
+						$context.find('.bt-next').on('click', function() {
+
+							var authnum = $.trim($('#authnum').val());							
+
+							if(authnum == "") {
+								U.invalidate($('#authnum'), '인증번호를 입력해 주세요.');
+								$('#authnum').focus();																				
+								return false;									
+							} else if($.isNumeric(authnum) != true) {
+								U.invalidate($('#authnum'), '숫자만 입력해 주세요.');
+								$('#authnum').focus();	
+								return false;																																											
+							} else {
+								U.invalidate($('#authnum'));		
+
+								if($('#hphone').val().length >= 10 && $.isNumeric($('#hphone').val()) == true && authnum.length == 6 && $.isNumeric(authnum) == true) {
+
+									goStep3();
+									return false;	
+								}								
+							}
 						});
 
 						$context.find('.bt-prev').on('click', function() {
