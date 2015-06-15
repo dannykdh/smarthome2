@@ -105,16 +105,17 @@ jQuery(function($) {
 						$('.bt-send-number').prop("disabled", true);
 						$('.bt-next').prop("disabled", true);
 
-						var $context = $(context);
+  				        var $context = $(context);
 						var $form = $context.find('form');
+
+						U.getRemainedTimeDisplay().show();
+						U.getRemainedTimeDisplay().setTime(0200);
 
 						$(document).on("keyup", "input:text[numberOnly]", function() {
 							$(this).val($(this).val().replace(/[^0-9]/gi,""));
 							U.invalidate($('#hphone'));	
 							$('.bt-send-number').prop("disabled", false);
 						});
-
-						//var hphone = $.trim($('#hphone').val());
 
 						$('#hphone').change(function() {
 							if($('#hphone').val().length >= 10) {
@@ -124,6 +125,8 @@ jQuery(function($) {
 
 						//인증번호 전송
 						$context.find('.bt-send-number').on('click', function() {
+
+						//var hphone = $.trim($('#hphone').val());
 
 							if($('#hphone').val() == "" || $('#hphone').val().length < 10) {
 								U.invalidate($('#hphone'), '올바른 휴대폰 번호를 입력 하세요.');
@@ -150,6 +153,7 @@ jQuery(function($) {
 							    contentType : "application/json", 
 							    success: function(data) {
 							      console.log('성공 - ', data);
+							      U.getRemainedTimeDisplay();
 							    },
 							    error: function(xhr) {
 							      console.log('실패 - ', xhr);
@@ -181,11 +185,13 @@ jQuery(function($) {
 							} else {
 								U.invalidate($('#authnum'));		
 
-								if($('#hphone').val().length >= 10 && $.isNumeric($('#hphone').val()) == true && authnum.length == 6 && $.isNumeric(authnum) == true) {
+								if($('#hphone').val().length >= 10 && $.isNumeric($('#hphone').val()) == true && authnum.length >= 6 && $.isNumeric(authnum) == true) {
 
 									goStep3();
 									return false;	
-								}								
+								} else {
+									U.invalidate($('#authnum'), '입력하신 값이 올바르지 않습니다.');
+									$('#authnum').focus();									}								
 							}
 						});
 
@@ -216,13 +222,17 @@ jQuery(function($) {
 								$('#name').focus();	
 								return false;										
 							} else {
-								U.invalidate($('#name'));	
+								U.invalidate($('#name'));
+								U.validate($('#name'));	
 							}
 
 							if(uemail == "") {
 								U.invalidate($('#email'), '이메일을 입력해 주세요.');
 								$('#email').focus();		
-								return false;						
+								return false;	
+							// } else if (!isEmailIDCheck(uemail)) {
+							// 	U.invalidate($('#email'), '스마트홈 계정 (이메일)을 형식에 맞게 입력하세요.'); 								
+							// 	return;			
 							} else {
 								U.invalidate($('#email'));	
 							}
@@ -254,27 +264,53 @@ jQuery(function($) {
 								
 							if(uname != "" && uemail != "" && upass != "" && upassre != "") { 
 							//API 통신을 위한 파라미터 값
-							var params = {}, url='/v1/member/registerMember', type='POST', dataType = 'json';
+							var params = {}, url='v1/member/registerMember', type='POST', dataType = 'json';
 								var ip = "127.0.0.1"; // 접속 IP구하여 대체해야 함.
 
 								params = {				
-									userNickNm:uname,
-									loginId:uemail,
-									loginPwd:upass,
-									userMobileNo:'',
-									pushTknVal:'',
-									dvcTknVal:ip,
-									dvcOsNm:'WEB',
-									certNo:'111111'
+									// userNickNm:uname,
+									// loginId:uemail,
+									// loginPwd:upass,
+									// userMobileNo:'',
+									// pushTknVal:'',
+									// dvcTknVal:ip,
+									// dvcOsNm:'WEB',
+									// certNo:'111111'
+									userNickNm : "59443",
+									loginId : "latuni006@sk.com",
+									loginPwd : "1010qpqp",
+									userMobileNo : "01098877181",
+									pushTknVal : "12345",
+									dvcTknVal : "123456",
+									dvcOsNm : "WEB",
+									certNo: "111111"									
 								};
 
-								startJoinTransaction(url, params, type, dataType, function(response){
-									parseJoinTransaction(response);
-								});								
+
+								$.ajax({
+	            					url: "http://mobiledev.sktsmarthome.com:9002/v1/member"+url,
+								    type: "POST",
+								    dataType : "json",
+								    data: params,
+								    contentType : "application/json", 
+								    success: function(data) {
+								      console.log('성공 - ', data);
+								      U.getRemainedTimeDisplay();
+								    },
+								    error: function(xhr) {
+								      console.log('실패 - ', xhr);
+								    }
+								});
+
+
+
+								// startJoinTransaction(url, params, type, dataType, function(response){
+								// 	parseJoinTransaction(response);
+								// });								
 
 								// 마지막 단계 Dialog로 진입합니다.
 								//goFinish();
-								return false;
+								//return false;
 							} else {
 								console.log(uname+"/"+uemail+"/"+upass+"/"+upassre);
 							}
