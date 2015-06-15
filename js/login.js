@@ -191,6 +191,127 @@ function setLoginBeforeAfterUpdate() {
 	}
 }
 
+// 아이디 찾기 인증번호 요청
+function findIDCheckCellPhone($context) {
+	var $js_cellPhone = $('#js_cellPhone');
+	var params = {}, url='v1/member/certification', type='GET', dataType = 'json';
+	var $elPhone = $context.find('form').find('input[type=text]').eq(0);
+
+	if ($js_cellPhone.val().length == 0) {
+		U.invalidate($elPhone, '휴대폰 번호를 입력하세요.'); 
+		$elPhone.focus();
+		return false;
+	} else {
+		U.invalidate($elPhone);
+	}
+
+	params = {				
+		mobileNo:$js_cellPhone.val()
+	};
+
+	startAuthRequestTransaction(url, params, type, dataType, function(response){
+		parseAuthRequestTransaction(response, $context);
+	});
+}
+
+// 아이디 찾기 유효성 검사
+function findIDCheckForm($context) {
+	var $js_cellPhone = $('#js_cellPhone');
+	var $js_authNumber = $('#js_authNumber');
+	var params = {}, url='v1/member/userCertification', type='GET', dataType = 'json';
+	var $elPhone = $context.find('form').find('input[type=text]').eq(0);
+	var $elAuth = $context.find('form').find('input[type=text]').eq(1);
+
+
+	if ($js_cellPhone.val().length == 0) {
+		U.invalidate($elPhone, '휴대폰 번호를 입력하세요.'); 
+		$elPhone.focus();
+		return false;
+	} else {
+		U.invalidate($elPhone);
+	}
+
+	if ($js_authNumber.val().length == 0) {
+		U.invalidate($elAuth, '인증번호를 입력하세요'); 
+		$elAuth.focus();
+		return false;
+	} else {
+		U.invalidate($elAuth);
+	}
+
+	params = {				
+		mobileNo: $js_cellPhone.val(),
+		certNo: $js_authNumber.val()
+	};
+
+	startAuthNumTransaction(url, params, type, dataType, function(response){
+		parseAuthNumTransaction(response, 'findID');
+	});
+	
+}
+
+// 입력 폼 초기화 및 버튼 비 활성
+function inputBoxReset($context) {
+	var $js_cellPhone = $('#js_cellPhone');
+	var $js_authNumber = $('#js_authNumber');
+	var $elPhone = $context.find('form').find('input[type=text]').eq(0);
+	var $elAuth = $context.find('form').find('input[type=text]').eq(1);
+	
+	$('#js_bt-send-number').prop("disabled", true);	
+	$elAuth.prop("disabled", true);
+
+	$elPhone.val('');
+	$elAuth.val('');
+	$elPhone.focus();
+}
+
+// 인증번호 전송 시 부터 출력되는 유효시간
+function timeLimitCheck($context) {
+	/**
+	*  남은 시간을 표시하는 예제입니다.
+	*  편의 상 현재 분/초를 zero-leading없이 표시합니다.
+	*/
+	var $elAuth = $context.find('form').find('input[type=text]').eq(1);
+	
+	$('#js_bt-send-number').prop("disabled", false);	
+	$elAuth.prop("disabled", false);
+	$elAuth.focus();
+
+	var timeLeft = 10;
+
+	var num = function(str) {
+		if (str < 0) {
+			return '0' + str;
+		} else {
+			return str;
+		}		
+	}
+
+	var timeDisplay = U.getRemainedTimeDisplay($context);
+	var date = new Date();
+
+	// timeDisplay.show().setTime(date.getMinutes() + ':' + date.getSeconds());
+
+	interval = setInterval(function() {
+		timeLeft = (timeLeft <= 0) ? 0 : --timeLeft;
+
+		var hours = num(Math.floor(timeLeft / 3600));
+		var minuts = num(Math.floor((timeLeft - 3600 * hours) / 60));
+		var seconds = num(timeLeft % 60);
+		timeDisplay.show().setTime(minuts + ':' + seconds);
+
+		if (minuts == 0 && seconds == 0) {
+			// 에러 메시지 노출
+			U.invalidate_txt($('#js_authNumber'), '인증시간이 초과되었습니다. 인증번호를 재전송 하세요.');
+
+			// 입력 폼 초기화
+			inputBoxReset($context);
+			clearInterval(interval);
+		}
+	}, 1000);
+	//-- 남은 시간 표시 예제 종료
+}
+
 // 로그인 여부에 따른 gnb-holder Update
 $(document).ready(function() {
 	setLoginBeforeAfterUpdate();

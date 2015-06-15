@@ -72,13 +72,14 @@ var SmartHomeUI = (function($) {
 
 		$(layer).on('wheel', function() {
 			return false;
-		}).on('click', function(ev) {
-			if (allowBubbleClickEvent(ev)) {
-				return true;
-			}
-			closeDialog();
-			return false;
 		});
+		// .on('click', function(ev) {
+		// 	if (allowBubbleClickEvent(ev)) {
+		// 		return true;
+		// 	}
+		// 	closeDialog();
+		// 	return false;
+		// });
 
 		return layer;
 	}
@@ -300,6 +301,14 @@ var SmartHomeUI = (function($) {
 		}
 	}
 
+	function validate_txt(valid, $el, msg) {
+		// $el.parent().find('.err-msg').text(msg || '');
+		$el.parent().find('.err-msg').html(msg || '');
+
+		// 엘리먼트 생성
+		// var addTxt
+	}
+
 	return {
 		$body: function() {
 			return $body;
@@ -372,6 +381,11 @@ var SmartHomeUI = (function($) {
 		},
 		invalidate: function(el, msg) {
 			validate(false, $(el), msg);
+			repositionDialog();
+			return this;
+		},
+		invalidate_txt: function(el, msg) {
+			validate_txt(false, $(el), msg);
 			repositionDialog();
 			return this;
 		},

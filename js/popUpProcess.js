@@ -264,7 +264,7 @@ jQuery(function($) {
 								
 							if(uname != "" && uemail != "" && upass != "" && upassre != "") { 
 							//API 통신을 위한 파라미터 값
-							var params = {}, url='v1/member/registerMember', type='POST', dataType = 'json';
+							var params = {}, url='/registerMember', type='POST', dataType = 'json';
 								var ip = "127.0.0.1"; // 접속 IP구하여 대체해야 함.
 
 								params = {				
@@ -339,7 +339,7 @@ jQuery(function($) {
 				});
 			}
 
-	function goFinish() {
+		function goFinish() {
 			U.dialog({
 				templateId: 'dialog-template-sign-up-success',
 				onOpen: function(context) {
@@ -403,37 +403,32 @@ jQuery(function($) {
 
 					$context.find('.bt-find-password').on('click', function() {
 						findIdOrPassword('password');
+					});	
+
+					var $js_cellPhone = $('#js_cellPhone');
+					var $elAuth = $context.find('form').find('input[type=text]').eq(1);
+					
+					$js_cellPhone.focus();
+					$('#js_bt-send-number').prop("disabled", true);
+					$elAuth.prop("disabled", true);
+
+
+					$context.find('#js_cellPhone').keydown( function() {
+						if (event.keyCode == 13) {
+							findIDCheckForm($context);
+						} else {
+							$('#js_bt-send-number').prop("disabled", false);	
+						}
 					});
 
-					$context.find('form').last().on('submit', function() {
-						U.dialog({
-							templateId: 'dialog-template-find-id-success',
-							onOpen: function(context) {
-								var $context = $(context);
+					$context.find('#js_bt-send-number').on('click', function() {
+						findIDCheckCellPhone($context);
+					});
 
-								// 서버로부터 가져온 email 목록을 추가합니다.
-								var results = [
-									'aaaa@bbbbb.com',
-									'cccc@ddddd.com',
-									'eeee@fffff.com',
-									'gggg@hhhhh.com',
-									'iiii@jjjjj.com'
-								];
-
-								results = $.map(results, function(v) {
-									return '<li>' + v + '</li>';
-								});
-
-								$context.find('.ids').html(results.join(''));
-								//-- END
-
-								$context.find('.bt-find-password').on('click', function() {
-									findIdOrPassword('password');
-								});
-
-								$context.find('.bt-log-in').on('click', login);
-							}
-						});
+					$('button').click( function() {
+						if (this.id == 'js_bt-confirm') {
+							findIDCheckForm($context);
+						} 
 					});
 				}
 			});
@@ -466,6 +461,40 @@ jQuery(function($) {
 		default:
 			// NO DEFAULT
 		}
+	}
+
+	function findIdOrPasswordResult(response) {
+		// 아이디 검색 결과에 쓰일 부분
+		// $context.find('form').last().on('submit', function() {
+			U.dialog({
+				templateId: 'dialog-template-find-id-success',
+				onOpen: function(context) {
+					var $context = $(context);
+
+					// 서버로부터 가져온 email 목록을 추가합니다.
+					var results = [
+						'aaaa@bbbbb.com',
+						'cccc@ddddd.com',
+						'eeee@fffff.com',
+						'gggg@hhhhh.com',
+						'iiii@jjjjj.com'
+					];
+
+					results = $.map(results, function(v) {
+						return '<li>' + v + '</li>';
+					});
+
+					$context.find('.ids').html(results.join(''));
+					//-- END
+
+					$context.find('.bt-find-password').on('click', function() {
+						findIdOrPassword('password');
+					});
+
+					$context.find('.bt-log-in').on('click', login);
+				}
+			});
+		// });
 	}
 	//-- home과 겹치는 부분 종료
 });

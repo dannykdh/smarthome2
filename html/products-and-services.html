@@ -44,25 +44,23 @@
 					<legend>인증번호 요청</legend>
 					<div class="dialog-content-panel">
 						<div class="field field-auth-number">
-							<input type="text" class="edit" placeholder="휴대폰 번호(-제외)">
-							<input type="submit" class="bt-send-number" value="인증번호 전송">
+							<input type="text" onkeyPress="if ((event.keyCode<48) || (event.keyCode>57)) event.returnValue=false;" class="edit" id="js_cellPhone" placeholder="휴대폰 번호(-제외)">
+							<input type="button" id="js_bt-send-number" class="bt-send-number" value="인증번호 전송">
 							<p class="err-msg"></p>
 						</div>
 					</div>
 				</fieldset>
-			</form>
-			<form>
 				<fieldset>
 					<legend>인증번호 전송</legend>
 					<div class="dialog-content-panel">
 						<div class="field">
-							<input type="text" class="edit" placeholder="인증번호 6자리">
+							<input type="text" class="edit" id="js_authNumber" placeholder="인증번호 6자리">
 							<p class="err-msg"></p>
 							<p class="remained-time">남은 시간 <strong>00:00</strong></p>
 						</div>
 					</div>
 					<div class="dialog-control-panel">
-						<button type="submit" class="bt-confirm">확인</button>
+						<button type="button" id = "js_bt-confirm" class="bt-confirm">확인</button>
 					</div>
 				</fieldset>
 			</form>
@@ -133,13 +131,11 @@
 						</div>
 						<div class="field field-auth-number">
 							<input type="text" class="edit" placeholder="휴대폰 번호(-제외)">
-							<input type="submit" class="bt-send-number" value="인증번호 전송">
+							<input type="button" class="bt-send-number" value="인증번호 전송">
 							<p class="err-msg"></p>
 						</div>
 					</div>
 				</fieldset>
-			</form>
-			<form>
 				<fieldset>
 					<legend>인증번호 전송</legend>
 					<div class="dialog-content-panel">
