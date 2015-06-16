@@ -306,7 +306,29 @@ var SmartHomeUI = (function($) {
 		$el.parent().find('.err-msg').html(msg || '');
 
 		// 엘리먼트 생성
-		// var addTxt
+		var $addTxt = $('<P>' + msg + '</P>');
+
+		// 생성된 엘리먼트 삽입 위치
+		var $pNode = $($el.parent().parent());
+		// $addTxt.insertBefore()
+
+        // $el.each(function(index, item) {
+        //     var $parentItems = $(item).parent('fieldset');
+        //     $parentItems.each(function(index, item) {
+        //         // $(btnItem).html(displayOrder);
+        //         // $(btnItem).data('displayOrder', displayOrder++);
+        // 		$addTxt.insertBefore($(btnItem))
+        //     });
+        // });
+
+	    //검색로그
+	    // $('.js_searchList').each(function(index, item) {
+	    //     var $listItems = $(item).children('dl');
+	    //     $listItems.each(function(index, listItem) {
+	    //         //$(listItem).html(displayOrder);
+	    //         $(listItem).data('displayOrder', displayOrder++);
+	    //     });
+	    // });        
 	}
 
 	return {

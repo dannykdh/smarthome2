@@ -277,7 +277,7 @@ function timeLimitCheck($context) {
 	$elAuth.prop("disabled", false);
 	$elAuth.focus();
 
-	var timeLeft = 10;
+	var timeLeft = 120;
 
 	var num = function(str) {
 		if (str < 0) {

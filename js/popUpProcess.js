@@ -16,328 +16,323 @@ jQuery(function($) {
 		// 회원가입을 시작합니다.
 		goStep1();
 
-			function goStep1() {
+		function goStep1() {
 
+			/**
+			 * Dialog를 여는 함수입니다.
+			 * templateId는 필수, onOpen과 onClose는 선택입니다.
+			 */
+			U.dialog({
 				/**
-				 * Dialog를 여는 함수입니다.
-				 * templateId는 필수, onOpen과 onClose는 선택입니다.
-				 */
-				U.dialog({
-					/**
-					 * 위 text/x-dialog-template를 type으로 가지는 script element의 id입니다.
-					 * 필요한 template을 찾아 이 함수를 호출하면 Dialog가 화면에 나타납니다.
-					 * */
-					templateId: 'dialog-template-sign-up-step1',
-					/**
-					 * Dialog가 생성되고 DOM에 추가된 후, 사용자에게 보여지기 전에 호출됩니다.
-					 * context로 .dialog의 DOM Element가 전달됩니다.
-					 * 이를 통해 내부에 event listener 등을 추가할 수 있습니다.
-					 * */
-					onOpen: function(context) {
+				 * 위 text/x-dialog-template를 type으로 가지는 script element의 id입니다.
+				 * 필요한 template을 찾아 이 함수를 호출하면 Dialog가 화면에 나타납니다.
+				 * */
+				templateId: 'dialog-template-sign-up-step1',
+				/**
+				 * Dialog가 생성되고 DOM에 추가된 후, 사용자에게 보여지기 전에 호출됩니다.
+				 * context로 .dialog의 DOM Element가 전달됩니다.
+				 * 이를 통해 내부에 event listener 등을 추가할 수 있습니다.
+				 * */
+				onOpen: function(context) {
+					var $context = $(context);
 
-						$('.bt-next').prop("disabled", true);
+					$('.bt-next').prop("disabled", true);
 
-						$('#agree-all').change(function() {
+					$('#agree-all').change(function() {
 
-							var checkObj = $("input[type='checkbox']");
-							//console.log("//input"+$("input[type='checkbox']:checked").length);
+						var checkObj = $("input[type='checkbox']");
+						//console.log("//input"+$("input[type='checkbox']:checked").length);
 
-							if(checkObj.length - 1 == $("input[type='checkbox']:checked").length) {
-								checkObj.prop("checked",false);
-							} else {
-								checkObj.prop("checked",true);								
-							}
+						if(checkObj.length - 1 == $("input[type='checkbox']:checked").length) {
+							checkObj.prop("checked",false);
+						} else {
+							checkObj.prop("checked",true);								
+						}
 
-						});
+					});
 
-						$("input[type='checkbox']").change(function() {
-							var chkObj = $("input[id='agree-all']");
-								//console.log("//chk:"+$("input[type='checkbox']:checked").length+"L:"+$("input[id='agree-all']:checked").length);
-							if($("input[id='agree-service']:checked").length > 0 && $("input[id='agree-geolocation']:checked").length > 0 && $("input[id='agree-privacy']:checked").length > 0 && $("input[id='agree-children']:checked").length > 0) {
-								chkObj.prop("checked",true);
-								$('.bt-next').prop("disabled", false);								
-							} else {
-								chkObj.prop("checked",false);
-							}
-						});	
+					$("input[type='checkbox']").change(function() {
+						var chkObj = $("input[id='agree-all']");
+							//console.log("//chk:"+$("input[type='checkbox']:checked").length+"L:"+$("input[id='agree-all']:checked").length);
+						if($("input[id='agree-service']:checked").length > 0 && $("input[id='agree-geolocation']:checked").length > 0 && $("input[id='agree-privacy']:checked").length > 0 && $("input[id='agree-children']:checked").length > 0) {
+							chkObj.prop("checked",true);
+							$('.bt-next').prop("disabled", false);								
+						} else {
+							$('.bt-next').prop("disabled", true);	
+							chkObj.prop("checked",false);
+						}
+					});	
 
 
-						$(context).find('form').first().on('submit', function() {
+					$context.find('.bt-next').on('click', function() {
 
-							/**
-							 * 필요한 validation check를 할 수 있습니다.
-							 * 또 필요한 테이터를 다른 곳에 저장해 둘 수 있습니다.
-							 */
+						/**
+						 * 필요한 validation check를 할 수 있습니다.
+						 * 또 필요한 테이터를 다른 곳에 저장해 둘 수 있습니다.
+						 */
 
-							if($("input[id='agree-all']:checked").length > 0) { 
-								// 두째 단계 Dialog로 진입합니다.
-								goStep2();
+						if($("input[id='agree-all']:checked").length > 0) { 
+							// 두째 단계 Dialog로 진입합니다.
+							goStep2();
 
-								return false;
-							} else {
-								//alert('체크필요!');
-								$('.bt-next').prop("disabled", true);
-							}
-						});
-					},
-					/**
-					 * Dialog가 사용자에게 사라지기 전에 호출됩니다.
-					 * context로 .dialog의 DOM Element가 전달됩니다.
-					 * 이를 통해 Dialog가 닫히기 전에 필요한 동작을 할 수 있습니다.
-					 * 이 함수가 실행되었다고 해서, 실제로 Dialog가 닫히지는 않습니다.
-					 * 실제로 Dialog를 닫으려면 콜백함수인 finish 호출합니다.
-					 * onClose를 생략했다면 바로 Dialog를 닫습니다.
-					 * */
-					onClose: function(context, finish) {
+							return false;
+						} else {
+							//alert('체크필요!');
+							$('.bt-next').prop("disabled", true);
+						}
+					});
+				},
+				/**
+				 * Dialog가 사용자에게 사라지기 전에 호출됩니다.
+				 * context로 .dialog의 DOM Element가 전달됩니다.
+				 * 이를 통해 Dialog가 닫히기 전에 필요한 동작을 할 수 있습니다.
+				 * 이 함수가 실행되었다고 해서, 실제로 Dialog가 닫히지는 않습니다.
+				 * 실제로 Dialog를 닫으려면 콜백함수인 finish 호출합니다.
+				 * onClose를 생략했다면 바로 Dialog를 닫습니다.
+				 * */
+				onClose: function(context, finish) {
 
-						// 여기서는 특별한 처리 없이 바로 finish()를 호출합니다.
-						finish();
-					}
-				});
-			}
+					// 여기서는 특별한 처리 없이 바로 finish()를 호출합니다.
+					finish();
+				}
+			});
+		}
 
-			function goStep2() {
-				U.dialog({
-					templateId: 'dialog-template-sign-up-step2',
-					onOpen: function(context) {
+		function goStep2() {
+			U.dialog({
+				templateId: 'dialog-template-sign-up-step2',
+				onOpen: function(context) {
 
-						//버튼 비활성화 
-						$('.bt-send-number').prop("disabled", true);
-						$('.bt-next').prop("disabled", true);
+					//버튼 비활성화 
+					$('.bt-send-number').prop("disabled", true);
+					$('.bt-next').prop("disabled", true);
 
-  				        var $context = $(context);
-						var $form = $context.find('form');
+				        var $context = $(context);
+					var $form = $context.find('form');
 
-						U.getRemainedTimeDisplay().show();
-						U.getRemainedTimeDisplay().setTime(0200);
+					U.getRemainedTimeDisplay().show();
+					U.getRemainedTimeDisplay().setTime(0200);
 
-						$(document).on("keyup", "input:text[numberOnly]", function() {
-							$(this).val($(this).val().replace(/[^0-9]/gi,""));
+					$(document).on("keyup", "input:text[numberOnly]", function() {
+						$(this).val($(this).val().replace(/[^0-9]/gi,""));
+						U.invalidate($('#hphone'));	
+						$('.bt-send-number').prop("disabled", false);
+					});
+
+					$('#hphone').change(function() {
+						if($('#hphone').val().length >= 10) {
 							U.invalidate($('#hphone'));	
-							$('.bt-send-number').prop("disabled", false);
+						}
+					});
+
+					//인증번호 전송
+					$context.find('.bt-send-number').on('click', function() {
+
+					//var hphone = $.trim($('#hphone').val());
+
+						if($('#hphone').val() == "" || $('#hphone').val().length < 10) {
+							U.invalidate($('#hphone'), '올바른 휴대폰 번호를 입력 하세요.');
+							$('#hphone').focus();																				
+							return false;
+						} else {
+							U.invalidate($('#hphone'));	
+						}	
+
+					        console.log('전송중 --- ');
+						
+						var hphone = $.trim($('#hphone').val());
+						var params = {}, url='v1/member/certification', type='GET', dataType = 'json';
+						var $elPhone = $context.find('form').find('input[type=text]').eq(0);
+
+						params = {
+							mobileNo : hphone
+						};
+
+						startAuthRequestTransaction(url, params, type, dataType, function(response){
+							parseAuthRequestTransaction(response, $context);
 						});
 
-						$('#hphone').change(function() {
-							if($('#hphone').val().length >= 10) {
-								U.invalidate($('#hphone'));	
-							}
-						});
+						// $.ajax({
+      //   					url: url,
+						//     type: "GET",
+						//     dataType : "json",
+						//     data: params,
+						//     contentType : "application/json", 
+						//     success: function(data) {
+						//       console.log('성공 - ', data);
+						//       // 인증번호 전송 버튼을 '재전송' 레이블로 수정
+						//       // U.getRemainedTimeDisplay();
+						//     },
+						//     error: function(xhr) {
+						//       console.log('실패 - ', xhr);
+						//     }
+						// });
 
-						//인증번호 전송
-						$context.find('.bt-send-number').on('click', function() {
+					});
 
-						//var hphone = $.trim($('#hphone').val());
+					$('#authnum').change(function() {
+						if($('#authnum').val().length >= 6) {
+							$('.bt-next').prop("disabled", false);
+							U.invalidate($('#authnum'));	
+						}
+					});						
 
-							if($('#hphone').val() == "" || $('#hphone').val().length < 10) {
-								U.invalidate($('#hphone'), '올바른 휴대폰 번호를 입력 하세요.');
-								$('#hphone').focus();																				
-								return false;
+					//다음 단계로 
+					$context.find('.bt-next').on('click', function() {
+
+						var authnum = $.trim($('#authnum').val());							
+
+						if(authnum == "") {
+							U.invalidate($('#authnum'), '인증번호를 입력해 주세요.');
+							$('#authnum').focus();																				
+							return false;									
+						} else if($.isNumeric(authnum) != true) {
+							U.invalidate($('#authnum'), '숫자만 입력해 주세요.');
+							$('#authnum').focus();	
+							return false;																																											
+						} else {
+							U.invalidate($('#authnum'));		
+
+							if($('#hphone').val().length >= 10 && $.isNumeric($('#hphone').val()) == true && authnum.length >= 6 && $.isNumeric(authnum) == true) {
+								var userInfo = {userPhone : $('#hphone').val(), userCertNo : $('#authnum').val()}
+
+								goStep3(userInfo);
+								return false;	
 							} else {
-								U.invalidate($('#hphone'));	
-							}	
+								U.invalidate($('#authnum'), '입력하신 값이 올바르지 않습니다.');
+								$('#authnum').focus();									}								
+						}
+					});
 
-  					        console.log('전송중 --- ');
+					$context.find('.bt-prev').on('click', function() {
+						goStep1();
+						return false;
+					});
 
-							var params = {}, url='http://mobiledev.sktsmarthome.com:9002/v1/member/certification', type='GET', dataType = 'json';
-							var hphone = $.trim($('#hphone').val());
+				}
+			});
+		}
 
-							params = {
-								mobileNo : hphone
+		function goStep3(userInfo) {
+			U.dialog({
+				templateId: 'dialog-template-sign-up-step3',
+				onOpen: function(context) {
+					var $context = $(context);
+					var $form = $context.find('form');
+					$context.find('.bt-next').on('click', function() {
+
+						var uname = $.trim($('#name').val());
+						var uemail = $.trim($('#email').val()); 
+						var upass = $.trim($('#pass').val()); 
+						var upassre = $.trim($('#passre').val()); 						
+
+						if(uname == "") {
+							U.invalidate($('#name'), '이름을 입력해 주세요.');
+							$('#name').focus();	
+							return false;										
+						} else {
+							U.invalidate($('#name'));
+							U.validate($('#name'));	
+						}
+
+						if(uemail == "") {
+							U.invalidate($('#email'), '이메일을 입력해 주세요.');
+							$('#email').focus();		
+							return false;	
+						// } else if (!isEmailIDCheck(uemail)) {
+						// 	U.invalidate($('#email'), '스마트홈 계정 (이메일)을 형식에 맞게 입력하세요.'); 								
+						// 	return;			
+						} else {
+							U.invalidate($('#email'));	
+						}
+
+						if(upass == "") {
+							U.invalidate($('#pass'), '비밀번호를 입력해 주세요.');
+							$('#pass').focus();	
+							return false;	
+						} else if(upass.length < 4) {
+							U.invalidate($('#pass'), '비밀번호를 8자 이상 입력해 주세요.');
+							$('#pass').focus();	
+							return false;													
+						} else {
+							U.invalidate($('#pass'));		
+						}	
+						
+						if(upassre == "") {
+							U.invalidate($('#passre'), '비밀번호 확인을 입력해 주세요.');
+							$('#passre').focus();		
+							return false;			
+						} else if($('#pass').val() != $('#passre').val()) {
+							U.invalidate($('#passre'), '비밀번호와 재입력한 비밀번호가 맞지 않습니다.');
+							$('#passre').val('');										
+							$('#passre').focus();		
+							return false;												
+						} else {
+							U.invalidate($('#passre'));	
+						}
+							
+						if(uname != "" && uemail != "" && upass != "" && upassre != "") { 
+						//API 통신을 위한 파라미터 값
+							var params = {}, url='v1/member/registerMember', type='POST', dataType = 'json';
+							// var params = {}, url='v2/member/registerMember', type='GET', dataType = 'json';										
+							var ip = "127.0.0.1"; // 접속 IP구하여 대체해야 함.
+
+							params = {				
+								userNickNm:uname,
+								loginId:uemail,
+								loginPwd:upass,
+								userMobileNo:userInfo.userPhone,
+								pushTknVal:'',
+								dvcTknVal:ip,
+								dvcOsNm:'WEB',
+								certNo:userInfo.userCertNo
+								// loginId : "goodman@btb.com",
+								// loginPwd : "1010qpqp",
+								// userNickNm : "이종",
+								// userMobileNo : "01098877181",
+								// pushTknVal : "12345",
+								// dvcTknVal : "123456",
+								// dvcOsNm : "WEB",
+								// fileNm : '',
+								// certNo: "111111"							
 							};
 
-							$.ajax({
-            					url: url,
-							    type: "GET",
-							    dataType : "json",
-							    data: params,
-							    contentType : "application/json", 
-							    success: function(data) {
-							      console.log('성공 - ', data);
-							      U.getRemainedTimeDisplay();
-							    },
-							    error: function(xhr) {
-							      console.log('실패 - ', xhr);
-							    }
-							});
+							startJoinTransaction(url, params, type, dataType, function(response){
+								parseJoinTransaction(response, function(rt) {
+									if (rt) {
+										goFinish();
+									} else {
 
-						});
-
-						$('#authnum').change(function() {
-							if($('#authnum').val().length >= 6) {
-								$('.bt-next').prop("disabled", false);
-								U.invalidate($('#authnum'));	
-							}
-						});						
-
-						//다음 단계로 
-						$context.find('.bt-next').on('click', function() {
-
-							var authnum = $.trim($('#authnum').val());							
-
-							if(authnum == "") {
-								U.invalidate($('#authnum'), '인증번호를 입력해 주세요.');
-								$('#authnum').focus();																				
-								return false;									
-							} else if($.isNumeric(authnum) != true) {
-								U.invalidate($('#authnum'), '숫자만 입력해 주세요.');
-								$('#authnum').focus();	
-								return false;																																											
-							} else {
-								U.invalidate($('#authnum'));		
-
-								if($('#hphone').val().length >= 10 && $.isNumeric($('#hphone').val()) == true && authnum.length >= 6 && $.isNumeric(authnum) == true) {
-
-									goStep3();
-									return false;	
-								} else {
-									U.invalidate($('#authnum'), '입력하신 값이 올바르지 않습니다.');
-									$('#authnum').focus();									}								
-							}
-						});
-
-						$context.find('.bt-prev').on('click', function() {
-							goStep1();
-							return false;
-						});
-
-					}
-				});
-			}
-
-			function goStep3() {
-				U.dialog({
-					templateId: 'dialog-template-sign-up-step3',
-					onOpen: function(context) {
-						var $context = $(context);
-						var $form = $context.find('form');
-						$context.find('.bt-next').on('click', function() {
-
-							var uname = $.trim($('#name').val());
-							var uemail = $.trim($('#email').val()); 
-							var upass = $.trim($('#pass').val()); 
-							var upassre = $.trim($('#passre').val()); 						
-
-							if(uname == "") {
-								U.invalidate($('#name'), '이름을 입력해 주세요.');
-								$('#name').focus();	
-								return false;										
-							} else {
-								U.invalidate($('#name'));
-								U.validate($('#name'));	
-							}
-
-							if(uemail == "") {
-								U.invalidate($('#email'), '이메일을 입력해 주세요.');
-								$('#email').focus();		
-								return false;	
-							// } else if (!isEmailIDCheck(uemail)) {
-							// 	U.invalidate($('#email'), '스마트홈 계정 (이메일)을 형식에 맞게 입력하세요.'); 								
-							// 	return;			
-							} else {
-								U.invalidate($('#email'));	
-							}
-
-							if(upass == "") {
-								U.invalidate($('#pass'), '비밀번호를 입력해 주세요.');
-								$('#pass').focus();	
-								return false;	
-							} else if(upass.length < 4) {
-								U.invalidate($('#pass'), '비밀번호를 8자 이상 입력해 주세요.');
-								$('#pass').focus();	
-								return false;													
-							} else {
-								U.invalidate($('#pass'));		
-							}	
-							
-							if(upassre == "") {
-								U.invalidate($('#passre'), '비밀번호 확인을 입력해 주세요.');
-								$('#passre').focus();		
-								return false;			
-							} else if($('#pass').val() != $('#passre').val()) {
-								U.invalidate($('#passre'), '비밀번호와 재입력한 비밀번호가 맞지 않습니다.');
-								$('#passre').val('');										
-								$('#passre').focus();		
-								return false;												
-							} else {
-								U.invalidate($('#passre'));	
-							}
-								
-							if(uname != "" && uemail != "" && upass != "" && upassre != "") { 
-							//API 통신을 위한 파라미터 값
-							var params = {}, url='/registerMember', type='POST', dataType = 'json';
-								var ip = "127.0.0.1"; // 접속 IP구하여 대체해야 함.
-
-								params = {				
-									// userNickNm:uname,
-									// loginId:uemail,
-									// loginPwd:upass,
-									// userMobileNo:'',
-									// pushTknVal:'',
-									// dvcTknVal:ip,
-									// dvcOsNm:'WEB',
-									// certNo:'111111'
-									userNickNm : "59443",
-									loginId : "latuni006@sk.com",
-									loginPwd : "1010qpqp",
-									userMobileNo : "01098877181",
-									pushTknVal : "12345",
-									dvcTknVal : "123456",
-									dvcOsNm : "WEB",
-									certNo: "111111"									
-								};
-
-
-								$.ajax({
-	            					url: "http://mobiledev.sktsmarthome.com:9002/v1/member"+url,
-								    type: "POST",
-								    dataType : "json",
-								    data: params,
-								    contentType : "application/json", 
-								    success: function(data) {
-								      console.log('성공 - ', data);
-								      U.getRemainedTimeDisplay();
-								    },
-								    error: function(xhr) {
-								      console.log('실패 - ', xhr);
-								    }
+									}
 								});
+							});				
+						} else {
+							console.log(uname+"/"+uemail+"/"+upass+"/"+upassre);
+						}
+						
+					});
 
+					//$context.find('form').last().on('submit', function() {
 
+						/**
+						 * 최종 성공 화면으로 진입합니다.
+						 * 실패했을 때는 dialog-temlate-signup-failure를
+						 * templateId로 사용하시면 됩니다.
+						 */
+ 
+						//goFinish();
+						//return false;
+					//});
 
-								// startJoinTransaction(url, params, type, dataType, function(response){
-								// 	parseJoinTransaction(response);
-								// });								
+					$context.find('.bt-prev').on('click', function() {
 
-								// 마지막 단계 Dialog로 진입합니다.
-								//goFinish();
-								//return false;
-							} else {
-								console.log(uname+"/"+uemail+"/"+upass+"/"+upassre);
-							}
-							
-						});
-
-						//$context.find('form').last().on('submit', function() {
-
-							/**
-							 * 최종 성공 화면으로 진입합니다.
-							 * 실패했을 때는 dialog-temlate-signup-failure를
-							 * templateId로 사용하시면 됩니다.
-							 */
-	 
-							//goFinish();
-							//return false;
-						//});
-
-						$context.find('.bt-prev').on('click', function() {
-
-							// 이전단계로 이동합니다.
-							goStep2();
-							return false;
-						});
-					}
-				});
-			}
+						// 이전단계로 이동합니다.
+						goStep2();
+						return false;
+					});
+				}
+			});
+		}
 
 		function goFinish() {
 			U.dialog({
@@ -443,7 +438,7 @@ jQuery(function($) {
 						findIdOrPassword('id');
 					});
 
-					$context.find('form').last().on('submit', function() {
+					$context.find('form').last().on('click', function() {
 						U.dialog({
 							templateId: 'dialog-template-find-password-success',
 							onOpen: function(context) {
