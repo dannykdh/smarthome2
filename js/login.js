@@ -175,7 +175,7 @@ function deleteCookieInfo() {
     }
 }
 
-// 로그인 전후 Updagte
+// 로그인 전후 Updagte.
 function setLoginBeforeAfterUpdate() {
 	// 상단 헤더 영역 로그인 / 아웃 Update
 	var $account_for_guest = $('.account-for-guest.h-bar');; 
@@ -272,8 +272,10 @@ function timeLimitCheck($context) {
 	*  편의 상 현재 분/초를 zero-leading없이 표시합니다.
 	*/
 	var $elAuth = $context.find('form').find('input[type=text]').eq(1);
+	var $btnAuth = $context.find('#js_bt-send-number').val() ? $context.find('#js_bt-send-number') : $context.find('.bt-send-number');
 	
-	$('#js_bt-send-number').prop("disabled", false);	
+	$btnAuth.prop("disabled", false);	
+	$btnAuth.val('재전송');
 	$elAuth.prop("disabled", false);
 	$elAuth.focus();
 
