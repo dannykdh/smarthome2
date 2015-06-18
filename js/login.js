@@ -304,10 +304,14 @@ function timeLimitCheck($context) {
 
 		if (minuts == 0 && seconds == 0) {
 			// 에러 메시지 노출
-			U.invalidate_txt($('#js_authNumber'), '인증시간이 초과되었습니다. 인증번호를 재전송 하세요.');
+			U.invalidate_txt($elAuth, '인증시간이 초과되었습니다. 인증번호를 재전송 하세요.');
 
 			// 입력 폼 초기화
 			inputBoxReset($context);
+
+			// 남은 시간 초기화
+			timeDisplay.hide();
+
 			clearInterval(interval);
 		}
 	}, 1000);

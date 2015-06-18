@@ -107,11 +107,11 @@ jQuery(function($) {
 					$('.bt-send-number').prop("disabled", true);
 					$('.bt-next').prop("disabled", true);
 
-				        var $context = $(context);
+				    var $context = $(context);
 					var $form = $context.find('form');
 
-					U.getRemainedTimeDisplay().show();
-					U.getRemainedTimeDisplay().setTime(0200);
+					// U.getRemainedTimeDisplay().show();
+					// U.getRemainedTimeDisplay().setTime(0200);
 
 					$(document).on("keyup", "input:text[numberOnly]", function() {
 						$(this).val($(this).val().replace(/[^0-9]/gi,""));
@@ -119,7 +119,8 @@ jQuery(function($) {
 						$('.bt-send-number').prop("disabled", false);
 					});
 
-					$('#hphone').change(function() {
+					$context.find('#hphone').keydown(function() {
+						console.log('rkrkrkrk');
 						if($('#hphone').val().length >= 10) {
 							U.invalidate($('#hphone'));	
 						}
@@ -127,9 +128,8 @@ jQuery(function($) {
 
 					//인증번호 전송
 					$context.find('.bt-send-number').on('click', function() {
-
-					//var hphone = $.trim($('#hphone').val());
-
+						$addTxt = $('.err-Txt');
+						$addTxt.remove();
 						if($('#hphone').val() == "" || $('#hphone').val().length < 10) {
 							U.invalidate($('#hphone'), '올바른 휴대폰 번호를 입력 하세요.');
 							$('#hphone').focus();																				
@@ -138,11 +138,10 @@ jQuery(function($) {
 							U.invalidate($('#hphone'));	
 						}	
 
-					        console.log('전송중 --- ');
+					    console.log('전송중 --- ');
 						
 						var hphone = $.trim($('#hphone').val());
 						var params = {}, url='v1/member/certification', type='GET', dataType = 'json';
-						var $elPhone = $context.find('form').find('input[type=text]').eq(0);
 
 						params = {
 							mobileNo : hphone
@@ -151,26 +150,10 @@ jQuery(function($) {
 						startAuthRequestTransaction(url, params, type, dataType, function(response){
 							parseAuthRequestTransaction(response, $context);
 						});
-
-						// $.ajax({
-      //   					url: url,
-						//     type: "GET",
-						//     dataType : "json",
-						//     data: params,
-						//     contentType : "application/json", 
-						//     success: function(data) {
-						//       console.log('성공 - ', data);
-						//       // 인증번호 전송 버튼을 '재전송' 레이블로 수정
-						//       // U.getRemainedTimeDisplay();
-						//     },
-						//     error: function(xhr) {
-						//       console.log('실패 - ', xhr);
-						//     }
-						// });
-
 					});
 
-					$('#authnum').change(function() {
+					$('#authnum').keyup(function() {
+						console.log('$(#authnum).val().length : '+$('#authnum').val().length)
 						if($('#authnum').val().length >= 6) {
 							$('.bt-next').prop("disabled", false);
 							U.invalidate($('#authnum'));	

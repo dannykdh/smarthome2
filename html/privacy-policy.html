@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta charset="utf-8">
-<title>이용 약관 - Smart[Home]</title>
+<title>이용 약관 - 스마트홈</title>
 <link rel="stylesheet" type="text/css" href="../css/base.css">
 <link rel="stylesheet" type="text/css" href="../css/smarthomeui.css">
 <script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
@@ -33,10 +33,7 @@
 				<li class="tab h-item"><button type="button" class="bt-find-password">비밀번호 찾기</button></li>
 			</ul>
 			<div class="dialog-content-panel">
-				<p class="description">
-					휴대폰 번호를 입력하신 후 다음 버튼을 누르시면,<br>
-					인증번호가 전송됩니다.
-				</p>
+				<p class="description">휴대폰 번호를 입력하신 후 인증번호 전송 버튼을 눌러주세요.</p>
 			</div>
 			<form>
 				<fieldset>
@@ -118,8 +115,8 @@
 			</ul>
 			<div class="dialog-content-panel dialog-content-wide">
 				<p class="description">
-					회원정보에 등록된 아이디 휴대폰 번호 입력을 통해 본인 확인 후<br>
-					임시 비밀번호를 발급 받으실 수 있습니다.
+					회원정보에 등록된 아이디, 휴대폰 번호를 입력하시면,<br>
+					본인 확인 후 임시 비밀번호를 발급받을 수 있습니다.
 				</p>
 			</div>
 			<form>
@@ -284,23 +281,21 @@
 				<fieldset>
 					<legend>사용자 정보</legend>
 					<div class="dialog-content-panel">
-						<div class="dialog-content-panel">
-							<div class="field">
-								<input type="text" class="edit" placeholder="이름 (한글, 영문, 12자 이내)">
-								<p class="err-msg"></p>
-							</div>
-							<div class="field">
-								<input type="text" class="edit" placeholder="사용할 아이디 (이메일)">
-								<p class="err-msg"></p>
-							</div>
-							<div class="field">
-								<input type="password" class="edit" placeholder="비밀번호 (대소문자 구분 영문, 숫자 포함 8자 이상)">
-								<p class="err-msg"></p>
-							</div>
-							<div class="field">
-								<input type="password" class="edit" placeholder="비밀번호 재입력">
-								<p class="err-msg"></p>
-							</div>
+						<div class="field">
+							<input type="text" class="edit" placeholder="이름 (한글, 영문, 12자 이내)">
+							<p class="err-msg"></p>
+						</div>
+						<div class="field">
+							<input type="text" class="edit" placeholder="아이디 (이메일)">
+							<p class="err-msg"></p>
+						</div>
+						<div class="field">
+							<input type="password" class="edit" placeholder="비밀번호 (대소문자 구분 영문, 숫자 포함 8자 이상)">
+							<p class="err-msg"></p>
+						</div>
+						<div class="field">
+							<input type="password" class="edit" placeholder="비밀번호 재입력">
+							<p class="err-msg"></p>
 						</div>
 					</div>
 					<div class="dialog-control-panel">
@@ -336,9 +331,7 @@
 		<button class="bt-dialog-close" type="button">Close</button>
 		<div class="dialog-body">
 			<div class="dialog-content-panel dialog-content-wide">
-				<p class="description">
-					당신의 집이 더 스마트해지도록 로그인을 해주세요
-				</p>
+				<p class="description">스마트한 집안 환경을 위해 로그인을 해주세요.</p>
 			</div>
 			<form>
 				<fieldset>
@@ -366,6 +359,90 @@
 		</div>
 	</div>
 </script>
+<script id="dialog-template-alliance" type="text/x-dialog-template">
+	<div class="dialog dialog-alliance">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">제휴 문의</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<p class="description">
+					스마트홈과 서비스 협력을 통해 스마트한 스토리를 만들어보세요.<br>
+					함께하는 시너지로 보다 가치 있는 브랜드를 만들어나갈 수 있습니다.
+				</p>
+			</div>
+			<form>
+				<fieldset>
+					<legend>제휴 문의</legend>
+					<div class="dialog-content-panel">
+						<div class="field h-bar">
+							<label for="alliance-email" class="h-item">이메일 주소</label>
+							<div class="sub-field h-item">
+								<input id="alliance-email" class="edit" type="text" placeholder="이메일 주소를 입력해주세요">
+								<p class="err-msg"></p>
+							</div>
+						</div>
+						<div class="field h-bar">
+							<label for="alliance-phone" class="h-item">전화번호</label>
+							<div class="sub-field h-item">
+								<input id="alliance-phone" class="edit" type="text" placeholder="연락받을 전화번호를 입력해주세요">
+								<p class="err-msg"></p>
+							</div>
+						</div>
+						<div class="field field-text h-bar">
+							<label for="alliance-text" class="h-item">문의 내용</label>
+							<div class="sub-field h-item">
+								<textarea id="alliance-text" class="edit text" placeholder="내용을 입력해주세요"></textarea>
+								<p class="err-msg"></p>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+				<div class="dialog-control-panel">
+					<button type="submit" class="bt-confirm">확인</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</script>
+<script id="dialog-template-alliance-success" type="text/x-dialog-template">
+	<div class="dialog dialog-alliance-success">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">메일 전송 완료</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel dialog-content-wide">
+				<p class="result">
+					<strong>메일이 성공적으로 전송되었습니다.</strong>
+				</p>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-confirm">확인</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="dialog-template-alliance-failure" type="text/x-dialog-template">
+	<div class="dialog dialog-alliance-failure">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">메일 전송 실패</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<p class="result">
+					<strong>메일 전송에 실패하였습니다.</strong><br>
+					다시 시도해주십시오.
+				</p>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-confirm">확인</button>
+			</div>
+		</div>
+	</div>
+</script>
 <script id="dialog-template-inquiry" type="text/x-dialog-template">
 	<div class="dialog dialog-inquiry">
 		<button class="bt-dialog-close" type="button">Close</button>
@@ -375,8 +452,8 @@
 		<div class="dialog-body">
 			<div class="dialog-content-panel">
 				<p class="description">
-					이용하시면서 불편한 상황이나 개선점이 있다면 Smart[Home] 고객센터로<br>
-					언제든지 알려주세요. 이메일을 함께 남겨주시면, 답변을 받아 보실 수 있습니다.
+					이용하시면서 불편한 상황이나 개선점이 있다면 언제든지<br>
+					스마트홈 고객센터로 알려주세요.
 				</p>
 			</div>
 			<form>
@@ -384,54 +461,25 @@
 					<legend>이메일 문의</legend>
 					<div class="dialog-content-panel">
 						<div class="field h-bar">
-							<label for="inquirer-email" class="h-item">연락받으실 이메일 주소</label>
+							<label for="inquirer-email" class="h-item">이메일 주소</label>
 							<div class="sub-field h-item">
-								<input id="inquirer-email" class="edit" type="text" placeholder="이메일을 입력해주세요">
+								<input id="inquirer-email" class="edit" type="text" placeholder="이메일 주소를 입력해주세요">
 								<p class="err-msg"></p>
 							</div>
 						</div>
 						<div class="field h-bar">
-							<label for="inquirer-phone" class="h-item">연락받으실 전화번호</label>
+							<label for="inquirer-phone" class="h-item">전화번호</label>
 							<div class="sub-field h-item">
 								<input id="inquirer-phone" class="edit" type="text" placeholder="연락 받을 전화번호를 입력해주세요">
 								<p class="err-msg"></p>
 							</div>
 						</div>
 						<div class="field field-text h-bar">
-							<label for="inquiry-text" class="h-item">문의하실 내용</label>
+							<label for="inquiry-text" class="h-item">문의 내용</label>
 							<div class="sub-field h-item">
-								<textarea id="inquiry-text" class="edit text" ></textarea>
+								<textarea id="inquiry-text" class="edit text" placeholder="내용을 입력해주세요"></textarea>
 								<p class="err-msg"></p>
 							</div>
-						</div>
-					</div>
-				</fieldset>
-				<fieldset>
-					<legend>개인정보 수집동의</legend>
-					<div class="dialog-content-panel">
-						<div class="field field-conditions">
-							<ol class="conditions">
-								<li class="condition">
-									<p>1. 수집하는 개인정보의 항목 및 수집방법</p>
-									<ol class="subconditions">
-										<li class="subcondition">
-											<p>
-												1) Smart[Home]은 이용자의 원활한 고객상담 및 불만처리 등을 위해 아래와 같은<br>
-												개인정보를 수집하고 있습니다.
-											</p>
-											<ul class="subsubconditions">
-												<li class="subsubcondition">
-													<p>- 필수정보: 이메일, 휴대폰번호</p>
-												</li>
-											</ul>
-										</li>
-									</ol>
-								</li>
-							</ol>
-						</div>
-						<div class="field field-agree">
-							<input id="agree-privacy-for-inquiry" type="checkbox" value="1">
-							<label for="agree-privacy-for-inquiry">동의합니다.</label>
 						</div>
 					</div>
 				</fieldset>
@@ -509,7 +557,7 @@
 			<div class="dialog-content-panel">
 				<p class="result">
 					<strong>회원탈퇴가 완료되었습니다.</strong><br>
-					더 좋아진 Smart[Home]으로 다시 만나요.
+					더 좋아진 스마트홈으로 다시 만나요.
 				</p>
 			</div>
 			<div class="dialog-control-panel">
@@ -524,7 +572,7 @@
 <header id="gnb-holder">
 	<div id="gnb">
 		<div class="menu-field h-bar">
-			<a class="logo h-item" href="home.html">Smart[Home]</a>
+			<a class="logo h-item" href="home.html">스마트홈</a>
 			<ul class="menus h-item h-bar">
 				<li class="menu h-item"><a class="bt-products-and-services" href="products-and-services.html">제품 및 서비스</a></li>
 				<li class="menu h-item"><a class="bt-costumer-center" href="costumer-support.html">고객 지원</a></li>
@@ -544,7 +592,14 @@
 </header>
 <div id="container">
 	<div id="holder" class="privacy-policy-page">
-		<h1 class="page-title">개인정보 취급방침</h1>
+		<!-- 수정 시작 : 20150618_01 -->
+		<div class="title-holder h-bar">
+			<div class="page-nav h-item">
+				<a class="page-external" href="terms-and-conditions.html">이용약관</a>
+			</div>
+			<h1 class="page-title h-item">개인정보 취급방침</h1>
+		</div>
+		<!--// 수정 종료 : 20150618_01 -->
 		<ul class="terms expandable">
 			<li id="privacy" class="term expandable-item expanded-always">
 				<h2 class="term-title expandable-handle"><span>개인정보 수집 및 이용 동의</span></h2>
@@ -554,23 +609,23 @@
 							<h1 class="article-title">총칙</h1>
 							<ol class="paragraphs">
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">"개인정보"라 함은 생존하고 있는 개인에 관한 정보로서 성명, 주민등록번호 및 영상 등을 통하여 개인을 알아볼 수 있는 정보(해당 정보만으로는 특정 개인을 알아볼 수 없더라도 다른 정보와 쉽게 결합하여 알아볼 수 있는 것을 포함한다)를 말합니다.</span>
 								</li>
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">스마트홈 서비스(이하 “서비스”라 함)은(는) 고객님의 개인정보보호를 매우 중요시하며, 『정보통신망 이용촉진 및 정보보호 등에 관한 법률』, 『개인정보 보호법』상의 개인정보보호규정을 준수하고 있습니다. 또한 “서비스”는 개인정보 취급방침을 통하여 고객님께서 제공하시는 개인정보가 어떤 용도와 방식으로 이용되고 있으며 개인정보를 효과적이고 적극적으로 보호하기 위해 항상 노력하고 있음에 대해 알려드립니다.</span>
 								</li>
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">”서비스”는 개인정보 취급방침을 홈페이지 첫 화면에 공개함으로써 고객님께서 언제나 용이하게 보실 수 있도록 조치하고 있습니다.</span>
 								</li>
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">”서비스”는 개인정보 취급방침의 지속적인 개선을 위하여 개인정보 취급방침을 개정하는데 필요한 절차를 정하고 있습니다. 그리고 개인정보 취급방침을 개정하는 경우 버전번호, 시행일자 등을 부여하여 개정된 내용을 확인할 수 있도록 하고 있습니다.</span>
 								</li>
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">”서비스”의 개인정보 취급방침 중 중요한 사항이 변경되는 경우에는 변경되는 개인정보 취급방침을 시행하기 전에 홈페이지(<a href="http://www.sktsmarthome.com" class="term-external" target="_blank">www.sktsmarthome.com</a>) 등을 통하여 변경이유 및 내용을 고객에게 공지합니다.</span>
 								</li>
 							</ol>
@@ -579,15 +634,15 @@
 							<h1 class="article-title">개인정보의 수집 항목 및 이용 목적</h1>
 							<ol class="paragraphs">
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">”서비스”는 기본적인 서비스 제공을 위한 ‘필수동의’와 고객 각각의 기호와 필요에 맞는 서비스를 제공하기 위한 ‘선택동의’로 구분되어 다음의 정보를 수집하고 있습니다. 선택동의를 하지 않은 경우에도 서비스 이용 제한은 없습니다.</span>
 								</li>
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">”서비스”는 고객의 기본적 인권 침해의 우려가 있는 민감한 개인정보(인종 및 민족, 사상 및 신조, 출신지 및 본적지, 정치적 성향 및 범죄기록, 건강상태 및 성생활 등)는 수집하지 않습니다.</span>
 								</li>
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">필수동의 사항</span>
 									<table class="term-attached-table">
 										<thead>
@@ -637,12 +692,12 @@
 									</table>
 								</li>
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">법령에 따라 수집/이용하는 정보</span>
 									<p>- 서비스 이용 내역, 접속 로그 등 서비스 이용 기록</p>
 								</li>
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">“서비스”는 상기 동의를 받은 개인정보를 통계화 등 개인을 식별할 수 없는 정보로 가공하여 이용할 수 있습니다.</span>
 								</li>
 							</ol>
@@ -651,11 +706,11 @@
 							<h1 class="article-title">개인정보 수집에 대한 동의</h1>
 							<ol class="paragraphs">
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">“서비스”는 고객님의 ‘개인정보 수집 및 이용’에 대한 별도의 동의획득 절차를 두고, 고객님께서 이에 대해 '동의한다' 또는 '동의하지 않는다' 버튼을 클릭할 수 있는 절차를 마련하고 있습니다. '동의한다' 버튼을 클릭하면 개인정보 수집 및 이용에 대해 동의한 것으로 봅니다.</span>
 								</li>
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">고객님은 개인정보 수집 및 이용에 대한 동의를 거부할 권리가 있으며, 동의를 거부할 경우 받는 별도의 불이익은 없습니다. 단, 서비스 이용이 불가능하거나, 서비스 이용 목적에 따른 서비스 제공에 제한이 따르게 됩니다.</span>
 								</li>
 							</ol>
@@ -682,15 +737,15 @@
 							<p class="article-statement">“서비스”의 개인정보를 개인정보 수집 시 고객에게 고지한 범위 또는 서비스이용약관에 명시한 범위를 넘어 이용하거나 제 3 자에게 제공하지 않습니다. 다만, 고객의 동의가 있거나 다음에 해당하는 경우에는 예외로 합니다.</p>
 							<ol class="paragraphs">
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">“서비스”의 제공에 관한 계약의 이행을 위하여 필요한 개인정보로서 경제적/기술적인 사유로 통상의 동의를 받는 것이 현저히 곤란한 경우</span>
 								</li>
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">“서비스” 제공에 따른 요금정산을 위하여 필요한 경우</span>
 								</li>
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">통신비밀보호법, 국세기본법, 정보통신망 이용촉진 및 정보보호 등에 관한 법률, 개인정보 보호법, 금융실명거래 및 비밀보장에 관한 법률, 신용정보의 이용 및 보호에 관한 법률, 전기통신기본법, 전기통신사업법, 지방세법, 소비자기본법, 한국은행법, 형사소송법 등 다른 법률에 특별한 규정이 있는 경우</span>
 								</li>
 							</ol>
@@ -701,7 +756,7 @@
 							<p class="article-statement">“서비스”는 업무위탁계약서 등을 통하여 개인정보보호 관련 법규의 준수, 개인정보에 관한 비밀유지, 제3자 제공에 대한 금지, 사고시의 책임부담, 위탁기간, 처리 종료 후의 개인정보의 반환 또는 파기 의무 등을 규정하고, 이를 준수하도록 관리하고 있습니다.</p>
 							<ul class="paragraphs">
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">”서비스” 제공을 위해 필수적으로 개인정보를 위탁하는 업체 리스트</span>
 									<table class="term-attached-table">
 										<thead>
@@ -780,31 +835,31 @@
 							<p class="article-statement">또한 상법, 국세기본법, 통신비밀보호법, 전자상거래 등에서 소비자보호에 관한 법률, 신용정보의 이용 및 보호에 관한 법률 등 관계법령에 따라 보존할 필요가 있는 경우 회사는 관계법령에서 정한 기간 동안 회원정보를 보관합니다. 이 경우 회사는 보관하는 정보를 그 보관의 목적으로만 이용하며 보존기간은 다음과 같습니다.</p>
 							<ol class="paragraphs">
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">상업장부와 영업에 관한 중요서류 및 전표 : 중요서류는 10년 / 전표(상법)는 5년</span>
 								</li>
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">거래에 관한 장부 및 증빙서류 : 5년(국세기본법, 법인세법, 부가가치세법 등)</span>
 								</li>
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">표시/광고에 관한 기록 : 6개월(전자상거래등에서의 소비자보호에 관한 법률)</span>
 								</li>
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">계약 또는 청약철회 등에 관한 기록 : 5년(전자상거래등에서의 소비자보호에 관한 법률)</span>
 								</li>
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">대금결제 및 재화 등의 공급에 관한 기록 : 5년(전자상거래등에서의 소비자보호에 관한 법률)</span>
 								</li>
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">소비자의 불만 또는 분쟁처리에 관한 기록 : 3년(전자상거래등에서의 소비자보호에 관한 법률)</span>
 								</li>
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">신용정보의 수집/처리 및 이용 등에 관한 기록 : 3년(신용정보의 이용 및 보호에 관한 법률)</span>
 								</li>
 							</ol>
@@ -880,19 +935,19 @@
 									<p>“서비스”는 고객님의 개인정보를 취급함에 있어 개인정보가 분실, 도난, 누출, 변조 또는 훼손되지 않도록 안전성 확보를 위하여 다음과 같은 기술적 대책을 강구하고 있습니다.</p>
 									<ul class="sub-paragraph-list">
 										<li class="sub-paragraph-item">
-											<span class="sub-paragraph-number">&nbsp;•&nbsp;</span>
+											<span class="sub-paragraph-number">&nbsp;?&nbsp;</span>
 											<span class="sub-paragraph-statement">고객님의 개인정보는 비밀번호에 의해 보호되며 파일 및 전송데이터를 암호화하거나 파일 잠금기능(Lock)을 사용하여 중요한 데이터는 별도의 보안기능을 통해 보호되고 있습니다.</span>
 										</li>
 										<li class="sub-paragraph-item">
-											<span class="sub-paragraph-number">&nbsp;•&nbsp;</span>
+											<span class="sub-paragraph-number">&nbsp;?&nbsp;</span>
 											<span class="sub-paragraph-statement">”서비스”는 백신프로그램을 이용하여 컴퓨터 바이러스에 의한 피해를 방지하기 위한 조치를 취하고 있습니다. 백신프로그램은 주기적으로 업데이트되며 갑작스런 바이러스가 출현할 경우 백신이 나오는 즉시 이를 제공함으로써 개인정보가 침해되는 것을 방지하고 있습니다.</span>
 										</li>
 										<li class="sub-paragraph-item">
-											<span class="sub-paragraph-number">&nbsp;•&nbsp;</span>
+											<span class="sub-paragraph-number">&nbsp;?&nbsp;</span>
 											<span class="sub-paragraph-statement">”서비스”는 암호알고리즘을 이용하여 네트워크 상의 개인정보를 안전하게 전송할 수 있는 보안장치(SSL 또는 SET)를 채택하고 있습니다.</span>
 										</li>
 										<li class="sub-paragraph-item">
-											<span class="sub-paragraph-number">&nbsp;•&nbsp;</span>
+											<span class="sub-paragraph-number">&nbsp;?&nbsp;</span>
 											<span class="sub-paragraph-statement">해킹 등 외부침입에 대비하여 각 서버마다 침입차단시스템 및 취약점 분석시스템 등을 이용하여 보안에 만전을 기하고 있습니다.</span>
 										</li>
 									</ul>
@@ -905,55 +960,55 @@
 									<p>“서비스”는 고객님의 개인정보에 대한 접근권한을 최소한의 인원으로 제한하고 있습니다. 그 최소한의 인원에 해당하는 자는 다음과 같습니다.</p>
 									<ul class="sub-paragraph-list">
 										<li class="sub-paragraph-item">
-											<span class="sub-paragraph-number">&nbsp;•&nbsp;</span>
+											<span class="sub-paragraph-number">&nbsp;?&nbsp;</span>
 											<span class="sub-paragraph-statement">이용자를 직접 상대로 하여 마케팅 업무를 수행하는 자</span>
 										</li>
 										<li class="sub-paragraph-item">
-											<span class="sub-paragraph-number">&nbsp;•&nbsp;</span>
+											<span class="sub-paragraph-number">&nbsp;?&nbsp;</span>
 											<span class="sub-paragraph-statement">개인정보관리책임자 및 담당자 등 개인정보관리업무를 수행하는 자</span>
 										</li>
 										<li class="sub-paragraph-item">
-											<span class="sub-paragraph-number">&nbsp;•&nbsp;</span>
+											<span class="sub-paragraph-number">&nbsp;?&nbsp;</span>
 											<span class="sub-paragraph-statement">기타 업무상 개인정보의 취급이 불가피한 자</span>
 										</li>
 										<li class="sub-paragraph-item">
-											<span class="sub-paragraph-number">&nbsp;•&nbsp;</span>
+											<span class="sub-paragraph-number">&nbsp;?&nbsp;</span>
 											<span class="sub-paragraph-statement">”서비스”는 컴퓨터를 이용하여 고객의 개인정보를 처리하는 경우 개인정보에 대한 접근권한을 가진 담당자를 지정하여 식별부호(ID) 및 비밀번호를 부여하고, 해당 비밀번호를 정기적으로 갱신하고 있습니다.</span>
 										</li>
 										<li class="sub-paragraph-item">
-											<span class="sub-paragraph-number">&nbsp;•&nbsp;</span>
+											<span class="sub-paragraph-number">&nbsp;?&nbsp;</span>
 											<span class="sub-paragraph-statement">개인정보를 취급하는 직원을 대상으로 새로운 보안 기술 습득 및 개인정보보호 의무 등에 관해 정기적인 사내 교육 및 외부 위탁교육을 실시하고 있습니다.</span>
 										</li>
 										<li class="sub-paragraph-item">
-											<span class="sub-paragraph-number">&nbsp;•&nbsp;</span>
+											<span class="sub-paragraph-number">&nbsp;?&nbsp;</span>
 											<span class="sub-paragraph-statement">신규직원 채용 시 정보보호서약서 또는 개인정보보호서약서에 서명함으로 직원에 의한 정보유출을 사전에 방지하고 개인정보 취급방침에 대한 이행사항 및 직원의 준수여부를 감사하기 위한 내부절차를 마련하여 지속적으로 시행하고 있습니다.</span>
 										</li>
 										<li class="sub-paragraph-item">
-											<span class="sub-paragraph-number">&nbsp;•&nbsp;</span>
+											<span class="sub-paragraph-number">&nbsp;?&nbsp;</span>
 											<span class="sub-paragraph-statement">직원 퇴직 시 비밀유지서약서에 서명함으로 고객의 개인정보를 취급하였던 자가 직무상 알게 된 개인정보를 훼손ㆍ침해 또는 누설하지 않도록 하고 있습니다.</span>
 										</li>
 										<li class="sub-paragraph-item">
-											<span class="sub-paragraph-number">&nbsp;•&nbsp;</span>
+											<span class="sub-paragraph-number">&nbsp;?&nbsp;</span>
 											<span class="sub-paragraph-statement">개인정보 관련 취급자의 업무 인수인계는 보안이 유지된 상태에서 철저하게 이뤄지고 있으며 입사 및 퇴사 후 개인정보 사고에 대한 책임을 명확히 하고 있습니다.</span>
 										</li>
 										<li class="sub-paragraph-item">
-											<span class="sub-paragraph-number">&nbsp;•&nbsp;</span>
+											<span class="sub-paragraph-number">&nbsp;?&nbsp;</span>
 											<span class="sub-paragraph-statement">서비스이용계약체결 또는 서비스제공을 위하여 고객의 신용카드번호, 은행결제계좌 등 대금결재에 관한 정보를 수집하거나 고객에게 제공하는 경우 당해 고객이 본인임을 확인하기 위하여 필요한 조치를 취하고 있습니다.</span>
 										</li>
 										<li class="sub-paragraph-item">
-											<span class="sub-paragraph-number">&nbsp;•&nbsp;</span>
+											<span class="sub-paragraph-number">&nbsp;?&nbsp;</span>
 											<span class="sub-paragraph-statement">회사는 이용자 개인의 실수나 기본적인 인터넷의 위험성 때문에 일어나는 일들에 대해 책임을 지지 않습니다. 회원 개개인이 본인의 개인정보를 보호하기 위해서 자신의 ID 와 패스워드를 적절하게 관리하고 여기에 대한 책임을 져야 합니다.</span>
 										</li>
 										<li class="sub-paragraph-item">
-											<span class="sub-paragraph-number">&nbsp;•&nbsp;</span>
+											<span class="sub-paragraph-number">&nbsp;?&nbsp;</span>
 											<span class="sub-paragraph-statement">또한, 다른 사람이 추측할 수 있는 쉬운 비밀번호는 사용을 피하시기를 권장하며, 정기적으로 비밀번호를 변경하시는 것이 바람직합니다.</span>
 										</li>
 										<li class="sub-paragraph-item">
-											<span class="sub-paragraph-number">&nbsp;•&nbsp;</span>
+											<span class="sub-paragraph-number">&nbsp;?&nbsp;</span>
 											<span class="sub-paragraph-statement">특히, 공동으로 사용하는 PC에서 저희 홈페이지를 접속하여 로그인 한 상태에서 다른 사이트로 이동하는 경우, “서비스” 이용을 종료하는 경우에는 반드시 로그아웃 처리 후 해당 홈페이지를 종료하시기 바랍니다. 그렇지 않을 경우, 해당 브라우저를 통해 ID, 비밀번호 등 고객님의 정보가 타인에게 쉽게 유출될 위험이 있습니다.</span>
 										</li>
 										<li class="sub-paragraph-item">
-											<span class="sub-paragraph-number">&nbsp;•&nbsp;</span>
+											<span class="sub-paragraph-number">&nbsp;?&nbsp;</span>
 											<span class="sub-paragraph-statement">그 외 내부 관리자의 실수나 기술관리 상의 사고로 인해 개인정보의 상실, 유출, 변조, 훼손이 유발될 경우 “서비스”는 즉각 고객님께 사실을 알리고 적절한 대책과 보상을 강구할 것입니다.</span>
 										</li>
 									</ul>
@@ -965,11 +1020,11 @@
 							<p class="article-statement">회사는 고객의 의견을 매우 소중하게 생각합니다. 고객께서 문의사항이 있을 경우 고객센터 등에 연락을 하여 문의하시면 신속 · 정확한 답변을 드리겠습니다. 고객센터 연락처는 다음과 같습니다.</p>
 							<ol class="paragraphs">
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">전화번호 : 1800-0212</span>
 								</li>
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">사이버상담 : <a href="http://www.sktsmarthome.com" target="_blank" class="term-external">www.sktsmarthome.com</a> 또는 스마트홈 어플리케이션에 접속하신 후 고객센터 메뉴의 1:1 문의에서 작성 후 제출하는 방법을 통해 질문을 하실 수 있습니다.</span>
 								</li>
 							</ol>
@@ -979,23 +1034,23 @@
 							<p class="article-statement">회사는 고객님이 안전하게 서비스를 이용할 수 있도록 개인정보 보호에 최선을 다하고 있습니다. 개인정보를 보호하는데 있어 고객님께 고지한 사항들에 반하는 사고가 발생할 시에 개인정보관리책임자가 모든 책임을 집니다. 고객님의 개인정보를 취급하는 책임자 및 담당자는 다음과 같으며 개인정보 관련 문의사항에 신속하고 성실하게 답변해드리고 있습니다.</p>
 							<ol class="paragraphs">
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">개인정보관리책임자 : 민욱 PL</span>
 								</li>
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">개인정보관리담당자 : 박준석 매니저</span>
 								</li>
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">소속부서 : SK텔레콤 스마트홈 TF</span>
 								</li>
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">전화번호 : 02-6100-5555</span>
 								</li>
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">이메일 : pjs3894@sk.com</span>
 								</li>
 							</ol>
@@ -1006,11 +1061,11 @@
 							<p class="article-statement">회사는 “서비스” 관련, 아동의 개인정보에 대하여 아래의 행위를 하는 경우에는 해당 아동의 법정대리인의 동의를 얻도록 하고 있습니다.</p>
 							<ol class="paragraphs">
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">아동의 “서비스” 가입을 위해 개인정보 수집하거나 “서비스” 가입 시 고지한 범위 또는 서비스이용약관에 명시한 범위를 넘어 이동의 개인정보를 이용하거나 제3자에게 제공하고자 하는 경우</span>
 								</li>
 								<li class="paragraph">
-									<span class="paragraph-number">&nbsp;•&nbsp;</span>
+									<span class="paragraph-number">&nbsp;?&nbsp;</span>
 									<span class="paragraph-statement">아동의 개인정보를 제공받은 자가 개인정보를 제공받은 목적 외의 용도로 이용하거나 제3자에게 제공하는 경우</span>
 								</li>
 							</ol>
@@ -1025,7 +1080,7 @@
 							<h1 class="article-title">고지의 의무</h1>
 							<p class="article-statement">현 개인정보 취급방침 제정일은 2015년 5월 __일이며, 이번 버전을 1.0으로 명시합니다.</p>
 							<p class="article-statement">“서비스”는 신상품이나 이벤트 정보안내 등 고객 지향적인 마케팅을 수행하기 위하여 광고성 정보를 전자우편으로 전송하는 경우에는 광고성 정보 전송에 대한 고객의 사전 동의를 득하고 전자우편의 제목란 및 본문란에 아래와 같이 고객이 광고성 정보임을 쉽게 알아 볼 수 있도록 조치합니다.</p>
-							<p class="article-statement">정부의 정책 또는 보안기술의 변경에 따라 내용의 추가∙삭제 및 수정이 있을 경우에는 개정 최소 10일 전부터 홈페이지의 '공지’란을 통해 고지할 것입니다.</p>
+							<p class="article-statement">정부의 정책 또는 보안기술의 변경에 따라 내용의 추가?삭제 및 수정이 있을 경우에는 개정 최소 10일 전부터 홈페이지의 '공지’란을 통해 고지할 것입니다.</p>
 						</li>
 					</ul>
 				</div>
@@ -1041,12 +1096,12 @@
 		</div>
 		<div class="footer-field">
 			<ul class="infos">
-				<li class="info"><p>주소: 서울특별시 중구 을지로 65 (을지로 2가) <span>|</span> 대포이사/사장: 장동현 <span>|</span> 사업자 등록번호: 104-81-37225</p></li>
-				<li class="info"><p>고객센터: 1800-0161 <span>|</span> 이메일 문의: <a class="mail-to" href="mailto:smarthome@sk.com">smarthome@sk.com</a></p></li>
+				<li class="info"><p>우편번호 : 100-999 서울특별시 중구 을지로65(을지로 2가) SK T-타워 SK텔레콤(주) <span>|</span> 대표이사 사장 : 장동현 <span>|</span> 사업자 등록번호 : 104-81-37225</p></li>
+				<li class="info"><p>고객센터 : 1800-0161 <span>|</span> 이메일 문의 : <a class="mail-to" href="mailto:smarthome@sk.com">smarthome@sk.com</a></p></li>
 			</ul>
 		</div>
 		<div class="copyright-holder">
-			<p class="copyright">Copyright SK Planet. All Rights Reservced.</p>
+			<p class="copyright">COPYRIGHT &copy; SK TELECOM CO., LTD. ALL RIGHTS RESERVED.</p>
 		</div>
 	</footer>
 </div>

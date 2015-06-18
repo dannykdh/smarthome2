@@ -668,26 +668,27 @@ var Showroom = (function($, U) {
 		return card;
 	};
 
-
-
-	function releaseSeizing($observer, leave) {
+	function releaseSeizing($observer, enter, leave) {
 		$observer.off('transitionend').on('transitionend', function() {
 			if (service.isSeized() && leave) {
 				service.cards[leave].$el.trigger('showend');
 			}
 			service.seize(false);
+
+			if (enter === 'security') {
+				service.getGnbHolder().addClass('orange');
+			}
 		});
 	}
 
 	function triggerShowBeginAndEndEvent(enter, leave) {
-
 		/**
 		 * transitionend Event를 처리할 객체를 특정하기 곤란하여
 		 * 안정성을 위해 유력한 후보 모두에서 처리한다.
 		 * showend를 하는 것이므로 중복되도 무관하다.
 		 */
-		releaseSeizing(service.getPrologue(), leave);
-		releaseSeizing(service.getMain(), leave);
+		releaseSeizing(service.getPrologue(), enter, leave);
+		releaseSeizing(service.getMain(), enter, leave);
 
 		service.cards[enter].$el.trigger('showbegin');
 	}
@@ -698,6 +699,9 @@ var Showroom = (function($, U) {
 			return;
 		}
 
+		if (leave === 'security') {
+			service.getGnbHolder().removeClass('orange');
+		}
 		service.setCurrentCard(enter);
 		service.cards[enter].play(textShow);
 		triggerShowBeginAndEndEvent(enter, leave);
@@ -827,6 +831,16 @@ var Showroom = (function($, U) {
 		state.phoneHolderTop = Math.round(Math.max(config.GNB_HOLDER_HEIGHT - state.phoneHolderTopGap, (state.windowHeight - state.phoneHolderOuterHeight - state.phoneHolderPaddingTop + state.phoneHolderPaddingBottom) / 2));
 	}
 
+	function resize() {
+		var cards = service.cards;
+
+		calcAndCacheSizeFactors();
+		cards.intro.resize();
+		cards.status.resize();
+		cards.mode.resize();
+		cards.security.resize();
+	}
+
 	return {
 		init: function() {
 			initService();
@@ -842,14 +856,7 @@ var Showroom = (function($, U) {
 			return this;
 		},
 		resize: function() {
-			var cards = service.cards;
-
-			calcAndCacheSizeFactors();
-			cards.intro.resize();
-			cards.status.resize();
-			cards.mode.resize();
-			cards.security.resize();
-
+			resize();
 			return this;
 		}
 	};

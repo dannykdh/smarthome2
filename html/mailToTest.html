@@ -1,0 +1,55 @@
+<HTML> 
+<HEAD> 
+<TITLE> Jasko Sample Script </TITLE> 
+
+<!---- [1단계] 아래의 소스코드를 <HEAD>와 </HEAD> 사이에 붙여 넣으세요 ----> 
+
+<SCRIPT LANGUAGE="JavaScript"> 
+<!-- 
+function email() 
+{ 
+var add = document.form.To.value 
+var subject = document.form.Subject.value 
+document.form.action="mailto:your_id@domain.com"+add+"?subject="+subject; 
+
+} 
+//--> 
+</SCRIPT> 
+
+<!------------------------- 여기까지 ----------------------------------> 
+
+</head> 
+
+<body> 
+
+<!---- [2단계] 아래의 방법으로 원하는 위치에 복사 해 넣으세요 ------------------> 
+
+<FORM METHOD="post" NAME="form" ACTION="" onSubmit="email();return true" ENCTYPE="text/plain"> 
+<TABLE BORDER=0> 
+<TR> 
+<TD ALIGN="right"><B>받는사람:</B></TD> 
+<TD ALIGN="left"><INPUT TYPE="text" NAME="To" SIZE=30></TD> 
+</TR> 
+<TR> 
+<TD ALIGN="right"><B>제목:</B></TD> 
+<TD ALIGN="left"><INPUT TYPE="text" NAME="Subject" SIZE=30></TD> 
+</TR> 
+<TR> 
+<TD ALIGN="right"><B>회신 주소:</B></TD> 
+<TD ALIGN="left"><INPUT TYPE="text" NAME="Reply-to" SIZE=30></TD> 
+</TR> 
+<TR> 
+<TD VALIGN="top"><B>내용:</B></TD> 
+<TD ALIGN="left"><TEXTAREA COLS=40 ROWS=20 NAME="Message"></TEXTAREA> 
+</TD> 
+</TR> 
+<TR> 
+<TD COLSPAN=2 ALIGN="center"><INPUT TYPE="submit" VALUE="Send it!" ><INPUT TYPE="reset" VALUE="Reset Form"></TD> 
+</TR> 
+</TABLE> 
+</FORM> 
+
+<!------------------------- 여기까지 ----------------------------------> 
+
+</body> 
+</html> 

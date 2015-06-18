@@ -72,14 +72,13 @@ var SmartHomeUI = (function($) {
 
 		$(layer).on('wheel', function() {
 			return false;
+		}).on('click', function(ev) {
+			if (allowBubbleClickEvent(ev)) {
+				return true;
+			}
+			closeDialog();
+			return false;
 		});
-		// .on('click', function(ev) {
-		// 	if (allowBubbleClickEvent(ev)) {
-		// 		return true;
-		// 	}
-		// 	closeDialog();
-		// 	return false;
-		// });
 
 		return layer;
 	}
@@ -279,10 +278,16 @@ var SmartHomeUI = (function($) {
 		$win.on('scroll', function(ev) {
 			var scrollTop = $win.scrollTop();
 
-			if (scrollTop < 200) {
+			/*if (scrollTop < 200) {
 				$body.removeClass('state-1').addClass('state-0');
 			} else if (scrollTop < 400) {
 				$body.removeClass('state-2').addClass('state-1');
+			} else {
+				$body.removeClass('state-0 state-1');
+			}*/
+
+			if (scrollTop < 1) {
+				$body.removeClass('state-1').addClass('state-0');
 			} else {
 				$body.removeClass('state-0 state-1');
 			}
@@ -307,28 +312,20 @@ var SmartHomeUI = (function($) {
 
 		// 엘리먼트 생성
 		var $addTxt = $('<P>' + msg + '</P>');
+		// 생성 엘리먼트 스타일 정의
+		$addTxt
+		.css("height", "17px")
+		.css("margin-top", "10px")
+		.css("line-height", "7px")
+		.css("font-size", "11px")
+		.css("color", "#f00")
+		.css("text-align", "left").addClass('err-Txt');
+		// 유효시간 지나고 이전, 다음 버튼 비활성화.
+		$('.bt-prev').prop("disabled", true);
+		$('.bt-next').prop("disabled", true);
 
 		// 생성된 엘리먼트 삽입 위치
-		var $pNode = $($el.parent().parent());
-		// $addTxt.insertBefore()
-
-        // $el.each(function(index, item) {
-        //     var $parentItems = $(item).parent('fieldset');
-        //     $parentItems.each(function(index, item) {
-        //         // $(btnItem).html(displayOrder);
-        //         // $(btnItem).data('displayOrder', displayOrder++);
-        // 		$addTxt.insertBefore($(btnItem))
-        //     });
-        // });
-
-	    //검색로그
-	    // $('.js_searchList').each(function(index, item) {
-	    //     var $listItems = $(item).children('dl');
-	    //     $listItems.each(function(index, listItem) {
-	    //         //$(listItem).html(displayOrder);
-	    //         $(listItem).data('displayOrder', displayOrder++);
-	    //     });
-	    // });        
+		$el.after($addTxt);		
 	}
 
 	return {

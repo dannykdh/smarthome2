@@ -54,7 +54,9 @@ input[type=checkbox]:checked + label {
 strong {
 	font-weight: bold;
 }
-
+textarea {
+	overflow: auto;
+}
 .edit {
 	box-sizing: border-box;
 	width: 100%;
@@ -63,6 +65,10 @@ strong {
 	border: 1px solid #dbdbdb;
 	color: #333;
 	outline: 0;
+	transition: border-color .2s
+}
+.edit:focus {
+	border-color: #ffa851;
 }
 .text {
 	padding: 10px 12px;
@@ -86,6 +92,9 @@ strong {
 	border-color: #f00;
 	color: #f00;
 	background:url(../img/bg-invalidate.png) no-repeat right 10px;
+}
+.invalidate:focus {
+	border-color: #f00;
 }
 .validate {
 	padding-right: 40px;
@@ -143,6 +152,7 @@ strong {
 }
 .expandable-content {
 	padding: 41px 56px;
+	border-top: 1px solid #eaeaea;
 	background: #fafafa;
 	line-height: 24px;
 	color: #333;
@@ -170,6 +180,9 @@ strong {
 }
 .privacy-policy-page .expandable-handle {
 	display: none;
+}
+.privacy-policy-page .expandable-content {
+	background: #fff;
 }
 
 .store-holder {
@@ -505,19 +518,49 @@ strong {
 	white-space: nowrap;
 	overflow: hidden;
 }
-.withdraw-page > .page-title {
+.page-external {
+	display: block;
+	height:30px;
+	text-indent: 200%;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.page-nav {
+	background: url(../img/bg-page-nav.png) no-repeat;
+}
+.withdraw-page .page-title {
 	background: url(../img/ti-withdraw-page.png) no-repeat;
 }
-.costumer-support-page > .page-title {
+.costumer-support-page .page-title {
 	background: url(../img/ti-costumer-support-page.png) no-repeat;
 }
-.terms-and-conditions-page > .page-title {
+.terms-and-conditions-page .page-title {
+	width: 86px;
 	background: url(../img/ti-terms-and-conditions-page.png) no-repeat;
 }
-.privacy-policy-page > .page-title {
+.terms-and-conditions-page .page-nav {
+	padding-left: 17px;
+	margin-left: 16px;
+	background-position: left center;
+}
+.terms-and-conditions-page .page-external {
+	width: 168px;
+	background: url(../img/bt-privacy-policy.png) no-repeat;
+}
+.privacy-policy-page .page-title {
+	width: 168px;
 	background: url(../img/ti-privacy-policy-page.png) no-repeat;
 }
-.account-page > .page-title {
+.privacy-policy-page .page-nav {
+	padding-right: 17px;
+	margin-right: 16px;
+	background-position: right center;
+}
+.privacy-policy-page .page-external {
+	width: 86px;
+	background: url(../img/bt-terms-and-conditions.png) no-repeat;
+}
+.account-page .page-title {
 	background: url(../img/ti-account-page.png) no-repeat;
 }
 
@@ -992,6 +1035,7 @@ strong {
 	color: #333;
 }
 .dialog .field {
+	position: relative;
 	padding-bottom: 10px;
 }
 .dialog .field-auth-number input[type=text] {
@@ -1004,16 +1048,17 @@ strong {
 	border: 0;
 	margin-left: 10px;
 	background: url(../img/bt-dialog-send-number.png) no-repeat 0 0;
-	text-indent: 200%;
-	white-space: nowrap;
-	overflow: hidden;
+	line-height: 40px;
+	color: #fff;
 }
 .dialog .bt-send-number:hover {
 	background-position: 0 -40px;
 }
 .dialog .remained-time {
 	display: none;
-	margin-top: 7px;
+	position: absolute;
+	right: 0;
+	margin-top: 9px;
 	line-height: 11px;
 	font-size: 11px;
 	color: #767676;
@@ -1077,8 +1122,11 @@ strong {
 	border-bottom: 1px solid #efefef;
 	border-left: 1px solid #efefef;
 }
+.dialog-find-id-form .tabs + .dialog-content-panel {
+	width: 100%;
+}
 .dialog-find-id-form .description {
-	margin: 33px 0 29px;
+	margin: 33px 0 31px;
 }
 
 .dialog-find-id-success {
@@ -1088,7 +1136,7 @@ strong {
 	background-image: url(../img/ti-dialog-find-id-password.png);
 }
 .dialog-find-id-success .result {
-	padding: 79px 0 35px;
+	padding: 79px 0 34px;
 	color: #333;
 }
 .dialog-find-id-success .ids {
@@ -1100,7 +1148,7 @@ strong {
 	line-height: 12px;
 	font-size: 12px;
 	color: #888;
-	margin-top: 28px;
+	margin-top: 18px;
 }
 .dialog-find-id-success .ids li:first-child {
 	margin-top: 0;
@@ -1285,7 +1333,7 @@ strong {
 	overflow: hidden;
 }
 .dialog-log-in .dialog-content-panel {
-	width: 230px;
+	width: 236px;
 }
 .dialog-log-in .dialog-control-panel {
 	padding: 10px 0 29px;
@@ -1324,14 +1372,105 @@ strong {
 	background-image: url(../img/bt-dialog-log-in-wide.png);
 }
 
+.dialog-alliance {
+	width: 500px;
+}
+.dialog-alliance .dialog-title{
+	background-image: url(../img/ti-dialog-alliance.png);
+}
+.dialog-alliance .dialog-content-panel {
+	width: 400px;
+}
+.dialog-alliance .description {
+	height: 73px;
+	padding-top: 33px;
+}
+.dialog-alliance .field {
+	padding: 10px 10px 10px 0;
+	border-bottom: 1px solid #f0f0f0;
+}
+.dialog-alliance .field:first-child {
+	border-top: 1px solid #e1e1e1;
+}
+.dialog-alliance label {
+	width: 118px;
+	height: 40px;
+	line-height: 40px;
+	color: #333;
+	text-align: left;
+}
+.dialog-alliance .edit {
+	width: 272px;
+}
+.dialog-alliance .field-text {
+	height: auto;
+}
+.dialog-alliance textarea {
+	height: 120px;
+}
+.dialog-alliance .field-conditions {
+	height: auto;
+	padding: 31px 0 0;
+	text-align: left;
+}
+.dialog-alliance .field-agree {
+	padding: 28px 0 10px;
+	border-top: 0;
+	text-align: left;
+}
+.dialog-alliance .dialog-control-panel {
+	padding-top: 50px;
+}
+
+.dialog-alliance-success {
+	width: 380px;
+}
+.dialog-alliance-success .dialog-title{
+	background-image: url(../img/ti-dialog-alliance-success.png);
+}
+.dialog-alliance-success .dialog-control-panel {
+	padding-bottom: 37px;
+}
+.dialog-alliance-success .result {
+	height: 62px;
+	padding-top: 138px;
+	margin-top: 40px;
+	background: url(../img/bg-dialog-alliance-success.png) no-repeat center 0;
+	font-size: 12px;
+	line-height: 25px;
+	color: #999;
+}
+.dialog-alliance-success .result strong {
+	color: #333;
+	font-size: 14px;
+}
+
+.dialog-alliance-failure {
+	width: 380px;
+}
+.dialog-alliance-failure .dialog-title{
+	background-image: url(../img/ti-dialog-alliance-failure.png);
+}
+.dialog-alliance-failure .dialog-control-panel {
+	padding: 60px 0 37px;
+}
+.dialog-alliance-failure .result {
+	padding-top: 139px;
+	margin-top: 40px;
+	background: url(../img/bg-dialog-alliance-failure.png) no-repeat center 0;
+	font-size: 14px;
+	font-weight: bold;
+	color: #333;
+}
+
 .dialog-inquiry {
-	width: 600px;
+	width: 500px;
 }
 .dialog-inquiry .dialog-title{
 	background-image: url(../img/ti-dialog-inquiry.png);
 }
 .dialog-inquiry .dialog-content-panel {
-	width: 500px;
+	width: 400px;
 }
 .dialog-inquiry .description {
 	height: 73px;
@@ -1339,20 +1478,20 @@ strong {
 }
 .dialog-inquiry .field {
 	padding: 10px 10px 10px 0;
+	border-bottom: 1px solid #f0f0f0;
+}
+.dialog-inquiry .field:first-child {
 	border-top: 1px solid #e1e1e1;
 }
-.dialog-inquiry .field:last-child {
-	border-bottom: 1px solid #e1e1e1;
-}
 .dialog-inquiry label {
-	width: 168px;
+	width: 118px;
 	height: 40px;
 	line-height: 40px;
 	color: #333;
 	text-align: left;
 }
 .dialog-inquiry .edit {
-	width: 322px;
+	width: 272px;
 }
 .dialog-inquiry .field-text {
 	height: auto;
@@ -1372,6 +1511,47 @@ strong {
 }
 .dialog-inquiry .dialog-control-panel {
 	padding-top: 50px;
+}
+
+.dialog-inquiry-success {
+	width: 380px;
+}
+.dialog-inquiry-success .dialog-title{
+	background-image: url(../img/ti-dialog-inquiry-success.png);
+}
+.dialog-inquiry-success .dialog-control-panel {
+	padding-bottom: 37px;
+}
+.dialog-inquiry-success .result {
+	height: 62px;
+	padding-top: 138px;
+	margin-top: 40px;
+	background: url(../img/bg-dialog-inquiry-success.png) no-repeat center 0;
+	font-size: 12px;
+	line-height: 25px;
+	color: #999;
+}
+.dialog-inquiry-success .result strong {
+	color: #333;
+	font-size: 14px;
+}
+
+.dialog-inquiry-failure {
+	width: 380px;
+}
+.dialog-inquiry-failure .dialog-title{
+	background-image: url(../img/ti-dialog-inquiry-failure.png);
+}
+.dialog-inquiry-failure .dialog-control-panel {
+	padding: 60px 0 37px;
+}
+.dialog-inquiry-failure .result {
+	padding-top: 139px;
+	margin-top: 40px;
+	background: url(../img/bg-dialog-inquiry-failure.png) no-repeat center 0;
+	font-size: 14px;
+	font-weight: bold;
+	color: #333;
 }
 
 .dialog-change-password {
