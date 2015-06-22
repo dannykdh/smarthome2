@@ -306,12 +306,16 @@ var SmartHomeUI = (function($) {
 		}
 	}
 
-	function validate_txt(valid, $el, msg) {
-		// $el.parent().find('.err-msg').text(msg || '');
-		$el.parent().find('.err-msg').html(msg || '');
-
+	function validate_txt(validate, $el, msg) {
 		// 엘리먼트 생성
-		var $addTxt = $('<P>' + msg + '</P>');
+		var $addTxt = $('.err_txt');
+		var $leng = $addTxt.length;
+
+		if ($leng > 0) {
+			removeAddTxt($addTxt);
+		} else {
+			$addTxt = $('<P>' + msg + '</P>');			
+		}
 		// 생성 엘리먼트 스타일 정의
 		$addTxt
 		.css("height", "17px")
@@ -321,8 +325,8 @@ var SmartHomeUI = (function($) {
 		.css("color", "#f00")
 		.css("text-align", "left").addClass('err-Txt');
 		// 유효시간 지나고 이전, 다음 버튼 비활성화.
-		$('.bt-prev').prop("disabled", true);
-		$('.bt-next').prop("disabled", true);
+			$('.bt-prev').prop("disabled", validate);
+			$('.bt-next').prop("disabled", validate);
 
 		// 생성된 엘리먼트 삽입 위치
 		$el.after($addTxt);		
@@ -403,8 +407,8 @@ var SmartHomeUI = (function($) {
 			repositionDialog();
 			return this;
 		},
-		invalidate_txt: function(el, msg) {
-			validate_txt(false, $(el), msg);
+		invalidate_txt: function(validate, el, msg) {
+			validate_txt(validate, $(el), msg);
 			repositionDialog();
 			return this;
 		},

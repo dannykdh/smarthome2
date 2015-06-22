@@ -10,6 +10,62 @@ jQuery(function($) {
 	$('.bt-log-out').on('click', function() {
 		logOut();
 	});
+	
+	$('.bt-change-password').on('click', function() {
+		changePassword();
+	});
+
+	$('.bt-withdraw').on('click', function() {
+		withDraw();
+	});
+
+	function withDraw() {
+		U.dialog({
+			templateId: 'dialog-template-withdraw-confirm',
+			onOpen: function(context) {
+				$(context).find('.bt-confirm').on('click', function() {
+					// 회원 탈퇴 버튼 클릭 시 탈퇴 트랜잭션을 실행한다.
+					var url='v1/member/drop', type='POST', dataType = 'json';
+					
+					startWithDrawTransaction(url, type, dataType, function(response){
+						parseWithDrawTransaction(response, function(rt, response) {
+							if (rt) {
+								dropSuccess();
+							} else {
+
+							}
+						});
+					});
+				});
+			}
+		});
+		return false;
+	}
+
+	function dropSuccess() {
+		U.dialog({
+			templateId: 'dialog-template-withdraw-success',
+			onOpen: function(context) {
+				$(context).find('.bt-confirm').on('click', function() {
+					U.dialog();
+				});
+			}
+		})
+	}
+
+	function changePassword() {
+		U.dialog({
+			templateId: 'dialog-template-change-password',
+			onOpen: function(context) {
+				$(context).find('.bt-save').on('click', function() {
+					U.dialog();
+					return false;
+				});
+			}
+		});
+
+		return false;
+	}
 
 	function signUp() { 
 
@@ -128,8 +184,10 @@ jQuery(function($) {
 
 					//인증번호 전송
 					$context.find('.bt-send-number').on('click', function() {
-						$addTxt = $('.err-Txt');
-						$addTxt.remove();
+
+						var $addTxt = $('.err-Txt');
+						removeAddTxt($addTxt);
+
 						if($('#hphone').val() == "" || $('#hphone').val().length < 10) {
 							U.invalidate($('#hphone'), '올바른 휴대폰 번호를 입력 하세요.');
 							$('#hphone').focus();																				
@@ -148,7 +206,7 @@ jQuery(function($) {
 						};
 
 						startAuthRequestTransaction(url, params, type, dataType, function(response){
-							parseAuthRequestTransaction(response, $context);
+							parseAuthRequestTransaction(response, $context, '');
 						});
 					});
 
@@ -226,7 +284,7 @@ jQuery(function($) {
 						// 	U.invalidate($('#email'), '스마트홈 계정 (이메일)을 형식에 맞게 입력하세요.'); 								
 						// 	return;			
 						} else {
-							U.invalidate($('#email'));	
+							U.invalidate($('#email'));
 						}
 
 						if(upass == "") {
@@ -280,12 +338,17 @@ jQuery(function($) {
 								// certNo: "111111"							
 							};
 
+							var $addTxt = $('.err-Txt');
+							removeAddTxt($addTxt);
+
 							startJoinTransaction(url, params, type, dataType, function(response){
-								parseJoinTransaction(response, function(rt) {
+								parseJoinTransaction(response, function(rt, response) {
 									if (rt) {
 										goFinish();
 									} else {
-
+										var $elPassre = $('#passre');
+										joinFail(false, $elPassre, response);
+										console.log('실패 : ' + response);
 									}
 								});
 							});				
@@ -395,17 +458,27 @@ jQuery(function($) {
 						if (event.keyCode == 13) {
 							findIDCheckForm($context);
 						} else {
-							$('#js_bt-send-number').prop("disabled", false);	
+							$('.bt-send-number').prop("disabled", false);	
 						}
 					});
 
-					$context.find('#js_bt-send-number').on('click', function() {
+					$context.find('.bt-send-number').on('click', function() {
 						findIDCheckCellPhone($context);
 					});
 
 					$('button').click( function() {
 						if (this.id == 'js_bt-confirm') {
-							findIDCheckForm($context);
+							findIDCheckForm($context, function(response, id){
+								parseAuthNumTransaction(response, id, function(rt1){
+									parseFindIDTransaction(rt1, function(rt2){
+										if (rt2.resultCd == 1) {
+											findIdOrPasswordResult(rt2);
+										} else {
+											findIdOrPasswordResultFail();
+										}
+									});
+								});
+							});
 						} 
 					});
 				}
@@ -416,22 +489,65 @@ jQuery(function($) {
 				templateId: 'dialog-template-find-password-form',
 				onOpen: function(context) {
 					var $context = $(context);
+					var $elID = $context.find('form').find('input[type=text]').eq(0);
+					var $elAuth = $context.find('form').find('input[type=text]').eq(2);
 
 					$context.find('.bt-find-id').on('click', function() {
 						findIdOrPassword('id');
 					});
 
-					$context.find('form').last().on('click', function() {
-						U.dialog({
-							templateId: 'dialog-template-find-password-success',
-							onOpen: function(context) {
-								var $context = $(context);
+					$elID.focus();
+					$('.bt-send-number').prop("disabled", true);
+					$elAuth.prop("disabled", true);
 
-								$context.find('.bt-confirm').on('click', function() {
-									U.dialog();
+					$context.find('#js_cellPhone').keydown( function() {
+						if (event.keyCode == 13) {
+							goAuthNumberRequest();
+						} else {
+							$('.bt-send-number').prop("disabled", false);	
+						}
+					});
+
+					// 패스워드 분실 인증 번호 요청시 정보가 일치할 경우만 인증번호가 전송 될 경우 사용
+					$context.find('.bt-send-number').on('click', function() {
+						goAuthNumberRequest();
+					});
+
+					function goAuthNumberRequest() {
+						var $addTxt = $('.err-Txt');
+						removeAddTxt($addTxt);
+
+						findPWDCheckCellPhone($context, function(rt1, $rtEl1, type){
+							parseAuthRequestTransaction(rt1, $rtEl1, 'pass', function(rt2, $rtEl2, type){
+								if (rt2.resultCd == 1) {
+									timeLimitCheck(rt2, $rtEl2, type);
+								} else {								
+									passwordFindFail(true, $elAuth, rt2);
+								}
+							})
+						});
+					}
+
+
+					// 패스워드 분실 인증 번호 요청시 정보가 일치하지 않아도 인증번호가 전송 될 경우 사용
+					// $context.find('.bt-send-number').on('click', function() {
+					// 	findPWDCheckCellPhone($context);
+					// });
+
+					$('button').click( function() {
+						if (this.className == 'bt-confirm') {
+							findPWDCheckForm($context, function(response, id){
+								parseAuthNumTransaction(response, id, function(rt1){
+									parseFindIDTransaction(rt1, function(rt2){
+										if (rt2.resultCd == 1) {
+											findIdOrPasswordResult(rt2);
+										} else {
+											findIdOrPasswordResultFail();
+										}
+									});
 								});
-							}
-						})
+							});
+						} 
 					});
 				}
 			});
@@ -450,13 +566,14 @@ jQuery(function($) {
 					var $context = $(context);
 
 					// 서버로부터 가져온 email 목록을 추가합니다.
-					var results = [
-						'aaaa@bbbbb.com',
-						'cccc@ddddd.com',
-						'eeee@fffff.com',
-						'gggg@hhhhh.com',
-						'iiii@jjjjj.com'
-					];
+					var results = [];
+					var responseList = response.resultList;
+
+					if (responseList && responseList.length > 0) {
+						for(var i=0; i<responseList.length; i++) {
+							results.push(responseList[i].loginId);
+						}
+					}
 
 					results = $.map(results, function(v) {
 						return '<li>' + v + '</li>';
@@ -464,6 +581,24 @@ jQuery(function($) {
 
 					$context.find('.ids').html(results.join(''));
 					//-- END
+
+					$context.find('.bt-find-password').on('click', function() {
+						findIdOrPassword('password');
+					});
+
+					$context.find('.bt-log-in').on('click', login);
+				}
+			});
+		// });
+	}
+
+	function findIdOrPasswordResultFail(response) {
+		// 아이디 검색 결과에 쓰일 부분
+		// $context.find('form').last().on('submit', function() {
+			U.dialog({
+				templateId: 'dialog-template-find-id-failure',
+				onOpen: function(context) {
+					var $context = $(context);
 
 					$context.find('.bt-find-password').on('click', function() {
 						findIdOrPassword('password');

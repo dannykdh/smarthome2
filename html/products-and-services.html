@@ -9,9 +9,9 @@
 <link rel="stylesheet" type="text/css" href="../css/smarthomeui.css">
 <script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="../js/smarthomeui.js"></script>
+<script type="text/javascript" src="../js/popUpProcess.js"></script>
 <script type="text/javascript" src="../js/login.js"></script>
 <script type="text/javascript" src="../js/transaction.js"></script>
-<script type="text/javascript" src="../js/popUpProcess.js"></script>
 <script id="dialog-template-video" type="text/x-dialog-template">
 	<div class="dialog dialog-video">
 		<button class="bt-dialog-close" type="button">Close</button>
@@ -123,11 +123,11 @@
 					<legend>인증번호 요청</legend>
 					<div class="dialog-content-panel">
 						<div class="field">
-							<input type="text" class="edit" placeholder="아이디(이메일)">
+							<input type="text" id="js_userId" class="edit" placeholder="아이디(이메일)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field field-auth-number">
-							<input type="text" class="edit" placeholder="휴대폰 번호(-제외)">
+							<input type="text" id="js_cellPhone" class="edit" placeholder="휴대폰 번호(-제외)">
 							<input type="button" class="bt-send-number" value="인증번호 전송">
 							<p class="err-msg"></p>
 						</div>
@@ -137,13 +137,13 @@
 					<legend>인증번호 전송</legend>
 					<div class="dialog-content-panel">
 						<div class="field">
-							<input type="text" class="edit" placeholder="인증번호 6자리">
+							<input type="text" class="edit" id="js_authNumber" placeholder="인증번호 6자리">
 							<p class="err-msg"></p>
 							<p class="remained-time">남은 시간 <strong>00:00</strong></p>
 						</div>
 					</div>
 					<div class="dialog-control-panel">
-						<button type="submit" class="bt-confirm">확인</button>
+						<button type="button" class="bt-confirm">확인</button>
 					</div>
 				</fieldset>
 			</form>
@@ -212,7 +212,7 @@
 						</li>
 					</ul>
 					<div class="dialog-control-panel">
-						<button type="submit" class="bt-next">다음</button>
+						<button type="button" class="bt-next">다음</button>
 					</div>
 				</fieldset>
 			</form>
@@ -238,7 +238,7 @@
 					<div class="dialog-content-panel">
 						<div class="field field-auth-number">
 							<input type="text" class="edit" placeholder="휴대폰 번호(-제외)">
-							<input type="submit" class="bt-send-number" value="인증번호 전송">
+							<input type="button" class="bt-send-number" value="인증번호 전송">
 							<p class="err-msg"></p>
 						</div>
 					</div>
@@ -256,7 +256,7 @@
 					</div>
 					<div class="dialog-control-panel">
 						<button type="button" class="bt-prev">이전</button>
-						<button type="submit" class="bt-next">다음</button>
+						<button type="button" class="bt-next">다음</button>
 					</div>
 				</fieldset>
 			</form>
@@ -297,7 +297,7 @@
 					</div>
 					<div class="dialog-control-panel">
 						<button type="button" class="bt-prev">이전</button>
-						<button type="submit" class="bt-next">다음</button>
+						<button type="button" class="bt-next">다음</button>
 					</div>
 				</fieldset>
 			</form>
@@ -397,7 +397,7 @@
 					</div>
 				</fieldset>
 				<div class="dialog-control-panel">
-					<button type="submit" class="bt-confirm">확인</button>
+					<button type="button" class="bt-confirm">확인</button>
 				</div>
 			</form>
 		</div>
@@ -435,7 +435,7 @@
 				</fieldset>
 				<div class="dialog-control-panel">
 					<button type="button" class="bt-cancel">취소</button>
-					<button type="submit" class="bt-save">저장</button>
+					<button type="button" class="bt-save">저장</button>
 				</div>
 			</form>
 		</div>
