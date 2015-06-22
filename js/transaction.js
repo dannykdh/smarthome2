@@ -100,7 +100,7 @@ function parseAuthNumTransaction(response, kind, callback) {
 			startFindIDTransaction (url, params, type, dataType, function(response){
 				callback(response);
 			});
-		} else if (kind == 'findPwd') { // 비밀번호 찾기
+		} else if (kind == 'findPWD') { // 비밀번호 찾기
 			startFindPWDTransaction (url, params, type, dataType, function(response){
 				callback(response);
 			});

@@ -472,7 +472,7 @@ jQuery(function($) {
 								parseAuthNumTransaction(response, id, function(rt1){
 									parseFindIDTransaction(rt1, function(rt2){
 										if (rt2.resultCd == 1) {
-											findIdOrPasswordResult(rt2);
+											findIdOrPasswordResult(rt2, 'id');
 										} else {
 											findIdOrPasswordResultFail();
 										}
@@ -540,7 +540,7 @@ jQuery(function($) {
 								parseAuthNumTransaction(response, id, function(rt1){
 									parseFindIDTransaction(rt1, function(rt2){
 										if (rt2.resultCd == 1) {
-											findIdOrPasswordResult(rt2);
+											findIdOrPasswordResult(rt2, 'password', $elID.val());
 										} else {
 											findIdOrPasswordResultFail();
 										}
@@ -557,9 +557,12 @@ jQuery(function($) {
 		}
 	}
 
-	function findIdOrPasswordResult(response) {
+	function findIdOrPasswordResult(response, target, $elID) {
 		// 아이디 검색 결과에 쓰일 부분
 		// $context.find('form').last().on('submit', function() {
+
+		switch (target) {
+		case 'id':
 			U.dialog({
 				templateId: 'dialog-template-find-id-success',
 				onOpen: function(context) {
@@ -589,6 +592,23 @@ jQuery(function($) {
 					$context.find('.bt-log-in').on('click', login);
 				}
 			});
+			break;
+		case 'password':
+			U.dialog({
+				templateId: 'dialog-template-find-password-success',
+				onOpen: function(context) {
+					var $context = $(context);
+					var resultMsg = '임시 비밀번호를 아래의 메일 주소로 발송하였습니다. <br>	<strong>'+$elID+'</strong>';
+
+					$context.find('.result').html(resultMsg);
+
+					$context.find('.bt-confirm').on('click', U.closeDialog);
+				}
+			});
+			break;
+		default:
+			// NO DEFAULT
+		}
 		// });
 	}
 

@@ -302,7 +302,7 @@ function findPWDCheckForm($context, callback) {
 	var $js_userId = $('#js_userId');
 	var $js_cellPhone = $('#js_cellPhone');
 	var $js_authNumber = $('#js_authNumber');
-	var params = {}, url='v1/member/userCertification', type='GET', dataType = 'json';
+	var params = {}, url='v1/member/password/mail', type='GET', dataType = 'json';
 
 	if ($js_userId.val().length == 0) {
 		U.invalidate($js_userId, '아이디(이메일)을 입력하세요.'); 
@@ -330,7 +330,7 @@ function findPWDCheckForm($context, callback) {
 
 	params = {	
 		loginId: $js_userId.val(),					
-		mobileNo: $js_cellPhone.val(),
+		userMobileNo: $js_cellPhone.val(),
 		certNo: $js_authNumber.val()
 	};
 
@@ -376,7 +376,7 @@ function timeLimitCheck(response, $context, type) {
 	$elAuth.prop("disabled", false);
 	$elAuth.focus();
 
-	var timeLeft = 3;
+	var timeLeft = 120;
 
 	var num = function(str) {
 		if (str < 0) {
