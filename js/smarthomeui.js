@@ -295,7 +295,7 @@ var SmartHomeUI = (function($) {
 	}
 
 	function validate(valid, $el, msg) {
-		$el.parent().find('.err-msg').text(msg || '');
+		$el.parent().find('.err-msg').text(msg || '');		
 
 		if (valid) {
 			$el.removeClass('invalidate').addClass('validate');
@@ -307,15 +307,16 @@ var SmartHomeUI = (function($) {
 	}
 
 	function validate_txt(validate, $el, msg) {
+		U.invalidate($el);
 		// 엘리먼트 생성
-		var $addTxt = $('.err_txt');
-		var $leng = $addTxt.length;
+		var $errEl = $('.err-Txt');
+		var $leng = $errEl.length;
 
 		if ($leng > 0) {
-			removeAddTxt($addTxt);
-		} else {
-			$addTxt = $('<P>' + msg + '</P>');			
-		}
+			removeAddTxt($errEl);
+		} 
+		var $addTxt = $('<P>' + msg + '</P>');
+
 		// 생성 엘리먼트 스타일 정의
 		$addTxt
 		.css("height", "17px")

@@ -250,6 +250,13 @@ function findPWDCheckCellPhone($context, callback) {
 
 // 아이디 찾기 유효성 검사
 function findIDCheckForm($context, callback) {
+	var $addTxt = $('.err-Txt');
+	var $leng = $addTxt.length;
+
+	if ($leng > 0) {
+		removeAddTxt($addTxt);
+	}
+
 	var $js_cellPhone = $('#js_cellPhone');
 	var $js_authNumber = $('#js_authNumber');
 	var params = {}, url='v1/member/userCertification', type='GET', dataType = 'json';
@@ -286,6 +293,12 @@ function findIDCheckForm($context, callback) {
 
 // 비밀번호 찾기 유효성 검사
 function findPWDCheckForm($context, callback) {
+	var $addTxt = $('.err-Txt');
+	var $leng = $addTxt.length;
+
+	if ($leng > 0) {
+		removeAddTxt($addTxt);
+	}
 	var $js_userId = $('#js_userId');
 	var $js_cellPhone = $('#js_cellPhone');
 	var $js_authNumber = $('#js_authNumber');
@@ -338,8 +351,9 @@ function inputBoxReset($context, type) {
 	var $js_authNumber = $('#js_authNumber');
 	var $elPhone = $context.find('form').find('input[type=text]').eq(0);
 	var $elAuth = $context.find('form').find('input[type=text]').eq(num);
+	var $btnAuth = $context.find('#js_bt-send-number').val() ? $context.find('#js_bt-send-number') : $context.find('.bt-send-number');
 	
-	$('#js_bt-send-number').prop("disabled", false);	
+	$btnAuth.prop("disabled", false);	
 	$elAuth.prop("disabled", true);
 
 	// $elPhone.val('');
