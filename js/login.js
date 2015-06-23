@@ -13,9 +13,17 @@ function isEmailIDCheck ($id) {
 
 function isPasswordCheck($pwd) {
 	var regType1 = /^[A-Za-z0-9+]{8,30}$/;
+	var chk_num = $pwd.val().search(/[0-9]/g); 
+    var chk_eng = $pwd.val().search(/[a-z]/ig);
+
 	if (!regType1.test($pwd.val())) { 
 		return false;
 	}
+
+    if(chk_num < 0 || chk_eng < 0) { 
+        return false;
+    }
+
 	return true;
 }
 
@@ -68,7 +76,7 @@ function changPasswordCheckForm($context) {
 	};
 
 	startChangPasswordTransaction(url, params, type, dataType, function(response){
-		parseChangePasswordTransaction(response);
+		parseChangePasswordTransaction(response, $newPass);
 	});
 }
 
@@ -474,6 +482,11 @@ function timeLimitCheck(response, $context, type) {
 		}
 	}, 1000);
 	//-- 남은 시간 표시 예제 종료
+}
+
+// 패스워드 변경 실패.
+function changePasswordFail(validate, $el, response) {
+	U.invalidate_txt(validate, $el, response.resultMsg);
 }
 
 // 회원가입 실패.

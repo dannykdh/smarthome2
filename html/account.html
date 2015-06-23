@@ -13,15 +13,22 @@
 <script type="text/javascript" src="../js/transaction.js"></script>
 <script type="text/javascript" src="../js/popUpProcess.js"></script>
 <script>
-	var params = {}, url='v1/member/info', type='GET', dataType = 'json';
-	startMyInfoTransction(url, type, dataType, function(response){
-		parseMyInfoTransaction(response);		
-	});	
+	$('document').ready(function(){
+		if (isLoginCheck()) {
+			var params = {}, url='v1/member/info', type='GET', dataType = 'json';
+			startMyInfoTransction(url, type, dataType, function(response){
+				parseMyInfoTransaction(response);		
+			});	
 
-	var params = {}, url='v1/payment/pay', type='GET', dataType = 'json';
-	startUseCouponTransction(url, type, dataType, function(response){
-		parseUseCouponTransaction(response);		
-	});	
+			var params = {}, url='v1/payment/pay', type='GET', dataType = 'json';
+			startUseCouponTransction(url, type, dataType, function(response){
+				parseUseCouponTransaction(response);		
+			});	
+		} else {
+			$('body').removeClass('has-coupon')
+		}
+		
+	});
 </script>
 <script id="dialog-template-video" type="text/x-dialog-template">
 	<div class="dialog dialog-video">
@@ -621,7 +628,7 @@
 								<p class="coupon-empty">사용 가능한 이용권/쿠폰이 없습니다.</p>
 							</div>
 							<ul class="coupons h-bar">
-								<li class="coupon h-item">
+								<!-- <li class="coupon h-item">
 									<div class="coupon-holder">
 										<p class="coupon-title">가족 이용권</p>
 										<p class="coupon-payment">
@@ -680,17 +687,17 @@
 									<div class="coupon-holder is-placeholder">
 
 									</div>
-								</li>
+								</li> -->
 							</ul>
 						</div>
 					</li>
 					<li class="table-item table-item-address h-bar">
 						<span class="table-label h-item">주소</span>
-						<span class="table-data h-item" id="js_mem_address">강남구 역삼동 111 112-1</span>
+						<span class="table-data h-item" id="js_mem_address"></span>
 					</li>
 					<li class="table-item table-item-phone h-bar">
 						<span class="table-label h-item">이동전화</span>
-						<span class="table-data h-item" id="js_mem_hphone">010-1234-5678</span>
+						<span class="table-data h-item" id="js_mem_hphone"></span>
 					</li>
 					<li class="table-item table-item-password h-bar">
 						<span class="table-label h-item">비밀번호</span>

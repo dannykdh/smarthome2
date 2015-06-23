@@ -250,16 +250,16 @@ function startChangPasswordTransaction(url, params, type, dataType, callback) {
     });
 }
 
-function parseChangePasswordTransaction(response) {
+function parseChangePasswordTransaction(response, $el) {
 	if (response.resultCd && response.resultMsg) {
 		if (response.resultCd == '1' && response.resultMsg == '성공') {
 			console.log('parseChangePasswordTransaction : ' + response.resultMsg);
-		} else {
-			// TODO : 계정관리 통신 오류 시 처리할 예외 상황
+			U.dialog();
+		} else {			
+			changePasswordFail(false, $el, response);
 		}
 	} else {
-		// TODO : 계정관리 통신 오류 시 처리할 예외 상황
-
+		changePasswordFail(false, $el, response);
 	}
 }
 
@@ -285,15 +285,97 @@ function startUseCouponTransction(url, type, dataType, callback) {
 
 function parseUseCouponTransaction(response) {
 	if (response.resultCd && response.resultMsg) {
+		var rsUseProdList = response.useProdList;	// 사용중인 이용권 리스트
+		var rsRegCpnList = response.regCpnList;		// 등록한 쿠폰 리스트
+		var rsUseCpnList = response.regCpnList;		// 등록한 쿠폰 리스트
+
 		if (response.resultCd == '1' && response.resultMsg == '성공') {
 			console.log('parseUseCouponTransaction : ' + response.resultMsg);
+			if (rsUseProdList && rsUseProdList.length > 0) {
+				//for(var i=0; i<rsUseProdList.length; i++) {
+					setCouponList(rsUseProdList, 'UP');
+				//}
+			}
+
+			if (rsRegCpnList && rsRegCpnList.length > 0) {
+				//for(var i=0; i<rsRegCpnList.length; i++) {
+					setCouponList(rsRegCpnList, 'RC');
+				//}
+			}
+
+			if (rsUseCpnList && rsUseCpnList.length > 0) {
+				//for(var i=0; i<rsUseCpnList.length; i++) {
+					setCouponList(rsUseCpnList, 'UC');
+				//}
+			}
+
+			if (!rsUseProdList && !rsRegCpnList && !rsRegCpnList || rsUseProdList.length == 0 && rsRegCpnList.length == 0 && rsRegCpnList.length == 0) {
+				setEmptyCouponList();
+			}
 		} else {
-			// TODO : 계정관리 통신 오류 시 처리할 예외 상황
+			// TODO : 계정관리 통신 오류 시 처리할 예외 상황에 대한 시나리오가 없어 '사용가능한 이용권/쿠폰이 없습니다'로 처리
+			setEmptyCouponList();
 		}
 	} else {
-		// TODO : 계정관리 통신 오류 시 처리할 예외 상황
-
+		// TODO : 계정관리 통신 오류 시 처리할 예외 상황에 대한 시나리오가 없어 '사용가능한 이용권/쿠폰이 없습니다'로 처리
+		setEmptyCouponList();
 	}
+}
+
+function setEmptyCouponList() {	
+	var output = '';
+	var $emptyCouponContainer = $('.coupons-holder');
+
+	output += '<div class="no-coupon"><p class="coupon-empty">사용 가능한 이용권/쿠폰이 없습니다.</p></div>';
+    $couponContainer.html(output);
+}
+
+function setCouponList(dataList, kind) {	
+	var output = '';
+	var $couponContainer = $('.coupons.h-bar');
+	// $.each(dataList, function() {
+	for (var i=0; i<dataList.length; i++) {
+		if (kind == 'UP') { // 사용중인 이용권
+			output += '<li class="coupon h-item">';
+			output += '	<div class="coupon-holder">';
+			output += '		<p class="coupon-title">'+dataList[i].prodNm+'</p>';
+			output += '		<p class="coupon-payment">'+dataList[i].autopayStatCd == '001' ? '자동 결제' : '자동 결제 취소'+'<span>|</span>'+ dataList[i].payWayCd+'(2,000원/월)<br>'+ dataList[i].userCnt+'</p>';
+			output += '		<p class="coupon-status">';
+			output += '			<span class="coupon-usable">사용중</span>';
+			output += '			<span class="coupon-duration">결제예정일 : 2015.03.15</span>';
+			output += '		</p>';
+			output += '	</div>';
+			output += '</li>';
+		} else if (kind == 'RC') { // 등록한 쿠폰
+			output += '<li class="coupon h-item">';
+			output += '	<div class="coupon-holder has-coupon-ribbon">';
+			output += '		<p class="coupon-title">'+dataList[i].cpnNm+'</p>';
+			output += '		<p class="coupon-payment">'+dataList[i].userCnt+'</p>';
+			output += '		<p class="coupon-status">';
+			output += '			<span class="coupon-usable">'+dataList[i].cpnUseYn+'</span>';
+			output += '			<span class="coupon-duration">사용 유효기간 : '+dataList[i].regValidEndDay+'까지</span>';
+			output += '		</p>';
+			output += '	</div>';
+			output += '</li>';
+		} else {				// 사용중인 쿠폰
+			output += '<li class="coupon h-item">';
+			output += '	<div class="coupon-holder has-coupon-ribbon">';
+			output += '		<p class="coupon-title">'+dataList[i].cpnNm+'</p>';
+			output += '		<p class="coupon-payment">'+dataList[i].userCnt+'</p>';
+			output += '		<p class="coupon-status">';
+			output += '			<span class="coupon-usable">'+dataList[i].cpnUseYn+'</span>';
+			output += '			<span class="coupon-duration">'+dataList[i].regValidStartDay +'~'+ dataList[i].regValidEndDay+'</span>';
+			output += '		</p>';
+			output += '	</div>';
+			output += '</li>';
+		}
+    };
+	// $couponContainer.html(output);
+	if ($couponContainer.children().length > 0) {
+    	$couponContainer.children().last().after($(output));
+    } else {
+    	$couponContainer.append($(output));
+    }
 }
 
 function startMyInfoTransction(url, type, dataType, callback) {
