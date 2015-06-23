@@ -41,25 +41,23 @@
 					<legend>인증번호 요청</legend>
 					<div class="dialog-content-panel">
 						<div class="field field-auth-number">
-							<input type="text" class="edit" placeholder="휴대폰 번호(-제외)">
-							<input type="submit" class="bt-send-number" value="인증번호 전송">
+							<input type="text" onkeyPress="if ((event.keyCode<48) || (event.keyCode>57)) event.returnValue=false;" class="edit" id="js_cellPhone" placeholder="휴대폰 번호(-제외)">
+							<input type="button" id="js_bt-send-number" class="bt-send-number" value="인증번호 전송">
 							<p class="err-msg"></p>
 						</div>
 					</div>
 				</fieldset>
-			</form>
-			<form>
 				<fieldset>
 					<legend>인증번호 전송</legend>
 					<div class="dialog-content-panel">
 						<div class="field">
-							<input type="text" class="edit" placeholder="인증번호 6자리">
+							<input type="text" class="edit" id="js_authNumber" placeholder="인증번호 6자리">
 							<p class="err-msg"></p>
 							<p class="remained-time">남은 시간 <strong>00:00</strong></p>
 						</div>
 					</div>
 					<div class="dialog-control-panel">
-						<button type="submit" class="bt-confirm">확인</button>
+						<button type="button" id = "js_bt-confirm" class="bt-confirm">확인</button>
 					</div>
 				</fieldset>
 			</form>
@@ -125,29 +123,27 @@
 					<legend>인증번호 요청</legend>
 					<div class="dialog-content-panel">
 						<div class="field">
-							<input type="text" class="edit" placeholder="아이디(이메일)">
+							<input type="text" id="js_userId" class="edit" placeholder="아이디(이메일)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field field-auth-number">
-							<input type="text" class="edit" placeholder="휴대폰 번호(-제외)">
-							<input type="submit" class="bt-send-number" value="인증번호 전송">
+							<input type="text" id="js_cellPhone" class="edit" placeholder="휴대폰 번호(-제외)">
+							<input type="button" class="bt-send-number" value="인증번호 전송">
 							<p class="err-msg"></p>
 						</div>
 					</div>
 				</fieldset>
-			</form>
-			<form>
 				<fieldset>
 					<legend>인증번호 전송</legend>
 					<div class="dialog-content-panel">
 						<div class="field">
-							<input type="text" class="edit" placeholder="인증번호 6자리">
+							<input type="text" class="edit" id="js_authNumber" placeholder="인증번호 6자리">
 							<p class="err-msg"></p>
 							<p class="remained-time">남은 시간 <strong>00:00</strong></p>
 						</div>
 					</div>
 					<div class="dialog-control-panel">
-						<button type="submit" class="bt-confirm">확인</button>
+						<button type="button" class="bt-confirm">확인</button>
 					</div>
 				</fieldset>
 			</form>
@@ -216,7 +212,7 @@
 						</li>
 					</ul>
 					<div class="dialog-control-panel">
-						<button type="submit" class="bt-next">다음</button>
+						<button type="button" class="bt-next">다음</button>
 					</div>
 				</fieldset>
 			</form>
@@ -241,26 +237,24 @@
 					<legend>인증번호 요청</legend>
 					<div class="dialog-content-panel">
 						<div class="field field-auth-number">
-							<input type="text" class="edit" placeholder="휴대폰 번호(-제외)">
-							<input type="submit" class="bt-send-number" value="인증번호 전송">
+							<input type="text" class="edit" id="hphone" name="hphone" placeholder="휴대폰 번호(-제외)" numberOnly="true">
+							<input type="button" class="bt-send-number" value="인증번호 전송">
 							<p class="err-msg"></p>
 						</div>
 					</div>
 				</fieldset>
-			</form>
-			<form>
 				<fieldset>
 					<legend>인증번호 전송</legend>
 					<div class="dialog-content-panel">
 						<div class="field">
-							<input type="text" class="edit" placeholder="인증번호 6자리">
+							<input type="text" id="authnum" name="authnum" class="edit" placeholder="인증번호 6자리" maxlength="6">
 							<p class="err-msg"></p>
 							<p class="remained-time">남은 시간 <strong>00:00</strong></p>
 						</div>
 					</div>
 					<div class="dialog-control-panel">
 						<button type="button" class="bt-prev">이전</button>
-						<button type="submit" class="bt-next">다음</button>
+						<button type="button" class="bt-next">다음</button>
 					</div>
 				</fieldset>
 			</form>
@@ -283,25 +277,25 @@
 					<legend>사용자 정보</legend>
 					<div class="dialog-content-panel">
 						<div class="field">
-							<input type="text" class="edit" placeholder="이름 (한글, 영문, 12자 이내)">
+							<input type="text" id="name" name="name" maxlength="12" class="edit" placeholder="이름 (한글, 영문, 12자 이내)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
-							<input type="text" class="edit" placeholder="아이디 (이메일)">
+							<input type="text" id="email" name="email" class="edit" placeholder="아이디 (이메일)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
-							<input type="password" class="edit" placeholder="비밀번호 (대소문자 구분 영문, 숫자 포함 8자 이상)">
+							<input type="password" id="pass" name="pass" class="edit" placeholder="비밀번호 (대소문자 구분 영문, 숫자 포함 8자 이상)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
-							<input type="password" class="edit" placeholder="비밀번호 재입력">
+							<input type="password" id="passre" name="passre" class="edit" placeholder="비밀번호 재입력">
 							<p class="err-msg"></p>
 						</div>
 					</div>
 					<div class="dialog-control-panel">
 						<button type="button" class="bt-prev">이전</button>
-						<button type="submit" class="bt-next">다음</button>
+						<button type="button" class="bt-next">다음</button>
 					</div>
 				</fieldset>
 			</form>
@@ -339,16 +333,16 @@
 					<legend>로그인</legend>
 					<div class="dialog-content-panel">
 						<div class="field">
-							<input type="text" class="edit" placeholder="스마트홈 계정 (이메일)">
+							<input type="text" class="edit" id="myId" placeholder="스마트홈 계정 (이메일)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
-							<input type="password" class="edit" placeholder="비밀번호">
+							<input type="password" class="edit" id="myPass" placeholder="비밀번호">
 							<p class="err-msg"></p>
 						</div>
 					</div>
 					<div class="dialog-control-panel">
-						<button type="submit" class="bt-log-in">확인</button>
+						<button type="button" class="bt-log-in">확인</button>
 					</div>
 				</fieldset>
 			</form>
@@ -356,6 +350,90 @@
 				<button type="button" class="bt-sign-up">회원가입</button>
 				<span class="dialog-log-in-separator"></span>
 				<button type="button" class="bt-find-id-and-password">아이디/비밀번호 찾기</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="dialog-template-alliance" type="text/x-dialog-template">
+	<div class="dialog dialog-alliance">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">제휴 문의</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<p class="description">
+					스마트홈과 서비스 협력을 통해 스마트한 스토리를 만들어보세요.<br>
+					함께하는 시너지로 보다 가치 있는 브랜드를 만들어나갈 수 있습니다.
+				</p>
+			</div>
+			<form>
+				<fieldset>
+					<legend>제휴 문의</legend>
+					<div class="dialog-content-panel">
+						<div class="field h-bar">
+							<label for="alliance-email" class="h-item">이메일 주소</label>
+							<div class="sub-field h-item">
+								<input id="alliance-email" class="edit" type="text" placeholder="이메일 주소를 입력해주세요">
+								<p class="err-msg"></p>
+							</div>
+						</div>
+						<div class="field h-bar">
+							<label for="alliance-phone" class="h-item">전화번호</label>
+							<div class="sub-field h-item">
+								<input id="alliance-phone" class="edit" type="text" placeholder="연락받을 전화번호를 입력해주세요">
+								<p class="err-msg"></p>
+							</div>
+						</div>
+						<div class="field field-text h-bar">
+							<label for="alliance-text" class="h-item">문의 내용</label>
+							<div class="sub-field h-item">
+								<textarea id="alliance-text" class="edit text" placeholder="내용을 입력해주세요"></textarea>
+								<p class="err-msg"></p>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+				<div class="dialog-control-panel">
+					<button type="submit" class="bt-confirm">확인</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</script>
+<script id="dialog-template-alliance-success" type="text/x-dialog-template">
+	<div class="dialog dialog-alliance-success">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">메일 전송 완료</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel dialog-content-wide">
+				<p class="result">
+					<strong>메일이 성공적으로 전송되었습니다.</strong>
+				</p>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-confirm">확인</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="dialog-template-alliance-failure" type="text/x-dialog-template">
+	<div class="dialog dialog-alliance-failure">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">메일 전송 실패</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<p class="result">
+					<strong>메일 전송에 실패하였습니다.</strong><br>
+					다시 시도해주십시오.
+				</p>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-confirm">확인</button>
 			</div>
 		</div>
 	</div>
@@ -401,7 +479,7 @@
 					</div>
 				</fieldset>
 				<div class="dialog-control-panel">
-					<button type="submit" class="bt-confirm">확인</button>
+					<button type="button" class="bt-confirm">확인</button>
 				</div>
 			</form>
 		</div>
@@ -419,7 +497,7 @@
 					<legend class="displayed">현재 비밀번호</legend>
 					<div class="dialog-content-panel">
 						<div class="field">
-							<input type="password" class="edit" placeholder="현재 비밀번호">
+							<input type="password" class="edit" id="js_now_password" placeholder="현재 비밀번호">
 							<p class="err-msg"></p>
 						</div>
 					</div>
@@ -428,18 +506,18 @@
 					<legend class="displayed">새 비밀번호</legend>
 					<div class="dialog-content-panel">
 						<div class="field">
-							<input type="password" class="edit" placeholder="새 비밀번호 (대소문자 구분 영문, 숫자 포함 8자 이상)">
+							<input type="password" class="edit" id="js_new_password" placeholder="새 비밀번호 (대소문자 구분 영문, 숫자 포함 8자 이상)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
-							<input type="password" class="edit" placeholder="비밀번호 재입력">
+							<input type="password" class="edit" id="js_new_password_re" placeholder="비밀번호 재입력">
 							<p class="err-msg"></p>
 						</div>
 					</div>
 				</fieldset>
 				<div class="dialog-control-panel">
 					<button type="button" class="bt-cancel">취소</button>
-					<button type="submit" class="bt-save">저장</button>
+					<button type="button" class="bt-save">저장</button>
 				</div>
 			</form>
 		</div>

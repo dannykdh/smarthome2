@@ -62,13 +62,14 @@ jQuery(function($) {
 		U.dialog({
 			templateId: 'dialog-template-change-password',
 			onOpen: function(context) {
-				$(context).find('.bt-save').on('click', function() {
-					U.dialog();
-					return false;
+				var $context = $(context);
+				$context.find('.bt-save').on('click', function() {
+					// U.dialog();
+					// return false;
+					changPasswordCheckForm($context);
 				});
 			}
 		});
-
 		return false;
 	}
 
@@ -296,13 +297,19 @@ jQuery(function($) {
 							U.invalidate($('#pass'), '비밀번호를 입력해 주세요.');
 							$('#pass').focus();	
 							return false;	
-						} else if(upass.length < 4) {
+						} else if(upass.length < 8) {
 							U.invalidate($('#pass'), '비밀번호를 8자 이상 입력해 주세요.');
 							$('#pass').focus();	
 							return false;													
 						} else {
 							U.invalidate($('#pass'));		
 						}	
+
+						if (!isPasswordCheck($('#pass'))) {
+							U.invalidate($('#pass'), '입력하신 비밀번호 형식이 올바르지 않습니다. (영문, 숫자 포함 8자 이상)');
+						} else {
+							U.invalidate($('#pass'));
+						}
 						
 						if(upassre == "") {
 							U.invalidate($('#passre'), '비밀번호 확인을 입력해 주세요.');

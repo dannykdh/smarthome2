@@ -177,6 +177,145 @@ function parseJoinTransaction(response, callback) {
 	}
 }
 
+function parseMyInfoTransaction(response) {
+	console.log('parseMyInfoTransaction : ' + response);
+	if (response.resultCd && response.resultMsg) {
+		if (response.resultCd == '1' && response.resultMsg == '성공') {
+			// userAuthCd		EXP 체험회원 / GEN 일반회원 / HST 호스트회원 / SUB 서브회원
+			// userNickNm		사용자 명
+			// svrfileUrl		사용자 프로필 이미지 URL
+			// rsdcLatLoca		거주지 위도위치
+			// rsdcLongLoca		거주지 경도위치
+			// rsdcDefltAddr	거주지 기본주소
+			// rsdcDetailAddr	거주지 상세주소
+			// rnmCertYn		실명인증 여부(Y , N)
+			// dvcChgMsg		기기변경메시지
+			// userMobileNo		이동전화 번호('-'없음)
+			// expEndDay		체험회원 남은 일수
+			// modeSer			귀가모드일련번호
+			// notifSetYn		#알림_설정_여부 귀가모드 - 귀가 알림 여부(Y : N)
+			var rsMemType = response.userAuthCd;
+			var rsAddress = response.rsdcDefltAddr ? response.rsdcDefltAddr : '' + ' ' + response.rsdcDetailAddr ? response.rsdcDetailAddr : '';
+			var rsMemHPhone = response.userMobileNo;
+
+			switch (rsMemType) {
+				case 'EXP': rsMemType = '체험회원';
+					break;
+				case 'GEN': rsMemType = '일반회원';
+					break;
+				case 'HST': rsMemType = '호스트회원';
+					break;
+				case 'SUB': rsMemType = '서브회원';
+					break;
+				default:
+			}
+
+			rsMemHPhone = rsMemHPhone.substr(0, 3) + '-' + rsMemHPhone.substr(3, 4) + '-' + rsMemHPhone.substr(7, 4)
+
+			var $js_mem_type = $('#js_mem_type'); 		// userAuthCd
+			var $js_mem_address = $('#js_mem_address'); 	// rsdcDefltAddr + rsdcDetailAddr
+			var $js_mem_hphone = $('#js_mem_hphone');	// userMobileNo
+
+			$js_mem_type.html(rsMemType);
+			$js_mem_address.html(rsAddress);
+			$js_mem_hphone.html(rsMemHPhone);
+
+
+		} else {
+			// TODO : 계정관리 통신 오류 시 처리할 예외 상황
+		}
+	} else {
+		// TODO : 계정관리 통신 오류 시 처리할 예외 상황
+
+	}
+}
+
+function startChangPasswordTransaction(url, params, type, dataType, callback) {
+	var that = this;
+    $.ajax({
+        url: urlHeader+url,
+        data: JSON.stringify(params),
+        type: type,
+        dataType: dataType,
+        headers: {
+            "Authorization":getCookieInfo('userCertTknVal')
+        },
+	    contentType : "application/json;charset=UTF-8", 
+        success: function(response) {
+            callback(response);
+        },
+        error: function(xhr, textStatus, errorThrown) {
+            console.log('실패 - ', xhr);
+        }
+    });
+}
+
+function parseChangePasswordTransaction(response) {
+	if (response.resultCd && response.resultMsg) {
+		if (response.resultCd == '1' && response.resultMsg == '성공') {
+			console.log('parseChangePasswordTransaction : ' + response.resultMsg);
+		} else {
+			// TODO : 계정관리 통신 오류 시 처리할 예외 상황
+		}
+	} else {
+		// TODO : 계정관리 통신 오류 시 처리할 예외 상황
+
+	}
+}
+
+function startUseCouponTransction(url, type, dataType, callback) {
+	var that = this;
+    $.ajax({
+        url: urlHeader+url,
+        data: '',
+        type: type,
+        dataType: dataType,
+        headers: {
+            "Authorization":getCookieInfo('userCertTknVal')
+        },
+	    contentType: "application/json;charset=UTF-8", 
+        success: function(response) {
+            callback(response);
+        },
+        error: function(xhr, textStatus, errorThrown) {
+            console.log('실패 - ', xhr);
+        }
+    });
+}
+
+function parseUseCouponTransaction(response) {
+	if (response.resultCd && response.resultMsg) {
+		if (response.resultCd == '1' && response.resultMsg == '성공') {
+			console.log('parseUseCouponTransaction : ' + response.resultMsg);
+		} else {
+			// TODO : 계정관리 통신 오류 시 처리할 예외 상황
+		}
+	} else {
+		// TODO : 계정관리 통신 오류 시 처리할 예외 상황
+
+	}
+}
+
+function startMyInfoTransction(url, type, dataType, callback) {
+	var that = this;
+    $.ajax({
+        url: urlHeader+url,
+        data: '',
+        type: type,
+        dataType: dataType,
+        headers: {
+            "Authorization":getCookieInfo('userCertTknVal')
+        },
+	    contentType: "application/json;charset=UTF-8", 
+        success: function(response) {
+            callback(response);
+        },
+        error: function(xhr, textStatus, errorThrown) {
+            console.log('실패 - ', xhr);
+        }
+    });
+}
+
 // 회원탈퇴
 function startWithDrawTransaction(url, type, dataType, callback) {
 	var that = this;

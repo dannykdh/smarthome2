@@ -11,6 +11,67 @@ function isEmailIDCheck ($id) {
 	}  
 }
 
+function isPasswordCheck($pwd) {
+	var regType1 = /^[A-Za-z0-9+]{8,30}$/;
+	if (!regType1.test($pwd.val())) { 
+		return false;
+	}
+	return true;
+}
+
+function changPasswordCheckForm($context) {
+	var $nowPass = $('#js_now_password');
+	var $newPass = $('#js_new_password');
+	var $newPassRe = $('#js_new_password_re');
+	var params = {}, url='v1/member/updateMember/pwd', type='POST', dataType = 'json';
+
+	if ($nowPass.val().length == 0) {
+		U.invalidate($nowPass, '현재 비밀번호를 입력해주세요.'); 
+		$nowPass.focus();
+		return false;
+	} else {
+		U.invalidate($nowPass);
+	}
+
+	if ($newPass.val().length == 0) {
+		U.invalidate($newPass, '변경할 비밀번호를 입력해주세요.'); 
+		$newPass.focus();
+		return false;
+	} else {
+		U.invalidate($newPass);
+	}	
+
+	if (!isPasswordCheck($newPass)) {
+		U.invalidate($newPass, '입력하신 비밀번호 형식이 올바르지 않습니다. (영문, 숫자 포함 8자 이상)');
+		$newPass.focus();
+		return false;
+	} else {
+		U.invalidate($newPass);
+	}
+
+	if ($newPassRe.val().length == 0) {
+		U.invalidate($newPassRe, '변경할 비밀번호를 다시 한 번 입력해주세요.'); 
+		$newPassRe.focus();
+		return false;
+	} else {
+		U.invalidate($newPassRe);
+	}
+
+	if ($newPass.val() != $newPassRe.val()) {
+		U.invalidate($newPassRe, '변경할 비밀번호와 재 입력한 비밀번호가 맞지 않습니다.'); 
+		$newPassRe.focus();
+		return false;
+	}
+
+	params = {				
+		loginPwd:$nowPass.val()
+	};
+
+	startChangPasswordTransaction(url, params, type, dataType, function(response){
+		parseChangePasswordTransaction(response);
+	});
+}
+
 function loginCheckForm($context) {
 	var $myId = $('#myId');
 	var $myPass = $('#myPass');
