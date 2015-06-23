@@ -19,6 +19,11 @@ jQuery(function($) {
 		withDraw();
 	});
 
+	//제휴문의 
+	$('.bt-alliance').on('click', function() {
+		parent.location='mailto:join_smarthome@sk.com';
+	});
+
 	function withDraw() {
 		U.dialog({
 			templateId: 'dialog-template-withdraw-confirm',

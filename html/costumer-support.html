@@ -486,25 +486,28 @@
 <script type="text/javascript">
 	jQuery(function($) {
 		$('.bt-inquiry').on('click', function() {
-			U.dialog({
-				templateId: 'dialog-template-inquiry',
-				onOpen: function(context) {
-					$(context).find('form').on('submit', function() {
-						U.dialog({
-							templateId: 'dialog-template-inquiry-success',
-							onOpen: function(context) {
-								$(context).find('.bt-confirm').on('click', function() {
-									U.dialog();
-								});
-							}
-						});
+			parent.location='mailto:sktsmarthome@sk.com';
 
-						return false;
-					});
-				}
-			});
+			//문의하기 메일폼 향후 수정 가능성이 있어서 주석 처리함.
+			// U.dialog({
+			// 	templateId: 'dialog-template-inquiry',
+			// 	onOpen: function(context) {
+			// 		$(context).find('form').on('submit', function() {
+			// 			U.dialog({
+			// 				templateId: 'dialog-template-inquiry-success',
+			// 				onOpen: function(context) {
+			// 					$(context).find('.bt-confirm').on('click', function() {
+			// 						U.dialog();
+			// 					});
+			// 				}
+			// 			});
 
-			return false;
+			// 			return false;
+			// 		});
+			// 	}
+			// });
+
+			// return false;
 		});
 	});
 </script>
