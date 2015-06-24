@@ -15,8 +15,14 @@ jQuery(function($) {
 		changePassword();
 	});
 
+	//회원 탈퇴
 	$('.bt-withdraw').on('click', function() {
 		withDraw();
+	});
+
+	//회원탈퇴 취소
+	$('.bt-cancel').on('click', function() {
+		history.back();
 	});
 
 	//제휴문의 
@@ -42,6 +48,10 @@ jQuery(function($) {
 						});
 					});
 				});
+				$(context).find('.bt-cancel').on('click', function() {
+					//회원탈퇴 팝업 취소
+					U.closeDialog();
+				});				
 			}
 		});
 		return false;
