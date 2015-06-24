@@ -106,6 +106,9 @@ function parseAuthNumTransaction(response, kind, callback) {
 			});
 		} else { // 회원가입시
 			//TODO 회원 가입시 
+			startJoinNextStepTransaction (url, params, type, dataType, function(response){
+				callback(response);
+			});
 		}
 	} else {
 		authResponseFail($js_authNumber, resultMsg);
@@ -131,6 +134,23 @@ function startFindIDTransaction(url, params, type, dataType, callback) {
 
 // 본인 확인 인증 번호 송신 후 인증 성공 시 아이디 조회
 function startFindPWDTransaction(url, params, type, dataType, callback) {
+	var that = this;
+    $.ajax({
+        url: urlHeader+url,
+        data: params,
+        type: type,
+        dataType: dataType,
+        success: function(response) {
+            callback(response);
+        },
+        error: function(xhr, textStatus, errorThrown) {
+            console.log('실패 - ', xhr);
+        }
+    });
+}
+
+// 본인 확인 인증 번호 송신 후 인증 성공 시 아이디 조회
+function startJoinNextStepTransaction(url, params, type, dataType, callback) {
 	var that = this;
     $.ajax({
         url: urlHeader+url,
@@ -439,3 +459,10 @@ function parseFindIDTransaction(response, callback) {
 	var resultCd = response.resultCd, resultMsg = response.resultMsg;
 	callback(response);
 }
+
+// 본인 확인 인증 번호 송신 후 인증 성공 시 다음 단계로 이동
+function parseJoinNextStepTransaction(response, callback) {
+	var resultCd = response.resultCd, resultMsg = response.resultMsg;
+	callback(response);
+}
+

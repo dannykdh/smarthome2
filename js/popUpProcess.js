@@ -168,6 +168,7 @@ jQuery(function($) {
 					//버튼 비활성화 
 					$('.bt-send-number').prop("disabled", true);
 					$('.bt-next').prop("disabled", true);
+					$('#authnum').prop("disabled", true);
 
 				    var $context = $(context);
 					var $form = $context.find('form');
@@ -176,15 +177,21 @@ jQuery(function($) {
 					// U.getRemainedTimeDisplay().setTime(0200);
 
 					$(document).on("keyup", "input:text[numberOnly]", function() {
-						$(this).val($(this).val().replace(/[^0-9]/gi,""));
-						U.invalidate($('#hphone'));	
-						$('.bt-send-number').prop("disabled", false);
+						//$(this).val($(this).val().replace(/[^0-9]/gi,""));
+						//U.invalidate($('#hphone'));	
+						//$('.bt-send-number').prop("disabled", false);
 					});
 
-					$context.find('#hphone').keydown(function() {
-						console.log('rkrkrkrk');
+					$context.find('#hphone').keyup(function() {						
+						$(this).val($(this).val().replace(/[^0-9]/gi,""));
+
 						if($('#hphone').val().length >= 10) {
-							U.invalidate($('#hphone'));	
+							U.validate($('#hphone'));	
+							$('.bt-send-number').prop("disabled", false);
+						}
+
+						if (this.value == '' || this.value.length == 0) {
+							U.invalidate($(this));
 						}
 					});
 
@@ -199,10 +206,8 @@ jQuery(function($) {
 							$('#hphone').focus();																				
 							return false;
 						} else {
-							U.invalidate($('#hphone'));	
+							U.validate($('#hphone'));	
 						}	
-
-					    console.log('전송중 --- ');
 						
 						var hphone = $.trim($('#hphone').val());
 						var params = {}, url='v1/member/certification', type='GET', dataType = 'json';
@@ -220,14 +225,19 @@ jQuery(function($) {
 						console.log('$(#authnum).val().length : '+$('#authnum').val().length)
 						if($('#authnum').val().length >= 6) {
 							$('.bt-next').prop("disabled", false);
-							U.invalidate($('#authnum'));	
+							U.validate($('#authnum'));	
+						}
+
+						if (this.value == '' || this.value.length == 0) {
+							U.invalidate($(this));
 						}
 					});						
 
 					//다음 단계로 
 					$context.find('.bt-next').on('click', function() {
 
-						var authnum = $.trim($('#authnum').val());							
+						var authnum = $.trim($('#authnum').val());	
+						var params = {}, url='v1/member/userCertification', type='GET', dataType = 'json';						
 
 						if(authnum == "") {
 							U.invalidate($('#authnum'), '인증번호를 입력해 주세요.');
@@ -238,16 +248,25 @@ jQuery(function($) {
 							$('#authnum').focus();	
 							return false;																																											
 						} else {
-							U.invalidate($('#authnum'));		
+							// U.validate($('#authnum'));		
 
-							if($('#hphone').val().length >= 10 && $.isNumeric($('#hphone').val()) == true && authnum.length >= 6 && $.isNumeric(authnum) == true) {
-								var userInfo = {userPhone : $('#hphone').val(), userCertNo : $('#authnum').val()}
+							// if($('#hphone').val().length >= 10 && $.isNumeric($('#hphone').val()) == true && authnum.length >= 6 && $.isNumeric(authnum) == true) {
+							 	var userInfo = {userPhone : $('#hphone').val(), userCertNo : $('#authnum').val()}
 
-								goStep3(userInfo);
-								return false;	
-							} else {
-								U.invalidate($('#authnum'), '입력하신 값이 올바르지 않습니다.');
-								$('#authnum').focus();									}								
+							// 	goStep3(userInfo);
+							// 	return false;	
+							// } else {
+							// 	U.invalidate($('#authnum'), '입력하신 값이 올바르지 않습니다.');
+							// 	$('#authnum').focus();
+							// }	
+							
+							joinNextStepCheckForm($context, function(response, id){
+								if (response.resultCd == 1) {
+								 	goStep3(userInfo);
+								} else {
+									U.invalidate_txt(true, $('#authnum'), response.resultMsg);
+								}
+							});
 						}
 					});
 
@@ -267,9 +286,48 @@ jQuery(function($) {
 					var $context = $(context);
 					var $form = $context.find('form');
 
-
-					$context.find('#name').keydown( function() {
+					$context.find('#name').keyup( function() {
 						chkValidate($('#name'));
+
+						if (this.value == '' || this.value.length == 0) {
+							U.invalidate($(this));
+						}
+					});
+
+					$context.find('#email').keyup( function() {
+						if (isEmailIDCheck($('#email'))) {
+							chkValidate($('#email'));
+						}
+
+						if (this.value == '' || this.value.length == 0) {
+							U.invalidate($(this));
+						}
+					});
+
+					$context.find('#pass').keyup( function() {
+						if (isPasswordCheck($('#pass'))) {
+							chkValidate($('#pass'));
+						}
+
+						if (this.value == '' || this.value.length == 0) {
+							U.invalidate($(this));
+						}
+					});
+
+					$context.find('#passre').keyup( function() {
+						if ($('#pass').val() == $('#passre').val()) {
+							if (event.keyCode == 13) {
+								gotoJoinTransaction();
+							} else {
+								if (isPasswordCheck($('#passre'))) {
+									chkValidate($('#passre'));
+								}
+							}
+						}
+
+						if (this.value == '' || this.value.length == 0) {
+							U.invalidate($(this));
+						}
 					});
 
 					$context.find('.bt-next').on('click', function() {
@@ -291,11 +349,11 @@ jQuery(function($) {
 							U.invalidate($('#email'), '이메일을 입력해 주세요.');
 							$('#email').focus();		
 							return false;	
-						// } else if (!isEmailIDCheck(uemail)) {
-						// 	U.invalidate($('#email'), '스마트홈 계정 (이메일)을 형식에 맞게 입력하세요.'); 								
-						// 	return;			
+						} else if (!isEmailIDCheck($('#email'))) {
+							U.invalidate($('#email'), '스마트홈 계정 (이메일)을 형식에 맞게 입력하세요.'); 								
+							return;			
 						} else {
-							U.invalidate($('#email'));
+							U.validate($('#email'));
 						}
 
 						if(upass == "") {
@@ -307,13 +365,13 @@ jQuery(function($) {
 							$('#pass').focus();	
 							return false;													
 						} else {
-							U.invalidate($('#pass'));		
+							U.validate($('#pass'));		
 						}	
 
 						if (!isPasswordCheck($('#pass'))) {
 							U.invalidate($('#pass'), '입력하신 비밀번호 형식이 올바르지 않습니다. (영문, 숫자 포함 8자 이상)');
 						} else {
-							U.invalidate($('#pass'));
+							U.validate($('#pass'));
 						}
 						
 						if(upassre == "") {
@@ -326,11 +384,17 @@ jQuery(function($) {
 							$('#passre').focus();		
 							return false;												
 						} else {
-							U.invalidate($('#passre'));	
+							U.validate($('#passre'));	
 						}
 							
 						if(uname != "" && uemail != "" && upass != "" && upassre != "") { 
-						//API 통신을 위한 파라미터 값
+							gotoJoinTransaction();
+						} else {
+							console.log(uname+"/"+uemail+"/"+upass+"/"+upassre);
+						}
+
+						function gotoJoinTransaction () {
+							//API 통신을 위한 파라미터 값
 							var params = {}, url='v1/member/registerMember', type='POST', dataType = 'json';
 							// var params = {}, url='v2/member/registerMember', type='GET', dataType = 'json';										
 							var ip = "127.0.0.1"; // 접속 IP구하여 대체해야 함.
@@ -369,8 +433,6 @@ jQuery(function($) {
 									}
 								});
 							});				
-						} else {
-							console.log(uname+"/"+uemail+"/"+upass+"/"+upassre);
 						}
 						
 					});
@@ -431,19 +493,27 @@ jQuery(function($) {
 					findIdOrPassword('id');
 				});
 
-				$context.find('#myId').keydown( function(){
+				$context.find('#myId').keyup( function(){
 					if (isEmailIDCheck($('#myId'))) {
 						chkValidate($('#myId'));
 					}
+
+					if (this.value == '' || this.value.length == 0) {
+						U.invalidate($(this));
+					}
 				});
 
-				$context.find('#myPass').keydown( function(){
+				$context.find('#myPass').keyup( function(){
 					if (event.keyCode == 13) {
 						loginCheckForm($context);
 					} else {
 						if (isPasswordCheck($('#myPass'))) {
 							chkValidate($('#myPass'));
 						}
+					}
+
+					if (this.value == '' || this.value.length == 0) {
+						U.invalidate($(this));
 					}
 				});
 
@@ -481,12 +551,42 @@ jQuery(function($) {
 					$js_btn.prop("disabled", true);
 					$js_auth.prop("disabled", true);
 
-					$js_cellPhone.keydown( function() {
+					$js_cellPhone.keyup( function() {
 						if (event.keyCode == 13) {
 							findIDCheckForm($context);
 						} else {
-							$js_btn.prop("disabled", false);
-							chkValidate($js_cellPhone);
+							if (this.value.length >= 10) {
+								$js_btn.prop("disabled", false);
+								chkValidate($js_cellPhone);
+							}
+						}
+
+						if (this.value == '' || this.value.length == 0) {
+							U.invalidate($(this));
+						}
+					});
+
+					$js_auth.keyup( function() {
+						if (event.keyCode == 13) {
+							findIDCheckForm($context, function(response, id){
+								parseAuthNumTransaction(response, id, function(rt1){
+									parseFindIDTransaction(rt1, function(rt2){
+										if (rt2.resultCd == 1) {
+											findIdOrPasswordResult(rt2, 'id');
+										} else {
+											findIdOrPasswordResultFail();
+										}
+									});
+								});
+							});
+						} else {
+							if (this.value.length == 6) {
+								chkValidate($js_auth);
+							} 
+						}
+
+						if (this.value == '' || this.value.length == 0) {
+							U.invalidate($(this));
 						}
 					});
 
@@ -524,27 +624,70 @@ jQuery(function($) {
 				templateId: 'dialog-template-find-password-form',
 				onOpen: function(context) {
 					var $context = $(context);
-					var $elID = $context.find('form').find('input[type=text]').eq(0);
-					var $elAuth = $context.find('form').find('input[type=text]').eq(2);
+					var $elID = $('#js_userId');
+					var $elAuth = $('#js_authNumber');
+					var $elCellPhone = $('#js_cellPhone');
+					var $sendNumberBtn = $('.bt-send-number');
 
 					$context.find('.bt-find-id').on('click', function() {
 						findIdOrPassword('id');
 					});
 
 					$elID.focus();
-					$('.bt-send-number').prop("disabled", true);
+					$sendNumberBtn.prop("disabled", true);
 					$elAuth.prop("disabled", true);
 
-					$context.find('#js_cellPhone').keydown( function() {
+					$elID.keyup( function(){
+						if (isEmailIDCheck($elID)) {
+							chkValidate($elID);
+						}
+
+						if (this.value == '' || this.value.length == 0) {
+							U.invalidate($(this));
+						}
+					});
+					
+					$elCellPhone.keyup( function() {
 						if (event.keyCode == 13) {
 							goAuthNumberRequest();
 						} else {
-							$('.bt-send-number').prop("disabled", false);	
+							if (this.value.length >= 10) {
+								$sendNumberBtn.prop("disabled", false);	
+								chkValidate($elCellPhone);
+							}
+						}
+
+						if (this.value == '' || this.value.length == 0) {
+							U.invalidate($(this));
+						}
+					});
+
+					$elAuth.keyup( function() {
+						if (event.keyCode == 13) {
+							findPWDCheckForm($context, function(response, id){
+								parseAuthNumTransaction(response, id, function(rt1){
+									parseFindIDTransaction(rt1, function(rt2){
+										if (rt2.resultCd == 1) {
+											findIdOrPasswordResult(rt2, 'password', $elID.val());
+										} else {
+											findIdOrPasswordResultFail();
+										}
+									});
+								});
+							});
+						} else {
+							if (this.value.length == 6) {
+								chkValidate($elAuth);
+							} 
+						}
+
+						if (this.value == '' || this.value.length == 0) {
+							U.invalidate($(this));
 						}
 					});
 
 					// 패스워드 분실 인증 번호 요청시 정보가 일치할 경우만 인증번호가 전송 될 경우 사용
-					$context.find('.bt-send-number').on('click', function() {
+					$sendNumberBtn.on('click', function() {
 						goAuthNumberRequest();
 					});
 

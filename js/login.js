@@ -291,7 +291,7 @@ function findIDCheckCellPhone($context) {
 		$elPhone.focus();
 		return false;
 	} else {
-		U.invalidate($elPhone);
+		U.validate($elPhone);
 	}
 
 	params = {				
@@ -429,6 +429,29 @@ function findPWDCheckForm($context, callback) {
 	
 }
 
+// 회원가입 유효성 검사
+function joinNextStepCheckForm($context, callback) {
+	var $addTxt = $('.err-Txt');
+	var $leng = $addTxt.length;
+
+	if ($leng > 0) {
+		removeAddTxt($addTxt);
+	}
+	
+	var $js_cellPhone = $('#hphone');
+	var $js_authNumber = $('#authnum');
+	var params = {}, url='v1/member/userCertification', type='GET', dataType = 'json';
+
+	params = {						
+		mobileNo: $js_cellPhone.val(),
+		certNo: $js_authNumber.val()
+	};
+
+	startAuthNumTransaction(url, params, type, dataType, function(response){
+		callback(response, 'Join');
+	});
+}
+
 function authResponseFail($el, msg) {
 	U.invalidate($el, msg); 
 }
@@ -460,7 +483,7 @@ function timeLimitCheck(response, $context, type) {
 	var $elAuth = $context.find('form').find('input[type=text]').eq(num);
 	var $btnAuth = $context.find('#js_bt-send-number').val() ? $context.find('#js_bt-send-number') : $context.find('.bt-send-number');
 	
-	$btnAuth.prop("disabled", true);	
+	// $btnAuth.prop("disabled", true);	
 	$btnAuth.val('재전송');
 	$elAuth.prop("disabled", false);
 	$elAuth.focus();
