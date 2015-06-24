@@ -12,7 +12,7 @@ function isEmailIDCheck ($id) {
 }
 
 function isPasswordCheck($pwd) {
-	var regType1 = /^[A-Za-z0-9+]{8,30}$/;
+	var regType1 = /^[A-Za-z0-9+]{7,30}$/;
 	var chk_num = $pwd.val().search(/[0-9]/g); 
     var chk_eng = $pwd.val().search(/[a-z]/ig);
 
@@ -522,6 +522,10 @@ function passwordFindFail(validate, $el, response) {
 
 function removeAddTxt($el) {
 	$el.remove();
+}
+
+function chkValidate($el) {
+	U.validate($el);
 }
 
 // 로그인 여부에 따른 gnb-holder Update

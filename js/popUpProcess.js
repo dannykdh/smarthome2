@@ -266,8 +266,13 @@ jQuery(function($) {
 				onOpen: function(context) {
 					var $context = $(context);
 					var $form = $context.find('form');
-					$context.find('.bt-next').on('click', function() {
 
+
+					$context.find('#name').keydown( function() {
+						chkValidate($('#name'));
+					});
+
+					$context.find('.bt-next').on('click', function() {
 						var uname = $.trim($('#name').val());
 						var uemail = $.trim($('#email').val()); 
 						var upass = $.trim($('#pass').val()); 
@@ -278,7 +283,7 @@ jQuery(function($) {
 							$('#name').focus();	
 							return false;										
 						} else {
-							U.invalidate($('#name'));
+							// U.invalidate($('#name'));
 							U.validate($('#name'));	
 						}
 
@@ -426,9 +431,19 @@ jQuery(function($) {
 					findIdOrPassword('id');
 				});
 
+				$context.find('#myId').keydown( function(){
+					if (isEmailIDCheck($('#myId'))) {
+						chkValidate($('#myId'));
+					}
+				});
+
 				$context.find('#myPass').keydown( function(){
 					if (event.keyCode == 13) {
 						loginCheckForm($context);
+					} else {
+						if (isPasswordCheck($('#myPass'))) {
+							chkValidate($('#myPass'));
+						}
 					}
 				});
 
@@ -459,22 +474,30 @@ jQuery(function($) {
 					});	
 
 					var $js_cellPhone = $('#js_cellPhone');
-					var $elAuth = $context.find('form').find('input[type=text]').eq(1);
+					var $js_auth = $('#js_authNumber');
+					var $js_btn = $('#js_bt-send-number');
 					
 					$js_cellPhone.focus();
-					$('#js_bt-send-number').prop("disabled", true);
-					$elAuth.prop("disabled", true);
+					$js_btn.prop("disabled", true);
+					$js_auth.prop("disabled", true);
 
-
-					$context.find('#js_cellPhone').keydown( function() {
+					$js_cellPhone.keydown( function() {
 						if (event.keyCode == 13) {
 							findIDCheckForm($context);
 						} else {
-							$('.bt-send-number').prop("disabled", false);	
+							$js_btn.prop("disabled", false);
+							chkValidate($js_cellPhone);
 						}
 					});
 
-					$context.find('.bt-send-number').on('click', function() {
+					$js_cellPhone.focus( function() {
+						if (this.value != '') {
+							$js_btn.prop("disabled", false);
+							chkValidate($js_cellPhone);
+						}
+					});
+
+					$js_btn.on('click', function() {
 						findIDCheckCellPhone($context);
 					});
 
