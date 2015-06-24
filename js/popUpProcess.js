@@ -385,12 +385,6 @@ jQuery(function($) {
 						} else {
 							U.validate($('#pass'));		
 						}	
-
-						if (!isPasswordCheck($('#pass'))) {
-							U.invalidate($('#pass'), '입력하신 비밀번호 형식이 올바르지 않습니다. (영문, 숫자 포함 8자 이상)');
-						} else {
-							U.validate($('#pass'));
-						}
 						
 						if(upassre == "") {
 							U.invalidate($('#passre'), '비밀번호 확인을 입력해 주세요.');
@@ -403,6 +397,13 @@ jQuery(function($) {
 							return false;												
 						} else {
 							U.validate($('#passre'));	
+						}
+
+						if (!isPasswordCheck($('#pass'))) {
+							U.invalidate($('#pass'), '입력하신 비밀번호 형식이 올바르지 않습니다. (영문, 숫자 포함 8자 이상)');
+							return false;
+						} else {
+							U.validate($('#pass'));
 						}
 							
 						if(uname != "" && uemail != "" && upass != "" && upassre != "") { 
