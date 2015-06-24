@@ -567,7 +567,7 @@ jQuery(function($) {
 					
 					$js_cellPhone.focus();
 					$js_btn.prop("disabled", true);
-					$js_auth.prop("disabled", true);
+					//$js_auth.prop("disabled", true);
 
 					$js_cellPhone.keyup( function() {
 						if (event.keyCode == 13) {
@@ -598,9 +598,10 @@ jQuery(function($) {
 								});
 							});
 						} else {
+							isAuthCheck($js_auth);
 							if (this.value.length == 6) {
 								chkValidate($js_auth);
-							} 
+							}
 						}
 
 						if (this.value == '' || this.value.length == 0) {

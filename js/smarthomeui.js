@@ -326,8 +326,8 @@ var SmartHomeUI = (function($) {
 		.css("color", "#f00")
 		.css("text-align", "left").addClass('err-Txt');
 		// 유효시간 지나고 이전, 다음 버튼 비활성화.
-			$('.bt-prev').prop("disabled", validate);
-			$('.bt-next').prop("disabled", validate);
+		// $('.bt-prev').prop("disabled", validate);
+		// $('.bt-next').prop("disabled", validate);
 
 		// 생성된 엘리먼트 삽입 위치
 		$el.after($addTxt);		

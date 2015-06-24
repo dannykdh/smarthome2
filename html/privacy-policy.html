@@ -40,7 +40,7 @@
 					<legend>인증번호 요청</legend>
 					<div class="dialog-content-panel">
 						<div class="field field-auth-number">
-							<input type="text" onkeyPress="if ((event.keyCode<48) || (event.keyCode>57)) event.returnValue=false;" class="edit" id="js_cellPhone" autocomplete="off" placeholder="휴대폰 번호(-제외)">
+							<input type="text"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" class="edit" id="js_cellPhone" autocomplete="off" placeholder="휴대폰 번호(-제외)">
 							<input type="button" id="js_bt-send-number" class="bt-send-number" value="인증번호 전송">
 							<p class="err-msg"></p>
 						</div>
@@ -50,7 +50,7 @@
 					<legend>인증번호 전송</legend>
 					<div class="dialog-content-panel">
 						<div class="field">
-							<input type="text" class="edit" id="js_authNumber" placeholder="인증번호 6자리">
+							<input type="text" class="edit"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="6" id="js_authNumber" placeholder="인증번호 6자리">
 							<p class="err-msg"></p>
 							<p class="remained-time">남은 시간 <strong>00:00</strong></p>
 						</div>
@@ -126,7 +126,7 @@
 							<p class="err-msg"></p>
 						</div>
 						<div class="field field-auth-number">
-							<input type="text" id="js_cellPhone" autocomplete="off" class="edit" placeholder="휴대폰 번호(-제외)">
+							<input type="text" id="js_cellPhone" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" autocomplete="off" class="edit" placeholder="휴대폰 번호(-제외)">
 							<input type="button" class="bt-send-number" value="인증번호 전송">
 							<p class="err-msg"></p>
 						</div>
@@ -136,7 +136,7 @@
 					<legend>인증번호 전송</legend>
 					<div class="dialog-content-panel">
 						<div class="field">
-							<input type="text" class="edit" id="js_authNumber" placeholder="인증번호 6자리">
+							<input type="text" class="edit"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="6" id="js_authNumber" placeholder="인증번호 6자리">
 							<p class="err-msg"></p>
 							<p class="remained-time">남은 시간 <strong>00:00</strong></p>
 						</div>
@@ -246,7 +246,7 @@
 					<legend>인증번호 전송</legend>
 					<div class="dialog-content-panel">
 						<div class="field">
-							<input type="text" id="authnum" name="authnum" class="edit" placeholder="인증번호 6자리" maxlength="6">
+							<input type="text" id="authnum" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="6" name="authnum" class="edit" placeholder="인증번호 6자리">
 							<p class="err-msg"></p>
 							<p class="remained-time">남은 시간 <strong>00:00</strong></p>
 						</div>
