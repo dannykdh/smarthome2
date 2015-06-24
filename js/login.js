@@ -176,6 +176,21 @@ function loginComplete(response) {
 
 	setCookieInfo(cookieData);
 	setLoginBeforeAfterUpdate();
+
+	var params = {}, url='v1/member/info', type='GET', dataType = 'json';
+	startMyInfoTransction(url, type, dataType, function(response){
+		parseMyInfoTransaction(response);		
+	});	
+
+	var params = {}, url='v1/payment/pay', type='GET', dataType = 'json';
+	startUseCouponTransction(url, type, dataType, function(response){
+		parseUseCouponTransaction(response);		
+	});	
+
+	if ( /account.html/.test(location) ) {
+		$('body').addClass('has-coupon')
+	}
+
 	//팝업 닫기
 	U.closeDialog();
 }
@@ -228,6 +243,11 @@ function getCookieInfo(cookieName) {
 function logOut() {
 	deleteCookieInfo();
 	setLoginBeforeAfterUpdate();
+
+	if ( /account.html/.test(location) ) {
+		location.replace('/html/home.html');
+	}
+
 }
 
 // 로그아웃 성공시 쿠키 정보 삭제

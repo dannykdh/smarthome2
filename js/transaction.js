@@ -323,11 +323,12 @@ function parseUseCouponTransaction(response) {
 }
 
 function setEmptyCouponList() {	
-	var output = '';
-	var $emptyCouponContainer = $('.coupons-holder');
+	// var output = '';
+	// var $emptyCouponContainer = $('.coupons-holder');
 
-	output += '<div class="no-coupon"><p class="coupon-empty">사용 가능한 이용권/쿠폰이 없습니다.</p></div>';
-    $couponContainer.html(output);
+	// output += '<div class="no-coupon"><p class="coupon-empty">사용 가능한 이용권/쿠폰이 없습니다.</p></div>';
+ //    $couponContainer.html(output);
+ 	$('body').removeClass('has-coupon');
 }
 
 function setCouponList(dataList, kind) {	
