@@ -72,7 +72,7 @@ function changPasswordCheckForm($context) {
 	}
 
 	params = {				
-		loginPwd:$nowPass.val()
+		loginPwd:$newPass.val()
 	};
 
 	startChangPasswordTransaction(url, params, type, dataType, function(response){

@@ -369,7 +369,7 @@ jQuery(function($) {
 							return false;	
 						} else if (!isEmailIDCheck($('#email'))) {
 							U.invalidate($('#email'), '스마트홈 계정 (이메일)을 형식에 맞게 입력하세요.'); 								
-							return;			
+							return false;			
 						} else {
 							U.validate($('#email'));
 						}
