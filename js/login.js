@@ -339,6 +339,10 @@ function findPWDCheckCellPhone($context, callback) {
 
 // 아이디 찾기 유효성 검사
 function findIDCheckForm($context, callback) {
+	// 정상 이동후 타이머 제거
+	if (interval) {
+		clearInterval(interval);
+	}
 	var $addTxt = $('.err-Txt');
 	var $leng = $addTxt.length;
 
@@ -382,6 +386,10 @@ function findIDCheckForm($context, callback) {
 
 // 비밀번호 찾기 유효성 검사
 function findPWDCheckForm($context, callback) {
+	// 정상 이동후 타이머 제거
+	if (interval) {
+		clearInterval(interval);
+	}
 	var $addTxt = $('.err-Txt');
 	var $leng = $addTxt.length;
 
@@ -431,13 +439,18 @@ function findPWDCheckForm($context, callback) {
 
 // 회원가입 유효성 검사
 function joinNextStepCheckForm($context, callback) {
+	// 정상 이동후 타이머 제거
+	if (interval) {
+		clearInterval(interval);
+	}
+	
 	var $addTxt = $('.err-Txt');
 	var $leng = $addTxt.length;
 
 	if ($leng > 0) {
 		removeAddTxt($addTxt);
 	}
-	
+
 	var $js_cellPhone = $('#hphone');
 	var $js_authNumber = $('#authnum');
 	var params = {}, url='v1/member/userCertification', type='GET', dataType = 'json';

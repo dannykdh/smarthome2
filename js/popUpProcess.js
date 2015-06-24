@@ -319,7 +319,7 @@ jQuery(function($) {
 							chkValidate($('#pass'));
 						}
 
-						if (this.value == '' || this.value.length == 0) {
+						if (this.value == '' || this.value.length < 8) {
 							U.invalidate($(this));
 						}
 					});
@@ -333,14 +333,22 @@ jQuery(function($) {
 									chkValidate($('#passre'));
 								}
 							}
+						} else {
+							U.invalidate($(this));
 						}
 
-						if (this.value == '' || this.value.length == 0) {
+						if (this.value == '' || this.value.length < 8) {
 							U.invalidate($(this));
 						}
 					});
 
 					$context.find('.bt-next').on('click', function() {
+						var $addTxt = $('.err-Txt');
+						var $leng = $addTxt.length;
+
+						if ($leng > 0) {
+							removeAddTxt($addTxt);
+						}
 						var uname = $.trim($('#name').val());
 						var uemail = $.trim($('#email').val()); 
 						var upass = $.trim($('#pass').val()); 
