@@ -78,6 +78,10 @@ jQuery(function($) {
 					// return false;
 					changPasswordCheckForm($context);
 				});
+
+				$context.find('.bt-cancel').on('click', function() {
+					U.dialog();
+				});
 			}
 		});
 		return false;
