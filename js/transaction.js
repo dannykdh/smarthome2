@@ -392,6 +392,19 @@ function setCouponList(dataList, kind) {
 	var output = '';
 	var $couponContainer = $('.coupons.h-bar');
 	// $.each(dataList, function() {
+
+		// cpnAmt: 0
+		// cpnNm: "위닉스 쿠폰(24개월)"
+		// cpnNo: "CPN0000009"
+		// cpnPubNo: "tmndywsnryy9rq14"
+		// cpnQty: 0
+		// cpnUseYn: "N"
+		// dvcCd: "DVC0000031"
+		// dvcNm: "위닉스제습기(개발)"
+		// grpUserCnt: 0
+		// regValidEndDay: "2015.08.30"
+		// userCnt: 5
+		
 	for (var i=0; i<dataList.length; i++) {
 		if (kind == 'UP') { // 사용중인 이용권
 			output += '<li class="coupon h-item">';

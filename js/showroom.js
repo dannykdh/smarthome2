@@ -674,10 +674,6 @@ var Showroom = (function($, U) {
 				service.cards[leave].$el.trigger('showend');
 			}
 			service.seize(false);
-
-			if (enter === 'security') {
-				service.getGnbHolder().addClass('orange');
-			}
 		});
 	}
 

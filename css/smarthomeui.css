@@ -176,12 +176,12 @@ textarea {
 	height: 18px;
 	padding: 31px 22px;
 	background: #fff;
-	cursor: default;
 }
 .privacy-policy-page .expandable-handle {
 	display: none;
 }
 .privacy-policy-page .expandable-content {
+	border-top: 0;
 	background: #fff;
 }
 
@@ -511,6 +511,11 @@ textarea {
 	padding-top: 13px;
 	padding-bottom: 50px;
 }
+#holder.terms-and-conditions-page,
+#holder.privacy-policy-page {
+	width: 954px;
+	padding-top: 41px;
+}
 
 .page-title {
 	height: 30px;
@@ -535,29 +540,29 @@ textarea {
 	background: url(../img/ti-costumer-support-page.png) no-repeat;
 }
 .terms-and-conditions-page .page-title {
-	width: 86px;
+	width: 78px;
 	background: url(../img/ti-terms-and-conditions-page.png) no-repeat;
 }
 .terms-and-conditions-page .page-nav {
-	padding-left: 17px;
-	margin-left: 16px;
+	padding-left: 21px;
+	margin-left: 20px;
 	background-position: left center;
 }
 .terms-and-conditions-page .page-external {
-	width: 168px;
+	width: 150px;
 	background: url(../img/bt-privacy-policy.png) no-repeat;
 }
 .privacy-policy-page .page-title {
-	width: 168px;
+	width: 150px;
 	background: url(../img/ti-privacy-policy-page.png) no-repeat;
 }
 .privacy-policy-page .page-nav {
-	padding-right: 17px;
-	margin-right: 16px;
+	padding-right: 21px;
+	margin-right: 20px;
 	background-position: right center;
 }
 .privacy-policy-page .page-external {
-	width: 86px;
+	width: 78px;
 	background: url(../img/bt-terms-and-conditions.png) no-repeat;
 }
 .account-page .page-title {
@@ -1238,7 +1243,7 @@ textarea {
 .dialog-sign-up-step1 .field {
 	position: relative;
 	height: 24px;
-	padding: 12px 0 12px 17px;
+	padding: 12px 0 12px 13px;
 	border-bottom: 1px solid #eee;
 	text-align: left;
 }
@@ -1246,14 +1251,16 @@ textarea {
 	background: #fff;
 }
 .dialog-sign-up-step1 label {
+	padding-left: 30px !important;
 	font-weight: bold;
 	color: #666;
+	letter-spacing: -0.05em;
 }
 .dialog-sign-up-step1 .bt-show-term {
 	display: block;
 	position: absolute;
 	top: 15px;
-	right: 17px;
+	right: 12px;
 	width: 48px;
 	height: 17px;
 	line-height: 17px;

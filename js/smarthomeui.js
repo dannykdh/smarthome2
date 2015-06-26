@@ -73,11 +73,7 @@ var SmartHomeUI = (function($) {
 		$(layer).on('wheel', function() {
 			return false;
 		}).on('click', function(ev) {
-			if (allowBubbleClickEvent(ev)) {
-				return true;
-			}
-			closeDialog();
-			return false;
+			return allowBubbleClickEvent(ev);
 		});
 
 		return layer;
