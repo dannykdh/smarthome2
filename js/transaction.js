@@ -17,7 +17,8 @@
 
 
 // 개발 서버
-var urlHeader = 'http://mobiledev.sktsmarthome.com:9002/';
+//var urlHeader = 'http://mobiledev.sktsmarthome.com:9002/';
+var urlHeader = 'http://61.250.21.156:9002/';
 // 스테이징 서버
 // var urlHeader = 'https://61.250.21.180:9002/';
 // 상용서버
