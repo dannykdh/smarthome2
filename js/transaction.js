@@ -1,4 +1,27 @@
+// // 스테이징 서버
+// static NSString * const AFAppDotNetAPIBaseURLString = @"https://61.250.21.180:9002";
+// static NSString * const AFAppDotNetAPISecureBaseURLString = @"https://61.250.21.180:9002";
+// #else
+
+// // 개발 서버
+// static NSString * const AFAppDotNetAPIBaseURLString = @"http://mobiledev.sktsmarthome.com:9002";
+// static NSString * const AFAppDotNetAPISecureBaseURLString = @"http://mobiledev.sktsmarthome.com:9002";
+
+// #endif
+
+// #else
+
+// // 상용 서버
+// static NSString * const AFAppDotNetAPIBaseURLString = @"https://mobile.sktsmarthome.com:9002";
+// static NSString * const AFAppDotNetAPISecureBaseURLString = @"https://mobile.sktsmarthome.com:9002";
+
+
+// 개발 서버
 var urlHeader = 'http://mobiledev.sktsmarthome.com:9002/';
+// 스테이징 서버
+// var urlHeader = 'https://61.250.21.180:9002/';
+// 상용서버
+// var urlHeader = 'https://mobile.sktsmarthome.com:9002/';
 
 // 로그인 트랜잭션 시작
 function startLoginTransaction(url, params, type, dataType, callback) {
@@ -344,7 +367,7 @@ function parseUseCouponTransaction(response) {
 	if (response.resultCd && response.resultMsg) {
 		var rsUseProdList = response.useProdList;	// 사용중인 이용권 리스트
 		var rsRegCpnList = response.regCpnList;		// 등록한 쿠폰 리스트
-		var rsUseCpnList = response.regCpnList;		// 등록한 쿠폰 리스트
+		var rsUseCpnList = response.useCpnList;		// 등록한 쿠폰 리스트
 
 		if (response.resultCd == '1' && response.resultMsg == '성공') {
 			console.log('parseUseCouponTransaction : ' + response.resultMsg);
@@ -404,13 +427,25 @@ function setCouponList(dataList, kind) {
 		// grpUserCnt: 0
 		// regValidEndDay: "2015.08.30"
 		// userCnt: 5
-		
+
 	for (var i=0; i<dataList.length; i++) {
 		if (kind == 'UP') { // 사용중인 이용권
+			var autoPay = dataList[i].autopayStatCd == '001' ? '자동 결제' : '자동 결제 취소'
+			var payWayCd = dataList[i].payWayCd;
+			var payWayCdDp;
+			if (payWayCd == 'CPN') {
+				payWayCdDp = '쿠폰';
+			} else if (payWayCd == 'CPN') {
+				payWayCdDp = '신용카드';
+			} else if (payWayCd == 'MOB') {
+				payWayCdDp = '모바일';
+			}
+
 			output += '<li class="coupon h-item">';
 			output += '	<div class="coupon-holder">';
 			output += '		<p class="coupon-title">'+dataList[i].prodNm+'</p>';
-			output += '		<p class="coupon-payment">'+dataList[i].autopayStatCd == '001' ? '자동 결제' : '자동 결제 취소'+'<span>|</span>'+ dataList[i].payWayCd+'(2,000원/월)<br>'+ dataList[i].userCnt+'</p>';
+			output += '		<p class="coupon-payment">'+ autoPay +'<span>|</span>'+ payWayCdDp +'('+dataList[i].salePrc+'/월)';
+			output += '		<br>'+ dataList[i].userCnt +'</p>';
 			output += '		<p class="coupon-status">';
 			output += '			<span class="coupon-usable">사용중</span>';
 			output += '			<span class="coupon-duration">결제예정일 : 2015.03.15</span>';
@@ -421,9 +456,8 @@ function setCouponList(dataList, kind) {
 			output += '<li class="coupon h-item">';
 			output += '	<div class="coupon-holder has-coupon-ribbon">';
 			output += '		<p class="coupon-title">'+dataList[i].cpnNm+'</p>';
-			output += '		<p class="coupon-payment">'+dataList[i].userCnt+'</p>';
+			output += '		<p class="coupon-payment">'+dataList[i].userCnt+'인용(Host 회원 '+dataList[i].userCnt+'인 + Sub 회원 '+dataList[i].grpUserCnt+'인)</p>';
 			output += '		<p class="coupon-status">';
-			output += '			<span class="coupon-usable">'+dataList[i].cpnUseYn+'</span>';
 			output += '			<span class="coupon-duration">사용 유효기간 : '+dataList[i].regValidEndDay+'까지</span>';
 			output += '		</p>';
 			output += '	</div>';
@@ -432,7 +466,7 @@ function setCouponList(dataList, kind) {
 			output += '<li class="coupon h-item">';
 			output += '	<div class="coupon-holder has-coupon-ribbon">';
 			output += '		<p class="coupon-title">'+dataList[i].cpnNm+'</p>';
-			output += '		<p class="coupon-payment">'+dataList[i].userCnt+'</p>';
+			output += '		<p class="coupon-payment">'+dataList[i].userCnt+'인용</p>';
 			output += '		<p class="coupon-status">';
 			output += '			<span class="coupon-usable">'+dataList[i].cpnUseYn+'</span>';
 			output += '			<span class="coupon-duration">'+dataList[i].regValidStartDay +'~'+ dataList[i].regValidEndDay+'</span>';
