@@ -250,6 +250,43 @@ function parseMyInfoTransaction(response) {
 	}
 }
 
+// 현재 패스워드 유효성 체크
+function startChkNowPasswordTransaction(url, params, type, dataType, callback) {
+	var that = this;
+    $.ajax({
+        url: urlHeader+url,
+        data: params,
+        type: type,
+        dataType: dataType,
+        headers: {
+            "Authorization":getCookieInfo('userCertTknVal')
+        },
+	    contentType : "application/json;charset=UTF-8", 
+        success: function(response) {
+            callback(response);
+        },
+        error: function(xhr, textStatus, errorThrown) {
+            console.log('실패 - ', xhr);
+        }
+    });
+}
+
+// 현제 패스워드 유효성 체크 결과
+function parseChkNowPasswordTransaction(response, url, params, type, dataType, $nowPass, $newPass) {
+	if (response.resultCd && response.resultMsg) {
+		if (response.resultCd == '1' && response.resultMsg == '성공') {
+			console.log('parseChkNowPasswordTransaction : ' + response.resultMsg);
+				startChangPasswordTransaction(url, params, type, dataType, function(response){
+					parseChangePasswordTransaction(response, $newPass);
+				});
+		} else {			
+			chkNowPasswordFail(false, $nowPass, response);
+		}
+	} else {
+		chkNowPasswordFail(false, $nowPass, response);
+	}
+}
+
 function startChangPasswordTransaction(url, params, type, dataType, callback) {
 	var that = this;
     $.ajax({

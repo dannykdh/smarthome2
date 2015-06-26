@@ -31,7 +31,8 @@ function changPasswordCheckForm($context) {
 	var $nowPass = $('#js_now_password');
 	var $newPass = $('#js_new_password');
 	var $newPassRe = $('#js_new_password_re');
-	var params = {}, url='v1/member/updateMember/pwd', type='POST', dataType = 'json';
+	var params = {}, url='v1/member/password/check', type='GET', dataType = 'json';
+	var paramsChange = {}, urlChange='v1/member/updateMember/pwd', typeChange='POST';
 
 	if ($nowPass.val().length == 0) {
 		U.invalidate($nowPass, '현재 비밀번호를 입력해주세요.'); 
@@ -72,11 +73,15 @@ function changPasswordCheckForm($context) {
 	}
 
 	params = {				
-		loginPwd:$newPass.val()
+		loginPwd: $nowPass.val()
 	};
 
-	startChangPasswordTransaction(url, params, type, dataType, function(response){
-		parseChangePasswordTransaction(response, $newPass);
+	paramsChange = {				
+		loginPwd: $newPass.val()
+	};
+
+	startChkNowPasswordTransaction(url, params, type, dataType, function(response){
+		parseChkNowPasswordTransaction(response, urlChange, paramsChange, typeChange, dataType, $nowPass, $newPass);
 	});
 }
 
@@ -538,6 +543,11 @@ function timeLimitCheck(response, $context, type) {
 		}
 	}, 1000);
 	//-- 남은 시간 표시 예제 종료
+}
+
+// 현재 비밀번호 유효성 체크 실패.
+function chkNowPasswordFail(validate, $el, response) {
+	U.invalidate_txt(validate, $el, response.resultMsg);
 }
 
 // 패스워드 변경 실패.
