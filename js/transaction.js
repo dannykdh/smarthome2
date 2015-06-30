@@ -1,6 +1,7 @@
 var urlInfo = window.location.href;
 var urlHeader;
 
+/* 서버에 따른 API분기
 //개발 서버
 if( urlInfo.indexOf('mobiledev') > 0 || urlInfo.indexOf('61.250.21.156') > 0 ) {
 	urlHeader = 'http://mobiledev.sktsmarthome.com:9002/';
@@ -10,7 +11,9 @@ if( urlInfo.indexOf('mobiledev') > 0 || urlInfo.indexOf('61.250.21.156') > 0 ) {
 //상용 서버
 } else {
 	urlHeader = 'https://mobile.sktsmarthome.com:9002/';
-}
+}*/
+
+urlHeader = 'http://mobiledev.sktsmarthome.com:9002/';
 
 // 로그인 트랜잭션 시작
 function startLoginTransaction(url, params, type, dataType, callback) {
