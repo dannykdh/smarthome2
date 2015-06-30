@@ -1,28 +1,16 @@
-// // 스테이징 서버
-// static NSString * const AFAppDotNetAPIBaseURLString = @"https://61.250.21.180:9002";
-// static NSString * const AFAppDotNetAPISecureBaseURLString = @"https://61.250.21.180:9002";
-// #else
+var urlInfo = window.location.href;
+var urlHeader;
 
-// // 개발 서버
-// static NSString * const AFAppDotNetAPIBaseURLString = @"http://mobiledev.sktsmarthome.com:9002";
-// static NSString * const AFAppDotNetAPISecureBaseURLString = @"http://mobiledev.sktsmarthome.com:9002";
-
-// #endif
-
-// #else
-
-// // 상용 서버
-// static NSString * const AFAppDotNetAPIBaseURLString = @"https://mobile.sktsmarthome.com:9002";
-// static NSString * const AFAppDotNetAPISecureBaseURLString = @"https://mobile.sktsmarthome.com:9002";
-
-
-// 개발 서버
-//var urlHeader = 'http://mobiledev.sktsmarthome.com:9002/';
-var urlHeader = 'http://61.250.21.156:9002/';
-// 스테이징 서버
-// var urlHeader = 'https://61.250.21.180:9002/';
-// 상용서버
-// var urlHeader = 'https://mobile.sktsmarthome.com:9002/';
+//개발 서버
+if( urlInfo.indexOf('mobiledev') > 0 || urlInfo.indexOf('61.250.21.156') > 0 ) {
+	urlHeader = 'http://mobiledev.sktsmarthome.com:9002/';
+//스테이징 서버	
+} else if( urlInfo.indexOf('mobilestg') > 0 || urlInfo.indexOf('61.250.21.180') > 0 ) {
+	urlHeader = 'https://mobilestg.sktsmarthome.com:9002/';
+//상용 서버
+} else {
+	urlHeader = 'https://mobile.sktsmarthome.com:9002/';
+}
 
 // 로그인 트랜잭션 시작
 function startLoginTransaction(url, params, type, dataType, callback) {
