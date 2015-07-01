@@ -603,7 +603,7 @@ jQuery(function($) {
 								});
 							});
 						} else {
-							isAuthCheck($js_auth);
+							//isAuthCheck($js_auth);
 							if (this.value.length == 6) {
 								chkValidate($js_auth);
 							}
