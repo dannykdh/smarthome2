@@ -13,7 +13,13 @@ if( urlInfo.indexOf('mobiledev') > 0 || urlInfo.indexOf('61.250.21.156') > 0 ) {
 	urlHeader = 'https://mobile.sktsmarthome.com:9002/';
 }*/
 
+// 서버에 따른 분기가 가능하기 전까지는 서버에 맞게 수정하여 빌드해야 함.
+//DEV 서버
 urlHeader = 'http://mobiledev.sktsmarthome.com:9002/';
+//STG 서버
+//urlHeader = 'https://mobilestg.sktsmarthome.com:9002/';
+//상용 서버
+//urlHeader = 'https://mobile.sktsmarthome.com:9002/';
 
 // 로그인 트랜잭션 시작
 function startLoginTransaction(url, params, type, dataType, callback) {
