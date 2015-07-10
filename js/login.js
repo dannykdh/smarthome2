@@ -204,7 +204,8 @@ function loginComplete(response) {
 function setCookieInfo(cookieData) {
 	var exdate = new Date();
     
-    exdate.setDate(exdate.getDate() + 1);
+    //exdate.setDate(exdate.getDate() + 1);	// 기존 쿠키 만료일 1일 에서 60분으로 변경함. 
+    exdate.setMinutes(exdate.getMinutes() + 60);
 
 	for (var key in cookieData) {
         document.cookie = key + "=" + (escape(cookieData[key]) + "; expires=" + exdate.toGMTString());
@@ -574,8 +575,15 @@ function chkValidate($el) {
 	U.validate($el);
 }
 
+//함수를 담을 변수 선언
+var loginLink = null;
+//제이쿼리 안에 있는 함수를 실행할 함수 만듦
+function reLogin() {
+    //제이쿼리 안에 있는 함수를 실행
+    loginLink();
+}
+
 // 로그인 여부에 따른 gnb-holder Update
 $(document).ready(function() {
 	setLoginBeforeAfterUpdate();
 });
-
