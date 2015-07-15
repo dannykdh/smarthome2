@@ -12,9 +12,15 @@ function isEmailIDCheck ($id) {
 }
 
 function isPasswordCheck($pwd) {
-	var regType1 = /^[A-Za-z0-9+]{7,30}$/;
+	var regType1 = /[a-zA-Z0-9_]/;
+	//영문, 숫자 이외의 특수문자
+    var regType2 = /[^a-zA-Z0-9_]/;	
 	var chk_num = $pwd.val().search(/[0-9]/g); 
     var chk_eng = $pwd.val().search(/[a-z]/ig);
+
+    if($pwd.val().length < 9) {
+		return false;    	
+    }
 
 	if (!regType1.test($pwd.val())) { 
 		return false;
@@ -23,6 +29,11 @@ function isPasswordCheck($pwd) {
     if(chk_num < 0 || chk_eng < 0) { 
         return false;
     }
+
+    //특수문자가 없다면 
+	if (!regType2.test($pwd.val())) { 
+		return false;
+	}  
 
 	return true;
 }
@@ -51,7 +62,7 @@ function changPasswordCheckForm($context) {
 	}	
 
 	if (!isPasswordCheck($newPass)) {
-		U.invalidate($newPass, '입력하신 비밀번호 형식이 올바르지 않습니다. (영문, 숫자 포함 8자 이상)');
+		U.invalidate($newPass, '입력하신 비밀번호 형식이 올바르지 않습니다. (영문, 숫자, 특수문자 포함 9자 이상)');
 		$newPass.focus();
 		return false;
 	} else {

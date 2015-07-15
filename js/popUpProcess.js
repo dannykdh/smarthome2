@@ -2,6 +2,9 @@ jQuery(function($) {
 	// home과 겹치는 부분은 home.html을 참고바랍니다.
 	var U = SmartHomeUI.init();
 
+	//임시로 웹POC 회원 가입과 로그인 버튼을 감추는 기능
+	//$('.account-field').hide();
+
 	// home과 겹치는 부분 시작
 	$('.bt-sign-up').on('click', function() {
 		signUp(true);
@@ -381,14 +384,17 @@ jQuery(function($) {
 						if(upass == "") {
 							U.invalidate($('#pass'), '비밀번호를 입력해 주세요.');
 							$('#pass').focus();	
-							return false;	
-						} else if(upass.length < 8) {
-							U.invalidate($('#pass'), '비밀번호를 8자 이상 입력해 주세요.');
-							$('#pass').focus();	
-							return false;													
+							return false;																			
 						} else {
 							U.validate($('#pass'));		
 						}	
+
+						if (!isPasswordCheck($('#pass'))) {
+							U.invalidate($('#pass'), '입력하신 비밀번호 형식이 올바르지 않습니다. (영문, 숫자, 특수문자 포함 9자 이상)');
+							return false;
+						} else {
+							U.validate($('#pass'));
+						}						
 						
 						if(upassre == "") {
 							U.invalidate($('#passre'), '비밀번호 확인을 입력해 주세요.');
@@ -402,14 +408,7 @@ jQuery(function($) {
 						} else {
 							U.validate($('#passre'));	
 						}
-
-						if (!isPasswordCheck($('#pass'))) {
-							U.invalidate($('#pass'), '입력하신 비밀번호 형식이 올바르지 않습니다. (영문, 숫자 포함 8자 이상)');
-							return false;
-						} else {
-							U.validate($('#pass'));
-						}
-							
+						
 						if(uname != "" && uemail != "" && upass != "" && upassre != "") { 
 							gotoJoinTransaction();
 						} else {
@@ -501,6 +500,9 @@ jQuery(function($) {
 	}
 
 	$('.bt-log-in').on('click', login);
+
+	//선언한 변수에 제이쿼리 안에서 호출할 함수 대입
+	loginLink = login;
 
 	function login() {
 		U.dialog({
