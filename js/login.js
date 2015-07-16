@@ -62,7 +62,7 @@ function changPasswordCheckForm($context) {
 	}	
 
 	if (!isPasswordCheck($newPass)) {
-		U.invalidate($newPass, '입력하신 비밀번호 형식이 올바르지 않습니다. (영문, 숫자, 특수문자 포함 9자 이상)');
+		U.invalidate($newPass, '입력하신 비밀번호 형식이 올바르지 않습니다.(영문,숫자,특수문자 포함 9자 이상)');
 		$newPass.focus();
 		return false;
 	} else {

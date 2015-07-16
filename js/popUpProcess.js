@@ -390,7 +390,7 @@ jQuery(function($) {
 						}	
 
 						if (!isPasswordCheck($('#pass'))) {
-							U.invalidate($('#pass'), '입력하신 비밀번호 형식이 올바르지 않습니다. (영문, 숫자, 특수문자 포함 9자 이상)');
+							U.invalidate($('#pass'), '입력하신 비밀번호 형식이 올바르지 않습니다.(영문,숫자,특수문자 포함 9자 이상)');
 							return false;
 						} else {
 							U.validate($('#pass'));
