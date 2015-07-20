@@ -1,21 +1,21 @@
 var urlInfo = window.location.href;
 var urlHeader;
 
-/* 서버에 따른 API분기
+/* 서버에 따른 API분기*/
 //개발 서버
-if( urlInfo.indexOf('mobiledev') > 0 || urlInfo.indexOf('61.250.21.156') > 0 ) {
+if( urlInfo.indexOf('dev') > 0 || urlInfo.indexOf('61.250.21.156') > 0 || urlInfo.indexOf('localhost') > 0) {
 	urlHeader = 'http://mobiledev.sktsmarthome.com:9002/';
 //스테이징 서버	
-} else if( urlInfo.indexOf('mobilestg') > 0 || urlInfo.indexOf('61.250.21.180') > 0 ) {
+} else if( urlInfo.indexOf('stg') > 0 || urlInfo.indexOf('61.250.21.180') > 0 ) {
 	urlHeader = 'https://mobilestg.sktsmarthome.com:9002/';
 //상용 서버
 } else {
 	urlHeader = 'https://mobile.sktsmarthome.com:9002/';
-}*/
+}
 
 // 서버에 따른 분기가 가능하기 전까지는 서버에 맞게 수정하여 빌드해야 함.
 //DEV 서버
-urlHeader = 'http://mobiledev.sktsmarthome.com:9002/';
+//urlHeader = 'http://mobiledev.sktsmarthome.com:9002/';
 //STG 서버
 //urlHeader = 'https://mobilestg.sktsmarthome.com:9002/';
 //상용 서버
@@ -257,6 +257,10 @@ function parseMyInfoTransaction(response) {
 			var $js_mem_address = $('#js_mem_address'); 	// rsdcDefltAddr + rsdcDetailAddr
 			var $js_mem_hphone = $('#js_mem_hphone');	// userMobileNo
 
+			if(!rsAddress) {
+				rsAddress =	"스마트홈 앱에서 등록 가능합니다.";
+			}
+
 			$js_mem_type.html(rsMemType);
 			$js_mem_address.html(rsAddress);
 			$js_mem_hphone.html(rsMemHPhone);
@@ -365,7 +369,7 @@ function parseUseCouponTransaction(response) {
 	if (response.resultCd && response.resultMsg) {
 		var rsUseProdList = response.useProdList;	// 사용중인 이용권 리스트
 		var rsRegCpnList = response.regCpnList;		// 등록한 쿠폰 리스트
-		var rsUseCpnList = response.useCpnList;		// 등록한 쿠폰 리스트
+		var rsUseCpnList = response.useCpnList;		// 사용중인 쿠폰 리스트
 
 		if (response.resultCd == '1' && response.resultMsg == '성공') {
 			console.log('parseUseCouponTransaction : ' + response.resultMsg);
@@ -385,6 +389,8 @@ function parseUseCouponTransaction(response) {
 				//for(var i=0; i<rsUseCpnList.length; i++) {
 					setCouponList(rsUseCpnList, 'UC');
 				//}
+			} else {
+				console.log("사용중인 쿠폰이 없습니다.");
 			}
 
 			if (!rsUseProdList && !rsRegCpnList && !rsRegCpnList || rsUseProdList.length == 0 && rsRegCpnList.length == 0 && rsRegCpnList.length == 0) {
@@ -439,11 +445,17 @@ function setCouponList(dataList, kind) {
 				payWayCdDp = '모바일';
 			}
 
+			//천단위 ,콤마
+			var numComma = function(num){
+			   num = String(num);
+			   return num.replace(/(\d)(?=(?:\d{3})+(?!\d))/g,"$1,");
+			};
+
 			output += '<li class="coupon h-item">';
 			output += '	<div class="coupon-holder">';
 			output += '		<p class="coupon-title">'+dataList[i].prodNm+'</p>';
-			output += '		<p class="coupon-payment">'+ autoPay +'<span>|</span>'+ payWayCdDp +'('+dataList[i].salePrc+'/월)';
-			output += '		<br>'+ dataList[i].userCnt +'</p>';
+			output += '		<p class="coupon-payment">'+ autoPay +'<span>|</span>'+ payWayCdDp +'('+numComma(dataList[i].salePrc)+'원/월, VAT포함)';
+			output += '		<br>정회원 '+ dataList[i].userCnt +'인</p>';
 			output += '		<p class="coupon-status">';
 			output += '			<span class="coupon-usable">사용중</span>';
 			output += '			<span class="coupon-duration">결제예정일 : 2015.03.15</span>';
@@ -497,6 +509,12 @@ function startMyInfoTransction(url, type, dataType, callback) {
         },
         error: function(xhr, textStatus, errorThrown) {
             console.log('실패 - ', xhr);
+            if(xhr.status == 401) {
+            	//타 단말에서 로그인 시 쿠키 정보 삭제하고 재로그인, 쿠키 정보 만료(60분 초과)
+            	alert('로그인이 정보가 만료되어 재로그인이 필요합니다.');
+            	deleteCookieInfo();
+            	reLogin();
+            }
         }
     });
 }

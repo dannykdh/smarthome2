@@ -3,7 +3,8 @@ var SmartHomeUI = (function($) {
 
 	var win = window, $win = $(win), doc = win.document, $doc = $(doc), body, $body,
 		BROWSER_NAMES = {CHROME: 'Chrome', MSIE: 'MSIE', FIREFOX: 'Firefox', SAFARI: 'Safari', OPERA: 'Opera'},
-		browser, components, dialog = {};
+		browser, components, dialog = {}, dialogs = [],
+		ZINDEX_LAYER = 1900, ZINDEX_DIALOG = 2000, ZINDEX_GAP = 1000;
 
 	browser = (function() {
 		var t,
@@ -61,6 +62,30 @@ var SmartHomeUI = (function($) {
 		return typeof fn === 'function';
 	}
 
+	function pushDialog(dialog) {
+		dialogs.push(dialog);
+	}
+
+	function countDialog() {
+		return dialogs.length;
+	}
+
+	function calcNewZIndexOfLayer(count) {
+		return count * ZINDEX_GAP + ZINDEX_LAYER;
+	}
+
+	function calcNewZIndexOfDialog(count) {
+		return count * ZINDEX_GAP + ZINDEX_DIALOG;
+	}
+
+	function getDialog() {
+		return dialogs[dialogs.length - 1];
+	}
+
+	function popDialog() {
+		return dialogs.pop();
+	}
+
 	function allowBubbleClickEvent(ev) {
 		return  ($.inArray(ev.target.type || '', ['submit', 'image', 'checkbox']) >= 0) ||
 			($.inArray(ev.target.tagName.toLowerCase() || '', ['label', 'a']) >= 0);
@@ -71,7 +96,7 @@ var SmartHomeUI = (function($) {
 		layer.className = 'block-layer';
 
 		$(layer).on('wheel', function() {
-			return false;
+			return components.length < 1;
 		}).on('click', function(ev) {
 			return allowBubbleClickEvent(ev);
 		});
@@ -88,7 +113,7 @@ var SmartHomeUI = (function($) {
 	}
 
 	function isDialogOpened() {
-		return !!dialog.target;
+		return countDialog() > 0;
 	}
 
 	function createDialog(id) {
@@ -108,17 +133,42 @@ var SmartHomeUI = (function($) {
 	}
 
 	function setDialog(config) {
-		dialog.target = createDialog(config.templateId);
-		dialog.onOpen = config.onOpen || onOpenDefault;
-		dialog.onClose = config.onClose || onCloseDefault;
+		if (countDialog() < 1) {
+			$body.addClass('has-dialog');
+		}
+
+		pushDialog({
+			target: adjustButtonWidth(createDialog(config.templateId)),
+			onOpen: config.onOpen || onOpenDefault,
+			onClose: config.onClose || onCloseDefault
+		});
+	}
+
+	function adjustButtonWidth(el) {
+		var $buttons = $(el).find('.dialog-control-panel').find('button');
+
+		if ($buttons.length > 1) {
+			$buttons.css({width: 130});
+		}
+
+		return el;
 	}
 
 	function openDialog(config) {
-		var layer;
+		var layer, dialog, index;
 
 		setDialog(config);
-
+		dialog = getDialog();
+		index = countDialog() - 1;
 		layer = createBlockLayer();
+
+		$(layer).css({
+			zIndex: calcNewZIndexOfLayer(index)
+		});
+		$(dialog.target).css({
+			zIndex: calcNewZIndexOfDialog(index)
+		});
+
 		layer.appendChild(dialog.target);
 		body.appendChild(layer);
 
@@ -129,11 +179,12 @@ var SmartHomeUI = (function($) {
 	}
 
 	function replaceDialog(config) {
+		var dialog = getDialog();
+
 		dialog.onClose(dialog.target, function() {
-			var oldEl = dialog.target, layer = oldEl.parentNode;
-
+			var old = popDialog(), oldEl = old.target, layer = oldEl.parentNode, dialog;
 			setDialog(config);
-
+			dialog = getDialog();
 			layer.replaceChild(dialog.target, oldEl);
 			dialog.onOpen(dialog.target);
 			repositionDialog();
@@ -145,7 +196,7 @@ var SmartHomeUI = (function($) {
 			return;
 		}
 
-		var $el = $(dialog.target), $parent = $el.parent();
+		var $el = $(getDialog().target), $parent = $el.parent();
 
 		$el.css({
 			top: Math.round(($parent.height() - $el.outerHeight(true)) / 2),
@@ -155,19 +206,23 @@ var SmartHomeUI = (function($) {
 
 	function closeDialog() {
 		if (isDialogOpened()) {
+			var dialog = getDialog();
 			dialog.onClose(dialog.target, removeDialog);
 		}
 	}
 
 	function removeDialog() {
-		if (!dialog.target) {
+		if (!isDialogOpened()) {
 			return;
 		}
+		if (countDialog() < 2) {
+			$body.removeClass('has-dialog');
+		}
 
-		$(dialog.target.parentNode).fadeOut(function() {
+		$(popDialog().target.parentNode).fadeOut(function() {
 			if (this.parentNode === body) {
 				body.removeChild(this);
-				dialog = {};
+				dialog = {};	//개발 추가
 				$win.trigger('dialogclose');
 			}
 		});
@@ -274,7 +329,7 @@ var SmartHomeUI = (function($) {
 		$win.on('scroll', function(ev) {
 			var scrollTop = $win.scrollTop();
 
-			/*if (scrollTop < 200) {
+			/*개발 추가 if (scrollTop < 200) {
 				$body.removeClass('state-1').addClass('state-0');
 			} else if (scrollTop < 400) {
 				$body.removeClass('state-2').addClass('state-1');
@@ -291,7 +346,7 @@ var SmartHomeUI = (function($) {
 	}
 
 	function validate(valid, $el, msg) {
-		$el.parent().find('.err-msg').text(msg || '');		
+		$el.parent().find('.err-msg').text(msg || '');
 
 		if (valid) {
 			$el.removeClass('invalidate').addClass('validate');
@@ -302,6 +357,7 @@ var SmartHomeUI = (function($) {
 		}
 	}
 
+	//개발 추가 시작 
 	function validate_txt(validate, $el, msg) {
 		U.invalidate($el);
 		// 엘리먼트 생성
@@ -327,7 +383,7 @@ var SmartHomeUI = (function($) {
 
 		// 생성된 엘리먼트 삽입 위치
 		$el.after($addTxt);		
-	}
+	}	//개발 추가 끝
 
 	return {
 		$body: function() {
@@ -341,13 +397,18 @@ var SmartHomeUI = (function($) {
 		},
 		browser: browser,
 		calcFitSizeKeepingAspect: calcFitSizeKeepingAspect,
-		dialog: function(config) {
+		dialog: function(overlay, config) {
+			if (typeof overlay !== 'boolean') {
+				config = overlay;
+				overlay = false;
+			}
+
 			if (!config) {
 				closeDialog();
 				return this;
 			}
 
-			if (isDialogOpened()) {
+			if (!overlay && isDialogOpened()) {
 				replaceDialog(config);
 			} else {
 				openDialog(config);
@@ -404,18 +465,19 @@ var SmartHomeUI = (function($) {
 			repositionDialog();
 			return this;
 		},
-		invalidate_txt: function(validate, el, msg) {
-			validate_txt(validate, $(el), msg);
-			repositionDialog();
-			return this;
-		},
 		validate: function(el) {
 			validate(true, $(el));
 			repositionDialog();
 		},
+		//개발 추가 시작
+		invalidate_txt: function(validate, el, msg) {
+			validate_txt(validate, $(el), msg);
+			repositionDialog();
+			return this;
+		},		
 		closeDialog: function() {
 			closeDialog();
-		}
+		}	//개발 추가 끝
 	};
 
 })(jQuery);

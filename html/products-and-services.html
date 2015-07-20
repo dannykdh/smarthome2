@@ -485,6 +485,43 @@
 		</div>
 	</div>
 </script>
+<script id="dialog-template-inquiry-success" type="text/x-dialog-template">
+	<div class="dialog dialog-inquiry-success">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">메일 전송 완료</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel dialog-content-wide">
+				<p class="result">
+					<strong>메일이 성공적으로 전송되었습니다.</strong>
+				</p>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-confirm">확인</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="dialog-template-inquiry-failure" type="text/x-dialog-template">
+	<div class="dialog dialog-inquiry-failure">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">메일 전송 실패</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<p class="result">
+					<strong>메일 전송에 실패하였습니다.</strong><br>
+					다시 시도해주십시오.
+				</p>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-confirm">확인</button>
+			</div>
+		</div>
+	</div>
+</script>
 <script id="dialog-template-change-password" type="text/x-dialog-template">
 	<div class="dialog dialog-change-password">
 		<button class="bt-dialog-close" type="button">Close</button>
@@ -591,98 +628,168 @@
 		<p>다양한 기기를 연결하여 안전하고 편리한 우리 집을 완성해 보세요.</p>
 	</div>
 	<div id="holder" class="products-and-services-page">
+		<!-- 수정 시작 : 20150717_01 -->
 		<ul class="services h-bar">
 			<li class="service h-item">
 				<div class="service-thumb-holder">
-					<img class="service-thumb" src="../img/ex-thumb-boiler.png" alt="나비엔 콘덴싱 보일러 썸네일">
+					<img class="service-thumb" src="../img/product/ex-thumb-boiler.png" alt="나비엔 콘덴싱 보일러 썸네일">
 				</div>
 				<h2 class="service-title">
-					<img src="../img/ex-title-boiler.png" alt="나비엔 콘덴싱 보일러">
+					<img src="../img/product/ex-tile-boiler.png" alt="나비엔 콘덴싱 보일러">
 					<span>나비엔 콘덴싱 보일러</span>
 				</h2>
 				<p class="service-text">
-					당신이 집에 도달하기 전,<br>
-					나비엔 콘덴싱으로 집안을 따듯하게<br>
-					설정할 수 있습니다.
+					당신이 집에 도달하기 전, 집안을 따뜻하게<br>
+					 만들어 드립니다.
 				</p>
 				<a class="bt-buy" href="" target="_blank">구매하기</a>
 				<div class="service-company-logo-holder">
-					<a href="http://www.naver.com" target="_blank"><img class="service-company-logo" src="../img/ex-logo-01.png" alt="경동 나비엔"></a>
+					<a href="http://www.naver.com" target="_blank"><img class="service-company-logo" src="../img/product/ex-logo-01.png" alt="경동 나비엔"></a>
 				</div>
 			</li>
 			<li class="service h-item">
 				<div class="service-thumb-holder">
-					<img class="service-thumb" src="../img/ex-thumb-dehumidifier.png" alt="위니아 제습기 썸네일">
+					<img class="service-thumb" src="../img/product/ex-thumb-dehumidifier.png" alt="위니아 제습기 썸네일">
 				</div>
 				<h2 class="service-title">
-					<img src="../img/ex-title-dehumidifier.png" alt="위니아 제습기">
+					<img src="../img/product/ex-title-dehumidifier.png" alt="위니아 제습기">
 					<span>위니아 제습기</span>
 				</h2>
 				<p class="service-text">
-					당신이 집에 도달하기 전,<br>
-					나비엔 콘덴싱으로 집안을 따듯하게<br>
-					설정할 수 있습니다.
+					파워 제습으로 더 빠르게! 습기 걱정 없는<br>
+					쾌적한 환경을 만들어 드립니다.
 				</p>
 				<a class="bt-buy" href="" target="_blank">구매하기</a>
 				<div class="service-company-logo-holder">
-					<a href="http://www.naver.com" target="_blank"><img class="service-company-logo" src="../img/ex-logo-02.png" alt="위니아"></a>
+					<a href="http://www.naver.com" target="_blank"><img class="service-company-logo" src="../img/product/ex-logo-02.png" alt="위니아"></a>
 				</div>
 			</li>
 			<li class="service h-item">
 				<div class="service-thumb-holder">
-					<img class="service-thumb" src="../img/ex-thumb-doorlock.png" alt="아이레보 도어락 썸네일">
+					<img class="service-thumb" src="../img/product/ex-thumb-aircon.png" alt="오텍캐리어 에어컨 썸네일">
 				</div>
 				<h2 class="service-title">
-					<img src="../img/ex-title-doorlock.png" alt="아이레보 도어락">
-					<span>아이레보 도어락</span>
+					<img src="../img/product/ex-title-aircon.png" alt="오텍캐리어 에어컨">
+					<span>오텍캐리어 에어컨</span>
 				</h2>
 				<p class="service-text">
-					당신이 집에 도달하기 전,<br>
-					나비엔 콘덴싱으로 집안을 따듯하게<br>
-					설정할 수 있습니다.
+					롱 펀치 허리케인 쾌속 냉방으로 시원하게!<br>
+					집안 구석 구석 시원한 우리집을<br>
+					만들어 드립니다.
 				</p>
 				<a class="bt-buy" href="" target="_blank">구매하기</a>
 				<div class="service-company-logo-holder">
-					<a href="http://www.naver.com" target="_blank"><img class="service-company-logo" src="../img/ex-logo-03.png" alt="아이레보"></a>
+					<a href="http://www.naver.com" target="_blank"><img class="service-company-logo" src="../img/product/ex-logo-03.png" alt="아이레보"></a>
 				</div>
 			</li>
 			<li class="service h-item">
 				<div class="service-thumb-holder">
-					<img class="service-thumb" src="../img/ex-thumb-boiler-dim.png" alt="나비엔 콘덴싱 보일러 썸네일">
+					<img class="service-thumb" src="../img/product/ex-thumb-gas-time.png" alt="타임밸브 가스차단기 썸네일">
 				</div>
 				<h2 class="service-title">
-					<img src="../img/ex-title-boiler-dim.png" alt="나비엔 콘덴싱 보일러">
-					<span>나비엔 콘덴싱 보일러</span>
+					<img src="../img/product/ex-title-gas-time.png" alt="타임밸브 가스차단기">
+					<span>타임밸브 가스차단기</span>
 				</h2>
 				<p class="service-text">
-					당신이 집에 도달하기 전,<br>
-					나비엔 콘덴싱으로 집안을 따듯하게<br>
-					설정할 수 있습니다.
+					깜빡깜빡하는 가스 밸브 이제 타임밸브<br>
+					가스 차단기가 스마트폰으로 안전한<br>
+					가정을 만들어 드립니다.
 				</p>
-				<!--<a class="bt-buy" href="" target="_blank">구매하기</a>-->
+				<a class="bt-buy" href="" target="_blank">구매하기</a>
 				<div class="service-company-logo-holder">
-					<img class="service-company-logo" src="../img/ex-logo-01-dim.png" alt="경동 나비엔">
+					<img class="service-company-logo" src="../img/product/ex-logo-04.png" alt="타임밸브 가스차단기">
 				</div>
 			</li>
 			<li class="service h-item">
 				<div class="service-thumb-holder">
-					<img class="service-thumb" src="../img/ex-thumb-doorlock-dim.png" alt="아이레보 도어락 썸네일">
+					<img class="service-thumb" src="../img/product/ex-thumb-doorlock.png" alt="게이트맨 도어락 썸네일">
 				</div>
 				<h2 class="service-title">
-					<img src="../img/ex-title-doorlock-dim.png" alt="아이레보 도어락">
-					<span>아이레보 도어락</span>
+					<img src="../img/product/ex-title-doorlock.png" alt="게이트맨 도어락">
+					<span>게이트맨 도어락</span>
 				</h2>
 				<p class="service-text">
-					당신이 집에 도달하기 전,<br>
-					나비엔 콘덴싱으로 집안을 따듯하게<br>
-					설정할 수 있습니다.
+					스마트폰으로 우리집 철통 보안! 도어락의<br>
+					상태를 실시간으로 알려 드립니다.                   
+				</p>
+				<a class="bt-buy" href="" target="_blank">구매하기</a>
+				<div class="service-company-logo-holder">
+					<img class="service-company-logo" src="../img/product/ex-logo-05.png" alt="게이트맨 도어락">
+				</div>
+			</li>
+			<li class="service h-item">
+				<div class="service-thumb-holder">
+					<img class="service-thumb" src="../img/product/ex-thumb-mcttalkz-sk.png" alt="MCT Talk Z 썸네일">
+				</div>
+				<h2 class="service-title">
+					<img src="../img/product/ex-title-mcttalkz-sk.png" alt="MCT Talk Z">
+					<span>MCT Talk Z</span>
+				</h2>
+				<p class="service-text">
+					집안의 기기들이 말할 수 있는 세상,<br>
+					스마트한 홈 라이프를 만들어 드립니다.
+				</p>
+				<a class="bt-buy" href="" target="_blank">구매하기</a>
+				<div class="service-company-logo-holder">
+					<img class="service-company-logo" src="../img/product/ex-logo-06.png" alt="coming soon">
+				</div>
+			</li>
+			<li class="service h-item">
+				<div class="service-thumb-holder">
+					<img class="service-thumb" src="../img/product/ex-thumb-robot-dim.png" alt="coming soon">
+				</div>
+				<h2 class="service-title">
+					<img src="../img/product/ex-title-aircon-dim.png" alt="coming soon">
+					<span>에어컨</span>
+				</h2>
+				<p class="service-text service-text-dimmed">
+					우리집 플러그를 똑똑하게!<br>
+					스마트 콘센트로 플러그 연결 기기별<br>
+					사용시간을 비교할 수 있습니다.
 				</p>
 				<!--<a class="bt-buy" href="" target="_blank">구매하기</a>-->
 				<div class="service-company-logo-holder">
-					<img class="service-company-logo" src="../img/ex-logo-03-dim.png" alt="아이레보">
+					<img class="service-company-logo" src="../img/product/ex-logo-06-dim.png" alt="coming soon">
+				</div>
+			</li> 
+			<li class="service h-item">
+				<div class="service-thumb-holder">
+					<img class="service-thumb" src="../img/product/ex-thumb-smartsocket-dim.png" alt="coming soon">
+				</div>
+				<h2 class="service-title">
+					<img src="../img/product/ex-title-aircon-dim.png" alt="coming soon">
+					<span>에어컨</span>
+				</h2>
+				<p class="service-text service-text-dimmed">
+					우리집 플러그를 똑똑하게!<br>
+					스마트 콘센트로 플러그 연결 기기별<br>
+					사용시간을 비교할 수 있습니다.
+				</p>
+				<!--<a class="bt-buy" href="" target="_blank">구매하기</a>-->
+				<div class="service-company-logo-holder">
+					<img class="service-company-logo" src="../img/product/ex-logo-06-dim.png" alt="coming soon">
+				</div>
+			</li>
+			<li class="service h-item">
+				<div class="service-thumb-holder">
+					<img class="service-thumb" src="../img/product/ex-thumb-dehumidifier-dim.png" alt="coming soon">
+				</div>
+				<h2 class="service-title">
+					<img src="../img/product/ex-title-aircon-dim.png" alt="coming soon">
+					<span>에어컨</span>
+				</h2>
+				<p class="service-text service-text-dimmed">
+					우리집 플러그를 똑똑하게!<br>
+					스마트 콘센트로 플러그 연결 기기별<br>
+					사용시간을 비교할 수 있습니다.
+				</p>
+				<!--<a class="bt-buy" href="" target="_blank">구매하기</a>-->
+				<div class="service-company-logo-holder">
+					<img class="service-company-logo" src="../img/product/ex-logo-06-dim.png" alt="coming soon">
 				</div>
 			</li>
 		</ul>
+		<!--// 수정 종료 : 20170517_01 -->
 		<div class="contact-us">
 			<p><strong>스마트홈</strong>과 서비스 협력을 통해 스마트한 스토리를 만들어 보세요.</p>
 			<button type="button" class="bt-alliance">제휴문의</button>

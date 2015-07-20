@@ -14,12 +14,13 @@ jQuery(function($) {
 		logOut();
 	});
 	
-	$('.bt-change-password').on('click', function() {
+	//비밀번호 변경
+	$('.bt-pwd-chng').on('click', function() {
 		changePassword();
 	});
 
 	//회원 탈퇴
-	$('.bt-withdraw').on('click', function() {
+	$('.member-leave-link').on('click', function() {
 		withDraw();
 	});
 

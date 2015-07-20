@@ -122,9 +122,9 @@ body {
 	top: 50%;
 	right: 20px;
 	z-index: 1000;
-	width: 10px;
-	height: 82px;
-	margin-top: -41px;
+	width: 14px;
+	height: 98px;
+	margin-top: -49px;
 	transition: right 1s ease-out;
 }
 .has-event[data-card=intro] #pager {
@@ -146,21 +146,19 @@ body {
 }
 .bt-pager {
 	display: block;
-	width: 10px;
-	height: 10px;
-	border-radius: 5px;
-	background: rgba(0, 0, 0, .2);
+	width: 16px;
+	height: 16px;
 	text-indent: 200%;
 	white-space: nowrap;
 	overflow: hidden;
-	transition: background-color .5s ease-out;
+	background: url(../img/bt-pager.png) no-repeat;
 }
 .bt-pager:hover,
 [data-card=intro] .bt-pager-intro,
 [data-card=status] .bt-pager-status,
 [data-card=mode] .bt-pager-mode,
 [data-card=security] .bt-pager-security {
-	background: #fff;
+	background: url(../img/bt-pager-hover.png) no-repeat;
 }
 
 #event-holder {

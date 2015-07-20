@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta charset="utf-8">
-<title>계정 관리 - 스마트홈</title>
+<title>내 정보 관리 - 스마트홈</title>
 <meta name="viewport" content="width=1349px">
 <link rel="stylesheet" type="text/css" href="../css/base.css">
 <link rel="stylesheet" type="text/css" href="../css/smarthomeui.css">
@@ -12,6 +12,8 @@
 <script type="text/javascript" src="../js/login.js"></script>
 <script type="text/javascript" src="../js/transaction.js"></script>
 <script type="text/javascript" src="../js/popUpProcess.js"></script>
+<script type="text/javascript" src="../js/paymentPop.js"></script>
+<script type="text/javascript" src="../js/paymentPop.js"></script>
 <script>
 	$('document').ready(function(){
 		if (isLoginCheck()) {
@@ -23,6 +25,12 @@
 			var params = {}, url='v1/payment/pay', type='GET', dataType = 'json';
 			startUseCouponTransction(url, type, dataType, function(response){
 				parseUseCouponTransaction(response);		
+			});	
+
+			//구매 가능한 이용권 - 추가됨
+			var params = {}, url='v1/payment/pay/available', type='GET', dataType = 'json';
+			startBargainousTicketTransction(url, type, dataType, function(response){
+				parseBargainousTicketTransaction(response);		
 			});	
 		} else {
 			$('body').removeClass('has-coupon');
@@ -502,6 +510,43 @@
 		</div>
 	</div>
 </script>
+<script id="dialog-template-inquiry-success" type="text/x-dialog-template">
+	<div class="dialog dialog-inquiry-success">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">메일 전송 완료</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel dialog-content-wide">
+				<p class="result">
+					<strong>메일이 성공적으로 전송되었습니다.</strong>
+				</p>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-confirm">확인</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="dialog-template-inquiry-failure" type="text/x-dialog-template">
+	<div class="dialog dialog-inquiry-failure">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">메일 전송 실패</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<p class="result">
+					<strong>메일 전송에 실패하였습니다.</strong><br>
+					다시 시도해주십시오.
+				</p>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-confirm">확인</button>
+			</div>
+		</div>
+	</div>
+</script>
 <script id="dialog-template-change-password" type="text/x-dialog-template">
 	<div class="dialog dialog-change-password">
 		<button class="bt-dialog-close" type="button">Close</button>
@@ -595,6 +640,7 @@
 				<li class="account h-item"><button type="button" class="bt-log-in">로그인</button></li>
 			</ul>
 			<ul class="account-for-user h-bar">
+				<li class="account h-item"><p class="gnb-tit">이용권 / 쿠폰</p></li>
 				<li class="account h-item"><a class="gnb-user-name" href="account.html">홍길동 님</a></li>
 				<li class="account h-item"><button type="button" class="bt-log-out">로그아웃</button></li>
 			</ul>
@@ -603,8 +649,9 @@
 </header>
 <div id="container">
 	<div id="holder" class="account-page">
-		<h1 class="page-title">계정 관리</h1>
-		<p class="page-description">사용자 프로필 수정 및 이용권 구매는 Mobile App을 통해서 제공됩니다.</p>
+		<!-- 수정 시작 : 20150717_01 -->
+		<h1 class="page-title">내 정보 관리</h1>
+		<p class="page-description">개인 정보 수정 및 이용권 구매는 Mobile App을 통해서 제공됩니다.</p>
 		<div class="store-holder">
 			<ul class="stores h-bar">
 				<li class="store h-item"><a class="bt-tstore" href="http://www.tstore.co.kr/userpoc/apps/view?pid=0000687485" target="_blank">TStore</a></li>
@@ -614,47 +661,70 @@
 		</div>
 		<div class="table">
 			<div class="table-header h-bar">
-				<span class="table-label h-item">회원 등급</span>
-				<span class="table-data h-item" id="js_mem_type">정회원</span>
-				<a class="bt-withdraw" href="withdraw.html">회원 탈퇴</a>
+				<div class="table-label h-item">회원 정보</div>
+				<ul class="user-info-holder">
+					<li class="user-info-item user-level">
+						<p class="user-info-title">&middot;&nbsp;회원 등급&nbsp;&#58;&nbsp;</p>
+						<p class="user-info-content" id="js_mem_type"></p>
+					</li>
+					<li class="user-info-item user-addr">
+						<p class="user-info-title">&middot;&nbsp;주소&nbsp;&#58;&nbsp;</p>
+						<p class="user-info-content" id="js_mem_address"></p>
+					</li>
+					<li class="user-info-item user-phne">
+						<p class="user-info-title">&middot;&nbsp;이동전화&nbsp;&#58;&nbsp;</p>
+						<p class="user-info-content" id="js_mem_hphone"></p>
+					</li>
+				</ul>
+				<div class="account-btn-holder">
+					<button type="button" class="bt-pwd-chng">비밀번호변경</button>
+				</div>
 			</div>
 			<div class="table-body">
 				<ul class="table-items">
 					<li class="table-item table-item-coupon">
-						<span class="table-label">사용 중인 이용권/쿠폰</span>
+						<div class="table-item-header">
+							<span class="table-label">나의 이용권 / 쿠폰</span>
+							<span class="used-amounts"><a href="usage-list.html">이용내역 보기</a></span>
+						</div>
 						<div class="coupons-holder">
 							<div class="no-coupon">
 								<p class="coupon-empty">사용 가능한 이용권/쿠폰이 없습니다.</p>
 							</div>
 							<ul class="coupons h-bar">
 								<!-- <li class="coupon h-item">
-									<div class="coupon-holder">
+									<div class="coupon-holder has-coupon-active">
+										<div class="coupon-status-sign">사용중</div>
 										<p class="coupon-title">가족 이용권</p>
 										<p class="coupon-payment">
 											자동 결제 <span>|</span> 휴대폰 결제 (2,000원/월)<br>
 											5인용(Host 회원 1인 + Sub 회원 4인)
 										</p>
 										<p class="coupon-status">
-											<span class="coupon-usable">사용중</span>
 											<span class="coupon-duration">결제예정일 : 2015.03.15</span>
 										</p>
+										<div class="bt-coupon-holder has-bt-group">
+											<button class="bt-coupon-item coupon-bt-type-chg" type="button">이용권 변경</button>
+											<button class="bt-coupon-item coupon-bt-type-cancel" type="button">자동결제 해지</button>
+										</div>
 									</div>
 								</li>
 								<li class="coupon h-item">
-									<div class="coupon-holder has-coupon-ribbon">
+									<div class="coupon-holder has-coupon-ribbon has-coupon-active">
+										<div class="coupon-status-sign">사용중</div>
 										<p class="coupon-title">경동 나비엔 보일러</p>
 										<p class="coupon-payment">
 											6개월 이용 쿠폰<br>
 											5인용(Host 회원 1인 + Sub 회원 4인)
 										</p>
 										<p class="coupon-status">
-											<span class="coupon-usable">사용중</span>
 											<span class="coupon-duration">2015.03.15 - 2015.09.15</span>
 										</p>
 									</div>
 								</li>
 								<li class="coupon h-item">
 									<div class="coupon-holder has-coupon-ribbon">
+										<div class="coupon-status-sign">사용중</div>
 										<p class="coupon-title">경동 나비엔 보일러</p>
 										<p class="coupon-payment">
 											6개월 이용 쿠폰<br>
@@ -663,10 +733,14 @@
 										<p class="coupon-status">
 											<span class="coupon-duration">이용기간 : 2015.03.15 - 2015.09.15</span>
 										</p>
+										<div class="bt-coupon-holder">
+											<button class="bt-coupon-item coupon-bt-type-use" type="button">쿠폰 사용</button>
+										</div>
 									</div>
 								</li>
 								<li class="coupon h-item">
 									<div class="coupon-holder has-coupon-ribbon">
+										<div class="coupon-status-sign">사용중</div>
 										<p class="coupon-title">경동 나비엔 보일러</p>
 										<p class="coupon-payment">
 											6개월 이용 쿠폰<br>
@@ -675,11 +749,14 @@
 										<p class="coupon-status">
 											<span class="coupon-duration">이용 기간 : 2015.03.15 - 2015.09.15</span>
 										</p>
+										<div class="bt-coupon-holder">
+											<button class="bt-coupon-item coupon-bt-type-use" type="button">쿠폰 사용</button>
+										</div>
 									</div>
 								</li>
 								<li class="coupon h-item">
 									<div class="coupon-holder is-placeholder">
-
+										
 									</div>
 								</li>
 								<li class="coupon h-item">
@@ -689,23 +766,14 @@
 								</li> -->
 							</ul>
 						</div>
-					</li>
-					<li class="table-item table-item-address h-bar">
-						<span class="table-label h-item">주소</span>
-						<span class="table-data h-item" id="js_mem_address"></span>
-					</li>
-					<li class="table-item table-item-phone h-bar">
-						<span class="table-label h-item">이동전화</span>
-						<span class="table-data h-item" id="js_mem_hphone"></span>
-					</li>
-					<li class="table-item table-item-password h-bar">
-						<span class="table-label h-item">비밀번호</span>
-						<span class="table-data h-item">최종 변경일 : 2015년 05월 10일</span>
-						<button type="button" class="bt-change-password">비밀번호 변경</button>
-					</li>
+					</li>					
 				</ul>
-			</div>
+			</div>			
 		</div>
+		<div class="member-leave-info">
+			<p><strong>&middot;&nbsp;</strong>탈퇴를 원하시면 회원 탈퇴 버튼을 눌러주세요.</p><a class="member-leave-link">회원 탈퇴</a>
+		</div>
+		<!--// 수정종료 : 20150717_01 -->
 	</div>
 	<footer id="footer">
 		<div class="footer-field">

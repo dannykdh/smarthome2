@@ -12,6 +12,9 @@ body {
 	font: 12px/21px '돋움', dotum, gulim, verdana, 'sans-serif';
 	color: #666;
 }
+body.has-dialog {
+	overflow: hidden;
+}
 
 legend:not(.displayed) {
 	position: absolute;
@@ -50,7 +53,14 @@ input[type=checkbox] + label {
 input[type=checkbox]:checked + label {
 	background-position: 0 -24px;
 }
-
+caption,
+.ui-label {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip:rect(1px, 1px, 1px, 1px);
+}
 strong {
 	font-weight: bold;
 }
@@ -74,18 +84,18 @@ textarea {
 	padding: 10px 12px;
 }
 ::-webkit-input-placeholder {
-	color:    #ddd;
+	color:    #ccc;
 }
 :-moz-placeholder {
-	color:    #ddd;
+	color:    #ccc;
 	opacity:  1;
 }
 ::-moz-placeholder {
-	color:    #ddd;
+	color:    #ccc;
 	opacity:  1;
 }
 :-ms-input-placeholder {
-	color:    #ddd;
+	color:    #ccc;
 }
 .invalidate {
 	padding-right: 40px;
@@ -102,12 +112,14 @@ textarea {
 }
 .err-msg {
 	display: none;
-	height: 17px;
+	min-height: 17px;
 	margin-top: 10px;
 	line-height: 17px;
 	font-size: 11px;
 	color: #f00;
 	text-align: left;
+	white-space: normal;
+	word-break: break-all;
 }
 .invalidate ~ .err-msg {
 	display: block;
@@ -395,9 +407,11 @@ textarea {
 	background-position: 0 -25px;
 }
 
-#gnb .gnb-user-name {
+#gnb .gnb-user-name {  /* 2015.07.09 수정 */
+	padding: 0 4px 0 3px ;
 	line-height: 25px;
-	color: #333;
+	font-size: 12px;
+	color: #333; 
 	text-indent: 0;
 	text-decoration: underline;
 }
@@ -566,7 +580,7 @@ textarea {
 	background: url(../img/bt-terms-and-conditions.png) no-repeat;
 }
 .account-page .page-title {
-	background: url(../img/ti-account-page.png) no-repeat;
+	background: url(../img/ti-account-page-02.png) no-repeat;
 }
 
 .page-description {
@@ -584,7 +598,7 @@ textarea {
 }
 .account-page > .page-description {
 	height: 15px;
-	background: url(../img/bg-account-page-description.png) no-repeat;
+	background: url(../img/bg-account-page-description-02.png) no-repeat;
 }
 
 .withdraw-page section {
@@ -733,6 +747,9 @@ textarea {
 	line-height: 20px;
 	color: #999;
 }
+.service-text.service-text-dimmed {
+	/*opacity: .4;*/
+}
 .bt-buy {
 	display: block;
 	width: 51px;
@@ -850,8 +867,8 @@ textarea {
 	border-radius: 3px;
 	padding-top: 110px;
 }
-.account-page .coupon-empty {
-	padding-top: 77px;
+.account-page .coupon-empty { /* 2015.07.09 수정 */
+	padding-top: 80px;
 	font-size: 14px;
 	font-weight: bold;
 	color: #333;
@@ -870,7 +887,7 @@ textarea {
 }
 
 .account-page .coupon {
-	margin: 9px 0 0 9px;
+	margin: 15px 0 0 15px;
 }
 .account-page .coupon:nth-child(1),
 .account-page .coupon:nth-child(2),
@@ -880,7 +897,8 @@ textarea {
 .account-page .coupon:nth-child(3n+1) {
 	margin-left: 0;
 }
-.account-page .coupon-holder {
+/* 2015.07.09 수정으로 삭제 */
+/* .account-page .coupon-holder {
 	position: relative;
 	width: 260px;
 	height: 142px;
@@ -892,14 +910,15 @@ textarea {
 }
 .account-page .coupon-holder.is-placeholder {
 	background-image: url(../img/bg-coupon-placeholder.png);
-}
+}*/
 .account-page .coupon-holder .coupon-title {
 	font-size: 14px;
 	font-weight: bold;
 	color: #333;
 }
 .account-page .coupon-holder .coupon-payment {
-	padding-top: 17px;
+	/* padding-top: 17px; */
+	padding-top: 15px; /* 2015.07.09 수정 */
 	line-height: 21px;
 	color: #666;
 }
@@ -907,7 +926,7 @@ textarea {
 	color: #ddd;
 }
 .account-page .coupon-holder .coupon-status {
-	padding-top: 14px;
+	/* padding-top: 14px; */ /* 2015.07.09 수정으로 삭제 */
 	font-size: 12px;
 }
 .account-page .coupon-holder .coupon-usable {
@@ -948,13 +967,11 @@ textarea {
 	right: 0;
 	bottom: 0;
 	left: 0;
-	z-index: 1900;
 	background: rgba(0, 0, 0, 0.8);
 }
 .dialog {
 	float: left;
 	position: relative;
-	z-index: 2000;
 	background: #fff;
 	font: 12px/22px '돋움', dotum, gulim, verdana, 'sans-serif';
 	color: #999;
@@ -974,11 +991,11 @@ textarea {
 }
 .bt-dialog-close {
 	position: absolute;
-	top: 0;
+	top: -1px;
 	left: 100%;
 	width: 30px;
 	height: 30px;
-	margin-left: 24px;
+	margin-left: 14px;
 	background: transparent url(../img/bt-dialog-close.png) no-repeat;
 	text-indent: 200%;
 	white-space: nowrap;
@@ -1006,7 +1023,7 @@ textarea {
 .dialog-control-panel button {
 	width: 145px;
 	height: 44px;
-	margin-left: 10px;
+	margin-left: 16px;
 	text-indent: 200%;
 	white-space: nowrap;
 	overflow: hidden;
@@ -1078,6 +1095,12 @@ textarea {
 }
 
 .dialog-control-panel .bt-confirm {
+	background-image: url(../img/bt-dialog-confirm-large.png);
+}
+.dialog-withdraw-confirm .dialog-control-panel .bt-confirm,
+.dialog-ticket-purchase-info .dialog-control-panel .bt-confirm,
+.dialog-payment-cancel .dialog-control-panel .bt-confirm,
+.dialog-name-verify-info .dialog-control-panel .bt-confirm {
 	background-image: url(../img/bt-dialog-confirm.png);
 }
 .dialog-control-panel .bt-find-password {
@@ -1095,6 +1118,9 @@ textarea {
 .dialog-control-panel .bt-next {
 	background-image: url(../img/bt-dialog-next.png);
 }
+.dialog-sign-up-step1 .dialog-control-panel .bt-next {
+	background-image: url(../img/bt-dialog-next-large.png);
+}
 .dialog-control-panel .bt-prev {
 	background-image: url(../img/bt-dialog-prev.png);
 }
@@ -1103,6 +1129,21 @@ textarea {
 }
 .dialog-control-panel .bt-save {
 	background-image: url(../img/bt-dialog-save.png);
+}
+.dialog-control-panel .bt-change {
+	background-image: url(../img/bt-dialog-change.png);
+}
+.dialog-control-panel .bt-close {
+	background-image: url(../img/bt-dialog-close-small.png);
+}
+.dialog-control-panel .bt-after {
+	background-image: url(../img/bt-dialog-after.png);
+}
+.dialog-control-panel .bt-now {
+	background-image: url(../img/bt-dialog-now.png);
+}
+.dialog-control-panel .bt-dialog-coupon-confirm {
+	background-image: url(../img/bt-dialog-coupon-confirm.png);
 }
 
 .dialog-video {
@@ -1124,14 +1165,16 @@ textarea {
 	background-image: url(../img/ti-dialog-find-id-password.png);
 }
 .dialog-find-id-form .bt-find-password {
-	border-bottom: 1px solid #efefef;
-	border-left: 1px solid #efefef;
+	border-bottom: 1px solid #d3d3d3;
+	border-left: 1px solid #d3d3d3;
+	color: #999 !important;
 }
 .dialog-find-id-form .tabs + .dialog-content-panel {
 	width: 100%;
 }
 .dialog-find-id-form .description {
 	margin: 33px 0 31px;
+	color: #666;
 }
 
 .dialog-find-id-success {
@@ -1143,6 +1186,7 @@ textarea {
 .dialog-find-id-success .result {
 	padding: 79px 0 34px;
 	color: #333;
+	font-size: 14px;
 }
 .dialog-find-id-success .ids {
 	height: 132px;
@@ -1171,9 +1215,7 @@ textarea {
 	padding: 60px 0 37px;
 }
 .dialog-find-id-failure .result {
-	padding-top: 143px;
-	margin-top: 40px;
-	background: url(../img/bg-dialog-id-not-found.png) no-repeat center 0;
+	padding: 85px 0 40px;
 	font-size: 14px;
 	line-height: 22px;
 }
@@ -1185,11 +1227,13 @@ textarea {
 	background-image: url(../img/ti-dialog-find-id-password.png);
 }
 .dialog-find-password-form .bt-find-id {
-	border-right: 1px solid #efefef;
-	border-bottom: 1px solid #efefef;
+	border-right: 1px solid #d3d3d3;
+	border-bottom: 1px solid #d3d3d3;
+	color: #999 !important;
 }
 .dialog-find-password-form .description {
 	margin: 33px 0 29px;
+	color: #666;
 }
 
 .dialog-find-password-success {
@@ -1233,6 +1277,7 @@ textarea {
 }
 .dialog-sign-up-step1 .description {
 	padding: 33px 0 29px;
+	color: #666;
 }
 .dialog-sign-up-step1 .dialog-terms-list {
 	width: 436px;
@@ -1286,6 +1331,7 @@ textarea {
 }
 .dialog-sign-up-step2 .description {
 	padding: 33px 0 29px;
+	color: #666;
 }
 
 .dialog-sign-up-step3 {
@@ -1299,6 +1345,7 @@ textarea {
 }
 .dialog-sign-up-step3 .description {
 	padding: 33px 0 29px;
+	color: #666;
 }
 
 .dialog-sign-up-success {
@@ -1391,6 +1438,7 @@ textarea {
 .dialog-alliance .description {
 	height: 73px;
 	padding-top: 33px;
+	color: #666;
 }
 .dialog-alliance .field {
 	padding: 10px 10px 10px 0;
@@ -1440,9 +1488,7 @@ textarea {
 }
 .dialog-alliance-success .result {
 	height: 62px;
-	padding-top: 138px;
-	margin-top: 40px;
-	background: url(../img/bg-dialog-alliance-success.png) no-repeat center 0;
+	padding: 97px 0 16px;
 	font-size: 12px;
 	line-height: 25px;
 	color: #999;
@@ -1462,9 +1508,7 @@ textarea {
 	padding: 60px 0 37px;
 }
 .dialog-alliance-failure .result {
-	padding-top: 139px;
-	margin-top: 40px;
-	background: url(../img/bg-dialog-alliance-failure.png) no-repeat center 0;
+	padding: 88px 0 25px;
 	font-size: 14px;
 	font-weight: bold;
 	color: #333;
@@ -1482,6 +1526,7 @@ textarea {
 .dialog-inquiry .description {
 	height: 73px;
 	padding-top: 33px;
+	color: #666;
 }
 .dialog-inquiry .field {
 	padding: 10px 10px 10px 0;
@@ -1572,7 +1617,7 @@ textarea {
 	padding: 0;
 	margin: 0 auto 5px;
 	color: #333;
-	text-align: left;
+	text-align: center;
 }
 .dialog-change-password .dialog-content-panel,
 .dialog-change-password .field,
@@ -1596,9 +1641,7 @@ textarea {
 	padding-bottom: 37px;
 }
 .dialog-withdraw-confirm .description {
-	padding-top: 168px;
-	margin: 40px auto 13px;
-	background: url(../img/bg-dialog-withdraw-confirm.png) no-repeat center 0;
+	margin: 96px auto 50px;
 }
 .dialog-withdraw-confirm .description strong {
 	font-size: 14px;
@@ -1616,15 +1659,572 @@ textarea {
 }
 .dialog-withdraw-success .result {
 	height: 62px;
-	padding-top: 140px;
-	margin-top: 40px;
-	background: url(../img/bg-dialog-withdraw-confirm.png) no-repeat center 0;
+	margin: 81px auto 26px;
 	color: #999;
 	line-height: 24px;
 }
 .dialog-withdraw-success .result strong {
 	font-size: 14px;
 	color: #333;
+}
+
+.dialog-ie-support {
+	width: 380px;
+}
+.dialog-ie-support .dialog-title{
+	background-image: url(../img/ti-dialog-ie-support.png);
+}
+.dialog-ie-support .dialog-control-panel {
+	padding-bottom: 37px;
+}
+.dialog-ie-support .result {
+	height: 47px;
+	padding-top: 125px;
+	margin-top: 45px;
+	background: url(../img/bg-dialog-ie-support.png) no-repeat center 0;
+	color: #999;
+	line-height: 20px;
+}
+.dialog-ie-support .result strong {
+	font-size: 12px;
+	color: #333;
+}
+.dialog-coupon-register-info {
+	width: 380px;
+}
+.dialog-coupon-register-info .dialog-title {
+	background-image: url(../img/ti-dialog-coupon-register-login.png);
+}
+.dialog-coupon-register-info .dialog-control-panel{
+	padding: 43px 0 38px;
+}
+.dialog-coupon-register-info .result {
+	padding: 72px 0 9px;
+	font-size: 14px;
+}
+.dialog-coupon-register-info .sub-result {
+	color: #f78f2e;
+	margin-bottom: 26px;
+}
+.dialog-coupon-register-success {
+	width:440px;
+}
+.dialog-coupon-register-success .dialog-title {
+	background-image: url(../img/ti-dialog-coupon-register.png);
+}
+.dialog-coupon-register-success .bt-close-small{
+	background-image: url(../img/bt-dialog-close-small.png);
+}
+.dialog-control-panel .bt-dialog-coupon-confirm {
+	background-image: url(../img/bt-dialog-coupon-confirm.png);
+}
+.dialog-coupon-register-success .result {
+	font-size: 14px;
+	padding: 46px 0 20px;
+}
+.dialog-coupon-register-success .dialog-control-panel {
+	width: 100%;
+	padding: 46px 0 40px;
+	text-align: center;
+}
+.dialog .bg-coupon {
+	width: 205px;
+	height: 105px;
+	padding: 18px 0 0 25px;
+	margin: 0 auto;
+	background: url(../img/bg-dialog-coupon.png) no-repeat;
+	text-align: left;
+}
+.dialog .bg-coupon .content {
+	width: 100%;
+}
+.dialog .bg-coupon  .coupon-title{
+	font-size: 12px;
+	color: #333;
+	font-weight:bold;
+	margin-bottom: 6px;
+}
+.dialog .bg-coupon  .coupon-contents {
+	font-size: 11px;
+	line-height: 19px;
+}
+.dialog .bg-coupon .coupon-expiry {
+	font-size: 11px;
+	color: #ff9020;
+}
+.dialog-coupon-register-now-use {
+	width:440px;
+}
+.dialog-coupon-register-now-use .dialog-title {
+	background-image: url(../img/ti-dialog-coupon-register.png);
+}
+.dialog-coupon-register-now-use .result {
+	font-size: 14px;
+	padding: 44px 0 4px;
+}
+.dialog-coupon-register-now-use .question {
+	margin-bottom: 24px;
+}
+.dialog-coupon-register-now-use .dialog-control-panel {
+	width: 100%;
+	padding: 49px 0 38px;
+	text-align: center;
+}
+.dialog-coupon-register-user-agreement {
+	width:440px;
+}
+.dialog-coupon-register-user-agreement .dialog-title {
+	background-image: url(../img/ti-dialog-coupon-register.png);
+}
+.dialog-coupon-register-user-agreement .dialog-control-panel {
+	width: 100%;
+	padding: 34px 0 37px;
+	text-align: center;
+}
+.dialog-coupon-register-user-agreement .dialog-content-panel {
+	padding-top: 32px;
+	width: 330px;
+	margin: 0 auto;
+}
+.dialog-coupon-register-user-agreement .agreement-contents {
+	width: 378px;
+	height: 117px;
+	color: #a7a7a7;
+	font-size: 11px;
+	margin: 32px 30px 9px;
+	border: 1px solid #f1f1f1;
+	background-color: #f6f6f6;
+	text-align: left;
+	overflow: auto;
+}
+.dialog-coupon-register-user-agreement .agreement-contents .agreement-holder {
+	padding: 12px 16px;
+}
+.dialog-coupon-register-user-agreement .agreement-contents .agreement-title {
+	height: 18px;
+	color: #747474;
+}
+.dialog-coupon-register-user-agreement .agreement-contents ol {
+	/*margin: 0 17px;*/
+}
+.dialog-coupon-register-user-agreement .agreement-contents ol li {
+	margin-top: 6px;
+	line-height: 18px;
+}
+.dialog-coupon-register-user-agreement .agreement-contents .agreement-sub-title {
+	/*margin: 0;*/
+}
+.dialog-coupon-register-user-agreement .agreement-contents .agreement-description {
+	margin-left: 12px;
+}
+.dialog-coupon-register-user-agreement .checkbox-area {
+	width: 380px;
+	margin: 0 28px;
+	text-align: left;
+}
+.dialog-coupon-expired {
+	width:380px;
+}
+.dialog-coupon-expired .dialog-title {
+	background-image: url(../img/ti-dialog-coupon-confirm.png);
+}
+.dialog-coupon-expired .dialog-control-panel{
+	padding: 44px 0 38px;
+}
+.dialog-coupon-expired .result {
+	padding: 89px 0 40px;
+	font-size: 14px;
+}
+.dialog-coupon-invalid-number {
+	width:380px;
+}
+.dialog-coupon-invalid-number .dialog-title {
+	background-image: url(../img/ti-dialog-coupon-confirm.png);
+}
+.dialog-coupon-invalid-number .dialog-control-panel{
+	padding: 43px 0 38px;
+}
+.dialog-coupon-invalid-number .result {
+	padding: 84px 0 5px;
+	font-size: 14px;
+}
+.dialog-coupon-invalid-number .sub-result {
+	margin-bottom: 42px;
+	color: #999;
+}
+.dialog-coupon-duplicated {
+	width: 380px;
+}
+.dialog-coupon-duplicated .dialog-title {
+	background-image: url(../img/ti-dialog-coupon-confirm.png);
+}
+.dialog-coupon-duplicated .dialog-control-panel{
+	padding: 45px 0 38px;
+}
+.dialog-coupon-duplicated .result {
+	padding: 74px 0 6px;
+	font-size: 14px;
+}
+.dialog-coupon-duplicated .result span {
+	color: #f78f2e;
+}
+.dialog-coupon-duplicated .sub-result {
+	color: #999;
+	margin-bottom: 26px;
+}
+.dialog-ticket-purchase-info {
+	width:380px;
+}
+.dialog-ticket-purchase-info .dialog-title {
+	background-image: url(../img/ti-dialog-coupon-purchase.png);
+}
+.dialog-ticket-purchase-info .dialog-control-panel{
+	padding: 45px 0 37px;
+}
+.dialog-ticket-purchase-info .result {
+	padding: 73px 0 8px;
+	font-size: 14px;
+}
+.dialog-ticket-purchase-info .sub-result {
+	color: #f78f2e;
+	margin-bottom: 26px;
+}
+.dialog-ticket-purchase-in-used {
+	width:380px;
+}
+.dialog-ticket-purchase-in-used .dialog-title {
+	background-image: url(../img/ti-dialog-coupon-purchase.png);
+}
+.dialog-ticket-purchase-in-used .dialog-control-panel{
+	padding: 43px 0 38px;
+}
+.dialog-ticket-purchase-in-used .result {
+	padding: 98px 0 54px;
+	font-size: 14px;
+}
+.dialog-ticket-purchase-in-used .result span{
+	color: #ff9020;
+}
+.dialog-ticket-purchase-in-used .sub-result {
+	color: #f78f2e;
+	margin-bottom: 26px;
+}
+.dialog-ticket-change {
+	width:400px;
+}
+.dialog-ticket-change .dialog-title {
+	background-image: url(../img/ti-dialog-ticket-change.png);
+}
+.dialog-ticket-change .dialog-control-panel {
+	padding: 28px 0 37px;
+}
+.dialog-ticket-change .result {
+	padding: 11px 0 20px;
+	line-height: 20px;
+}
+.dialog-ticket-change .result strong {
+	color: #ff9020;
+}
+.dialog-ticket-change .sub-result {
+	color: #f78f2e;
+	margin-bottom: 26px;
+}
+.dialog-ticket-change .description {
+	width: 338px;
+	height: 80px;
+	border: 1px solid #f1f1f1;
+	color: #a7a7a7;
+	font-size: 11px;
+	margin: 45px 30px 9px;
+	background-color: #f6f6f6;
+	text-align: left;
+	overflow:hidden;
+}
+.dialog-ticket-change .description ul {
+	padding: 15px 0 0 15px;
+	font-size: 11px;
+	word-spacing: -3px;
+	line-height:18px;
+}
+.dialog-ticket-change .description li {
+	text-indent:-4px;
+}
+.dialog-ticket-change .checkbox-area {
+	text-align: left;
+	padding: 0 27px;
+	color: #333;
+	font-weight: bold;
+}
+.dialog-ticket-change .result-question {
+	margin-top: 70px;
+	font-size: 16px;
+	color: #333333;
+	font-weight: bold;
+}
+.dialog-family-ticket-change {
+	width:400px;
+}
+.dialog-family-ticket-change .dialog-title {
+	background-image: url(../img/ti-dialog-ticket-change.png);
+}
+.dialog-family-ticket-change .dialog-control-panel {
+	padding: 28px 0 37px;
+}
+.dialog-family-ticket-change .result {
+	padding: 11px 0 20px;
+	line-height: 20px;
+}
+.dialog-family-ticket-change .result strong {
+	color: #ff9020;
+}
+.dialog-family-ticket-change .sub-result {
+	color: #f78f2e;
+	margin-bottom: 26px;
+}
+.dialog-family-ticket-change .description {
+	width: 338px;
+	height: 80px;
+	border: 1px solid #f1f1f1;
+	color: #a7a7a7;
+	font-size: 11px;
+	margin: 45px 30px 9px;
+	background-color: #f6f6f6;
+	text-align: left;
+	overflow:hidden;
+}
+.dialog-family-ticket-change .description ul {
+	padding: 15px 0 0 15px;
+	font-size: 11px;
+	word-spacing: -3px;
+	line-height:18px;
+}
+.dialog-family-ticket-change .description li {
+	text-indent:-4px;
+}
+.dialog-family-ticket-change .checkbox-area {
+	text-align: left;
+	padding: 0 27px;
+	color: #333;
+	font-weight: bold;
+}
+.dialog-family-ticket-change .result-question {
+	margin-top: 70px;
+	font-size: 16px;
+	color: #333333;
+	font-weight: bold;
+}
+.dialog-ticket-payment {
+	width:440px;
+}
+.dialog-ticket-payment .dialog-title {
+	background-image: url(../img/ti-dialog-ticket-change.png);
+}
+.dialog-ticket-payment .dialog-control-panel{
+	padding: 30px 0 37px;
+}
+.dialog-ticket-payment .result {
+	padding-top: 73px;
+	padding-bottom: 13px;
+	font-size: 16px;
+	font-weight: bold;
+}
+.dialog-ticket-payment .sub-result {
+	color: #666;
+}
+.dialog-ticket-payment .sub-result span {
+	color: #ddd;
+}
+.dialog-ticket-payment .expiry {
+	margin-top: -1px;
+	color: #ff9020;
+}
+.dialog-ticket-payment .description {
+	color: #a7a7a7;
+	font-size: 11px;
+	margin: 62px 20px 8px 40px;
+	text-align: left;
+	overflow:hidden;
+	word-spacing: -3px;
+}
+.dialog-ticket-payment .description li p {
+	height: 20px;
+	color: #999;
+}
+.dialog-ticket-payment .description li a {
+	font-size: 11px;
+	font-weight: bold;
+	text-decoration: underline;
+}
+.dialog-ticket-payment .description li:first-child {
+	color: #666;
+}
+.dialog-payment-cancel {
+	width:380px;
+}
+.dialog-payment-cancel .dialog-title {
+	background-image: url(../img/ti-payment-cancel.png);
+}
+.dialog-payment-cancel .dialog-control-panel{
+	padding: 43px 0 38px;
+}
+.dialog-payment-cancel .result {
+	padding: 52px 0 8px;
+	font-size: 14px;
+}
+.dialog-payment-cancel .result span {
+	color: #ff9020;
+}
+.dialog-payment-cancel .sub-result {
+	color: #ff9020;
+	font-size: 11px;
+}
+.dialog-payment-cancel .warn-result {
+	font-size: 11px;
+	padding: 21px 0 5px;
+	word-spacing: -2px;
+}
+.dialog-payment-cancel .dialog-content-panel {
+	margin: 0 auto;
+}
+.dialog-payment-cancel-complete {
+	width: 380px;
+}
+.dialog-payment-cancel-complete .dialog-title {
+	background-image: url(../img/ti-payment-cancel.png);
+}
+.dialog-payment-cancel-complete .result {
+	padding: 85px 0 6px;
+	font-size: 14px;
+}
+.dialog-payment-cancel-complete .result span {
+	color: #ff9020;
+}
+.dialog-payment-cancel-complete .sub-result {
+	color: #999;
+}
+.dialog-payment-cancel-complete .dialog-content-panel {
+	margin: 0 auto 40px;
+}
+.dialog-payment-cancel-complete .dialog-control-panel {
+	padding: 42px 0 38px;
+}
+.dialog-register-devices {
+	width:380px;
+}
+.dialog-register-devices .dialog-title {
+	background-image: url(../img/ti-dialog-register-devices.png);
+}
+.dialog-register-devices .dialog-control-panel{
+	padding: 42px 0 39px;
+}
+.dialog-register-devices .result {
+	padding: 72px 0 8px;
+	font-size: 14px;
+}
+.dialog-register-devices .result span {
+	color: #ff9020;
+}
+.dialog-register-devices .sub-result {
+	color: #999;
+}
+.dialog-register-devices .dialog-content-panel {
+	margin: 0 auto 28px;
+}
+.dialog-name-verify-info {
+	width:380px;
+}
+.dialog-name-verify-info .dialog-title {
+	background-image: url(../img/ti-dialog-name-verify-info.png);
+}
+.dialog-name-verify-info .dialog-control-panel{
+	padding: 42px 0 38px;
+}
+.dialog-name-verify-info .result {
+	padding-top: 83px;
+	padding-bottom: 37px;
+	font-size: 14px;
+	line-height: 27px;
+}
+.dialog-name-verify-info .result span {
+	color: #ff9020;
+	font-size: 12px;
+}
+.dialog-name-verify-info .sub-result {
+	color: #ff9020;
+	font-size: 11px;
+}
+.dialog-name-verify-info .dialog-content-panel {
+	margin: 0 auto;
+}
+.dialog-name-verify {
+	width:520px;
+}
+.dialog-name-verify .dialog-title {
+	background-image: url(../img/ti-dialog-name-verify.png);
+}
+.dialog-name-verify .dialog-content-panel {
+	width: 100%;
+	margin-top: 40px;
+}
+.dialog-name-verify .verify-ipin {
+	display: inline-block;
+	border: 1px solid #ccc;
+	width: 220px;
+	height: 240px;
+	box-sizing: border-box;
+	background: #fff;
+}
+.dialog-name-verify .verify-ipin-img {
+	display: block;
+	background: url(../img/vi-dialog-ipin.png)no-repeat center 0;
+	height: 105px;
+	text-indent: 200%;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.dialog-name-verify .verify-ipin-txt {
+	display: block;
+	background: url(../img/vi-dialog-text-ipin.png)no-repeat center 0;
+	height: 36px;
+	text-indent: 200%;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.dialog-name-verify .verify-mobile {
+	border: 1px solid #ccc;
+	width: 220px;
+	height: 240px;
+	margin-left: 15px;
+	box-sizing: border-box;
+	display: inline-block;
+	background: #fff;
+}
+.dialog-name-verify .verify-mobile-txt {
+	display: block;
+	background: url(../img/vi-dialog-text-mobile.png)no-repeat center 0;
+	height: 36px;
+	text-indent: 200%;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.dialog-name-verify .verify-mobile-img {
+	display: block;
+	background: url(../img/vi-dialog-mobile.png)no-repeat center 0;
+	height: 105px;
+	text-indent: 200%;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.dialog-name-verify .description {
+	color: #bdbdbd;
+	font-size: 14px;
+	font-weight: bold;
+}
+.dialog-name-verify .result {
+	text-align: left;
+	color: #a7a7a7;
+	padding: 12px 31px 33px;
+	font-size: 11px;
 }
 
 .term-holder .term-signature {
@@ -1706,3 +2306,528 @@ textarea {
 	background: #d9d9d9;
 	color: #333;
 }
+/************************************************
+ ** account 수정 2015.07.09 
+************************************************/
+#gnb .gnb-tit {
+	display: inline-block;
+	margin-top: 5px;
+	padding: 1px 19px 1px 0;
+	height: 13px;
+	line-height: 15px;
+	font-size: 12px;
+	color: #ff9020;
+	border-right: 1px solid #f0f0f0;
+}
+.account-page .table-header {
+	position: relative;
+	height: auto;
+	padding: 30px;
+	border-bottom: 1px solid #f0f0f0;
+	background: #fff;
+}
+.account-page .table-header .table-label {
+	margin-bottom: 30px;
+	width: 100%;
+	height: 17px;
+	background-image: url(../img/ti-account-table-user-label.png);
+}
+.user-info-holder {
+	width: 100%;
+	height: auto;
+	overflow: hidden;
+	letter-spacing: -0.2px;
+}
+.user-info-holder .user-info-item {
+	margin-bottom: 10px;
+	width: auto;
+	height: 14px;
+	line-height: 14px;
+	list-style: none;
+}
+.user-info-holder .user-info-item .user-info-title,
+.user-info-holder .user-info-item .user-info-content {
+	display: inline-block;
+	width: auto;
+	font-size: 12px;
+	color: #666;
+}
+.user-info-holder .user-info-item .user-info-title {
+	display: inline-block;
+	font-weight: bold;
+}
+.account-btn-holder {
+	padding-top: 9px;
+	width: auto;
+	height: 28px;
+}
+.account-btn-holder .bt-pwd-chng {
+	display: block;
+	width: 100px;
+	height: 28px;
+	text-indent: 200%;
+	white-space: nowrap;
+	overflow: hidden;
+	background: url(../img/bt_pwd_change.png)no-repeat;
+}
+.account-btn-holder .bt-pwd-chng:hover {
+	background-position: 0 -28px;
+}
+.account-page .table-body {
+	padding: 25px 30px;
+}
+.account-page .table-items .table-item {
+	padding: 0;
+}
+.table-body .table-item.table-item-coupon .table-item-header {
+	width: 100%;
+	height: 50px;
+	line-height: 50px;
+}
+.account-page .table-item-coupon .table-item-header .table-label {
+	display: inline-block;
+	margin: 0;
+	padding: 16.5px 0;
+	width: 150px;
+	height:17px;
+	background: url(../img/ti-account-table-coupon-label-02.png) no-repeat 0 center;
+}
+.table-item-header .used-amounts {
+	float: right;
+	padding-top: 23px;
+	line-height: normal;
+}
+.table-item-header .used-amounts a {
+	font-size: 12px;
+	color: #999;
+	text-decoration: underline;
+}
+.coupons-holder {
+	margin-top: 15px;
+}
+.account-page .coupon-holder {
+	position: relative;
+	padding: 48px 25px 0;
+	width: 236px;
+	/*height: 172px; - 결제 완료 후 풀어야 함 */
+	height: 133px;
+	border: 1px solid #d9d9d9;
+	border-radius: 5px;
+}
+.account-page .coupon-holder.has-coupon-ribbon {
+	background: url(../img/bg-coupon-with-ribbon.png) no-repeat right top;
+}
+.account-page .coupon-holder.is-placeholder {
+	opacity: 0.5;
+	background: url(../img/bg-coupon-list-empty.png) no-repeat center center;
+}
+.coupon.h-item .coupon-holder.has-coupon-active .coupon-status-sign {
+	display: inline-block;
+}
+.coupon-status-sign {
+	display: none;
+	position: absolute;
+	top: 25px;
+	left: 25px;
+	width: 42px;
+	height: 18px;
+	background: url(../img/bg-account-coupon-status-use.png) no-repeat center center;
+	text-indent: 200%;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.bt-coupon-holder {
+	display: none; /* 결제 오픈 시 풀어야 함 */
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	height: 39px;
+	border-top: 1px solid #d9d9d9;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	overflow: hidden;
+}
+.bt-coupon-item {
+	display: inline-block;
+	float: left;
+	width: 100%;
+	height: 39px;
+	text-indent: 200%;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.bt-coupon-holder.has-bt-group .bt-coupon-item {
+	width: 142.5px;
+}
+.bt-coupon-holder.has-bt-group .bt-coupon-item:nth-child(2) {
+	border-left: 1px solid #d9d9d9;
+}
+.bt-coupon-item.coupon-bt-type-chg {
+	background: #fafafa url(../img/bt-coupon-change.png)no-repeat center center;
+}
+.bt-coupon-item.coupon-bt-type-cancel {
+	background: #fafafa url(../img/bt-coupon-auto-approval-cancel.png)no-repeat center center;
+}
+.bt-coupon-item.coupon-bt-type-use {
+	background: #fafafa url(../img/bt-coupon-use.png)no-repeat center center;
+}
+.bt-coupon-item:hover {
+	background-color: #eaeaea;
+}
+.member-leave-info {
+	padding-top: 30px;
+	width: 100%;
+	height: 13px;
+	line-height: 13px;
+}
+.member-leave-info p,
+.member-leave-info .member-leave-link {
+	display: inline-block;
+	font-size: 12px;
+	color: #999;
+}
+.member-leave-info p {
+	padding-left: 9px;
+}
+.member-leave-info p strong {
+	position: absolute;
+	left: 0;
+	font-size: 22px;
+	font-weight: bold;
+}
+.member-leave-info .member-leave-link {
+	margin-left: 5px;
+	text-decoration: underline;
+}
+
+/************************************************
+ ** usage list 추가 2015.07.09 
+************************************************/
+#holder.usage-list-page {
+	width: 954px;
+	padding-top: 50px;
+}
+.usage-list-page .page-title {
+	background: url(../img/usage_text_01.png) no-repeat 2px 0;
+}
+.usage-list-page .table {
+	margin: 37px 0 20px;
+	padding: 40px 29px;
+	width: auto;
+	height: 591px;
+	border: 1px solid #dfdede;
+	background-color: #fff;
+}
+.has-usage .usage-list-page .table {
+	margin: 32px 0 20px;
+	padding: 40px 29px;
+	width: auto;
+	height: auto;
+	min-height: 610px;
+	border: 1px solid #dfdede;
+	background-color: #fff;
+}
+.has-usage .usage-grid-list {
+	display: table;
+	table-layout: fixed;
+}
+.usage-grid-list {
+	display: none;
+	width: 100%;
+	height: auto;
+}
+.has-usage .no-usage-list {
+	display: none;
+}
+.no-usage-list {
+	padding-top: 249px;
+	text-indent: 200%;
+	white-space: nowrap;
+	overflow: hidden;
+	
+}
+.no-usage-list .list-empty {
+	margin: 0 auto;
+	width: 122px;
+	height: 92px;
+	background: url(../img/bg-usage-list-empty.png) no-repeat;
+}
+.usage-grid-header {
+	/*padding: 9px 12px 8px;*/
+	height: 32px;
+	border-width: 1px 0 1px 0;
+	border-style: solid;
+	border-color: #ddd;
+	padding: 0;
+}
+.usage-grid-data {
+	box-sizing: border-box;
+	height: 62px;
+	padding: 5px 0 0 0;
+	font-size: 12px;
+	border-bottom: 1px solid #f0f0f0;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	text-align: center;
+	vertical-align: middle;
+}
+.usage-grid-list tbody tr:last-child td {
+	border-bottom: 1px solid #ddd;
+}
+.usage-list-page .usage-grid-list .list-tit {
+	height: 100%;
+	text-indent: 200%;
+	white-space: nowrap;
+	overflow: hidden;
+	background: no-repeat center 10px;
+}
+.usage-list-page .list-tit.ti-num {
+	background-image: url(../img/ti-usage-list-num.png);
+}
+.usage-list-page .list-tit.ti-coupon {
+	background-image: url(../img/ti-usage-list-coupon.png);
+	background-position: 16px 10px;
+}
+.usage-list-page .list-tit.ti-settling-day {
+	background-image: url(../img/ti-usage-list-settling-day.png);
+	background-position: 10px 9px;
+}
+.usage-list-page .list-tit.ti-payment {
+	background-image: url(../img/ti-usage-list-payment.png);
+	background-position: 46px 9px;
+}
+.usage-list-page .list-tit.ti-payment-option {
+	background-image: url(../img/ti-usage-list-payment-option.png);
+	background-position: 47px 9px;
+}
+.usage-list-page .list-tit.ti-usage-expiration {
+	background-image: url(../img/ti-usage-list-usage-expiration.png);
+	background-position: 17px 9px;
+}
+.usage-list-page .usage-grid-list .usage-grid-data.dt-num {
+	/*width: 21px;*/
+	text-align: center;
+	color: #999;
+}
+.usage-grid-list .usage-grid-data.dt-coupon {
+	/*width: 290px;*/
+	padding-left: 17px;
+	padding-right: 17px;
+	font-weight: bold;
+	text-align: left;
+	color: #333;
+}
+.usage-grid-list .usage-grid-data.dt-settling-day {
+	/*width: 68px;*/
+	color: #666;
+	text-align: center;
+	letter-spacing: -0.7px; 
+}
+.usage-grid-list .usage-grid-data.dt-payment {
+	/*padding-right: 39px;*/
+	/*width: 64px;*/
+	background-position: 0 10px;
+	color: #333;
+	text-align: right;
+}
+.usage-grid-list .usage-grid-data.dt-payment-option {
+	/*width: 144px;*/
+	padding-left: 47px;
+	padding-right: 17px;
+	color: #666;
+	text-align: left;
+}
+.usage-grid-list .usage-grid-data.dt-usage-expiration {
+	/*width: 136px;*/
+	color: #ff9f3e;
+	text-align: center;
+	letter-spacing: -0.7px; 
+}
+
+/************************************************
+ ** 이용권 / 쿠폰 구매  2015.07.15 
+************************************************/
+#holder.purchase-page {
+	width: 952px;
+}
+.purchase-page .page-title {
+	background: url(../img/ti-purchase-page.png) no-repeat 2px 0;
+}
+.purchase-page .page-description {
+	background: url(../img/bg-purchase-page-description.png) no-repeat 2px 0;
+}
+.purchase-page .table {
+	margin-top: 24px;
+	width: 100%;
+	height: 579px;
+	background-color: #fff;
+	border: 1px solid #e0e0e0;
+}
+.coupon-reg-wrap {
+	padding: 27px 29px;
+	width: 894px;
+	height: 72px;
+	border-bottom: 1px solid #eee;
+	overflow: hidden;
+}
+.coupon-reg-holder {
+	width: 100%;
+	height: 40px;
+	overflow: hidden;
+}
+.coupon-reg-holder .coupon-reg-tit {
+	display: inline-block;
+	float: left;
+	margin-top: 10px;
+	width: 62px;
+	height: 20px;
+	text-indent: 200%;
+	white-space: nowrap;
+	overflow: hidden;
+	background: url(../img/bg_reg_coupon.png) no-repeat;
+}
+.coupon-reg-holder .coupon-reg {
+	width: 436px;
+	display: inline-block;
+	float: right;
+}
+.coupon-reg-holder .coupon-reg::after {
+	content: '';
+	display: block;
+	clear: both;
+}
+.coupon-reg-holder .coupon-reg input[type=text] {
+	float: left;
+	padding: 12px 17px;
+	width: 307px;
+	height: 14px;
+	border: 1px solid #dbdbdb;
+	outline: 0;
+	color: #333;
+}
+.coupon-reg-holder .coupon-reg input[type=text]:focus {
+	border-color: #ffa851;
+}
+.coupon-reg .bt-coupon-reg {
+	float: left;
+	width: 93px;
+	height: 40px;
+	color: #fff;
+	background-color: #666;
+}
+.coupon-reg .bt-coupon-reg:hover {
+	background-color: #555;
+}
+.reg-coupon-num {
+	margin-top: 13px;
+	width: 100%;
+	height: 21px;
+	line-height: 21px;
+	text-align: right;
+	font-size: 11px;
+	color: #666;
+}
+.reg-coupon-counter {
+	color: #ff8c17;
+}
+.voucher-purchase-wrap {
+	padding: 38px 29px 34px;
+	width: 894px;
+	height: auto;
+	overflow: hidden;
+}
+.voucher-purchase-tit {
+	width: 78px;
+	height: 20px;
+	text-indent: 200%;
+	white-space: nowrap;
+	overflow: hidden;
+	background: url(../img/bg_voucher_purchase.png) no-repeat;
+}
+.voucher-cards {
+	margin-top: 26px;
+	padding: 0 1px 0 2px;
+}
+.voucher-card {
+	position: relative;
+	display: inline-block;
+	float: left;
+	width: 433px;
+	height: 332px;
+	border: 1px solid #d9d9d9;
+}
+.voucher-cards .voucher-card:first-child {
+	margin-right: 21px;
+}
+.voucher-card-content {
+	padding-top: 65px;
+	width: 100%;
+	height: 205px;	
+}
+.voucher-type {
+	padding-top: 106px;
+	font-size: 12px;
+	text-align: center;
+}
+.voucher-type.one-man {
+	background: url(../img/bg_voucher_one.png) no-repeat center 0;
+}
+.voucher-type.familly {
+	background: url(../img/bg_voucher_familly.png) no-repeat center 0;
+}
+.voucher-payment {
+	height: 18px;
+	line-height: 18px;
+	color: #ff9020;
+}
+.voucher-info {
+	height: 18px;
+	line-height: 18px;
+	color: #999;
+}
+.voucher-card-buttons {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 61px;
+	border-top: 1px solid #ececec;
+}
+.voucher-card-buttons button {
+	display: inline-block;
+	float: left;
+	width: 216px;
+	height: 61px;
+	background-color: #fcfcfc;
+	text-indent: 200%;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.voucher-card-buttons .bt-purchase-credit {
+	background: #fcfcfc url(../img/bg_purchase_credit_card.png) no-repeat center center;
+}
+.voucher-card-buttons .bt-purchase-cell {
+	border-left: 1px solid #ececec;
+	background: #fcfcfc url(../img/bg_purchase_cell.png) no-repeat center center;
+}
+.voucher-card-buttons .bt-purchase-credit:hover,
+.voucher-card-buttons .bt-purchase-cell:hover {
+	background-color: #e5e5e5;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -827,6 +827,23 @@ var Showroom = (function($, U) {
 		state.phoneHolderTop = Math.round(Math.max(config.GNB_HOLDER_HEIGHT - state.phoneHolderTopGap, (state.windowHeight - state.phoneHolderOuterHeight - state.phoneHolderPaddingTop + state.phoneHolderPaddingBottom) / 2));
 	}
 
+	function captureArrowKeyEvent() {
+		$(utils.doc).on('keydown', function(ev) {
+			var current = service.getCurrentCard();
+
+			switch ((ev || window.event).keyCode) {
+			case 34: // page down
+			case 40: // arrow down
+				roll(service.findFollowedCard(current, false), current, true);
+				break;
+			case 33: // page up
+			case 38: // arrow up
+				roll(service.findFollowedCard(current, true), current, false);
+				break;
+			}
+		});
+	}
+
 	function resize() {
 		var cards = service.cards;
 
@@ -846,6 +863,7 @@ var Showroom = (function($, U) {
 			captureClickEventOnPager();
 			captureHashChangeEvent();
 			captureDialogEvent();
+			captureArrowKeyEvent();
 
 			roll('intro');
 
