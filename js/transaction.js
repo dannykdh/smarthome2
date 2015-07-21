@@ -258,7 +258,7 @@ function parseMyInfoTransaction(response) {
 			var $js_mem_hphone = $('#js_mem_hphone');	// userMobileNo
 
 			if(!rsAddress) {
-				rsAddress =	"스마트홈 앱에서 등록 가능합니다.";
+				rsAddress =	"스마트홈 에서 등록 가능합니다.";
 			}
 
 			$js_mem_type.html(rsMemType);
@@ -370,6 +370,10 @@ function parseUseCouponTransaction(response) {
 		var rsUseProdList = response.useProdList;	// 사용중인 이용권 리스트
 		var rsRegCpnList = response.regCpnList;		// 등록한 쿠폰 리스트
 		var rsUseCpnList = response.useCpnList;		// 사용중인 쿠폰 리스트
+
+		var rsRegCpnCnt = response.regCpnList.length;		// 등록한 쿠폰 갯수
+		var $jsRegCouponCounter = $('#jsRegCouponCounter');
+			$jsRegCouponCounter.html(rsRegCpnCnt);
 
 		if (response.resultCd == '1' && response.resultMsg == '성공') {
 			console.log('parseUseCouponTransaction : ' + response.resultMsg);

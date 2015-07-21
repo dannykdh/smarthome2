@@ -120,25 +120,25 @@ body {
 #pager {
 	position: fixed;
 	top: 50%;
-	right: 20px;
+	right: 50px;
 	z-index: 1000;
-	width: 14px;
+	width: 19px;
 	height: 98px;
 	margin-top: -49px;
 	transition: right 1s ease-out;
 }
 .has-event[data-card=intro] #pager {
-	right: 270px;
+	right: 300px;
 }
 .hide-event[data-card=intro] #pager {
-	right: 20px;
+	right: 50px;
 }
 [data-card=security] #pager {
 	position: absolute;
 }
 @media screen and (max-height: 768px) {
 	[data-card=security] #pager {
-		right: 37px;
+		right: 67px;
 	}
 }
 #pager li:not(:first-child) {
@@ -146,8 +146,8 @@ body {
 }
 .bt-pager {
 	display: block;
-	width: 16px;
-	height: 16px;
+	width: 19px;
+	height: 19px;
 	text-indent: 200%;
 	white-space: nowrap;
 	overflow: hidden;
@@ -374,17 +374,7 @@ section {
 }
 
 .bt-next-roller {
-	position: absolute;
-	left: 50%;
-	bottom: 26px;
-	display: block;
-	width: 41px;
-	height: 24px;
-	margin-left: -21px;
-	background: url(../img/bt-next-roller.png) no-repeat 0 0;
-	text-indent: 200%;
-	white-space: nowrap;
-	overflow: hidden;
+	display: none;
 }
 
 .phone-holder {

@@ -329,14 +329,6 @@ var SmartHomeUI = (function($) {
 		$win.on('scroll', function(ev) {
 			var scrollTop = $win.scrollTop();
 
-			/*개발 추가 if (scrollTop < 200) {
-				$body.removeClass('state-1').addClass('state-0');
-			} else if (scrollTop < 400) {
-				$body.removeClass('state-2').addClass('state-1');
-			} else {
-				$body.removeClass('state-0 state-1');
-			}*/
-
 			if (scrollTop < 1) {
 				$body.removeClass('state-1').addClass('state-0');
 			} else {

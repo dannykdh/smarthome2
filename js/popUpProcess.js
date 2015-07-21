@@ -34,6 +34,11 @@ jQuery(function($) {
 		parent.location='mailto:join_smarthome@sk.com';
 	});
 
+	//쿠폰 등록 버튼
+	$('.bt-coupon-reg').on('click', function() {
+		couponReg();
+	});	
+
 	function withDraw() {
 		U.dialog({
 			templateId: 'dialog-template-withdraw-confirm',

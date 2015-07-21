@@ -1246,17 +1246,16 @@ textarea {
 	padding-bottom: 37px;
 }
 .dialog-find-password-success .result {
-	height: 62px;
-	padding-top: 141px;
-	margin-top: 40px;
-	background: url(../img/bg-dialog-find-password-success.png) no-repeat center 0;
+	height: 53px;
+	padding-top: 103px;
 	font-size: 12px;
-	line-height: 25px;
+	line-height: 22px;
 	color: #999;
 }
-.dialog-find-password-success .result strong {
+.dialog-find-password-success .sub-result {
 	color: #333;
 	font-size: 14px;
+	margin-bottom: 61px;
 }
 
 .sign-up-progress {
@@ -1358,10 +1357,8 @@ textarea {
 	padding-bottom: 37px;
 }
 .dialog-sign-up-success .result {
-	height: 62px;
-	padding-top: 138px;
-	margin-top: 40px;
-	background: url(../img/bg-dialog-sign-up-success.png) no-repeat center 0;
+	height: 82px;
+	padding-top: 92px;
 	font-size: 12px;
 	line-height: 25px;
 	color: #999;
@@ -1598,9 +1595,8 @@ textarea {
 	padding: 60px 0 37px;
 }
 .dialog-inquiry-failure .result {
-	padding-top: 139px;
-	margin-top: 40px;
-	background: url(../img/bg-dialog-inquiry-failure.png) no-repeat center 0;
+	padding-top: 89px;
+	padding-bottom: 25px;
 	font-size: 14px;
 	font-weight: bold;
 	color: #333;
@@ -1943,11 +1939,24 @@ textarea {
 .dialog-ticket-change .description ul {
 	padding: 15px 0 0 15px;
 	font-size: 11px;
-	word-spacing: -3px;
 	line-height:18px;
 }
 .dialog-ticket-change .description li {
 	text-indent:-4px;
+}
+.dialog-ticket-change .description li p {
+	letter-spacing: -1px;
+	font-size: 11px;
+}
+.dialog-ticket-change .description li p span {
+	width: 6px;
+	height: 6px;
+	display: inline-block;
+	background: url(../img/bg-text-dot.png) no-repeat center center;
+	margin: 0 2px 1px 0px;
+	text-indent: 200%;
+	overflow: hidden;
+	white-space: nowrap;
 }
 .dialog-ticket-change .checkbox-area {
 	text-align: left;
@@ -1995,11 +2004,21 @@ textarea {
 .dialog-family-ticket-change .description ul {
 	padding: 15px 0 0 15px;
 	font-size: 11px;
-	word-spacing: -3px;
 	line-height:18px;
+	letter-spacing: -1px;
 }
 .dialog-family-ticket-change .description li {
 	text-indent:-4px;
+}
+.dialog-family-ticket-change .description li span {
+	width: 6px;
+	height: 6px;
+	display: inline-block;
+	background: url(../img/bg-text-dot.png) no-repeat center center;
+	margin: 0 2px 1px 0px;
+	text-indent: 200%;
+	overflow: hidden;
+	white-space: nowrap;
 }
 .dialog-family-ticket-change .checkbox-area {
 	text-align: left;
@@ -2044,16 +2063,27 @@ textarea {
 	margin: 62px 20px 8px 40px;
 	text-align: left;
 	overflow:hidden;
-	word-spacing: -3px;
 }
 .dialog-ticket-payment .description li p {
 	height: 20px;
 	color: #999;
+	letter-spacing: -1px;
+}
+.dialog-ticket-payment .description li p span {
+	width: 6px;
+	height: 6px;
+	display: inline-block;
+	background: url(../img/bg-text-dot.png) no-repeat center center;
+	margin: 0 2px 1px 0px;
+	text-indent: 200%;
+	overflow: hidden;
+	white-space: nowrap;
 }
 .dialog-ticket-payment .description li a {
 	font-size: 11px;
 	font-weight: bold;
 	text-decoration: underline;
+	color: #666666;
 }
 .dialog-ticket-payment .description li:first-child {
 	color: #666;
@@ -2081,7 +2111,7 @@ textarea {
 .dialog-payment-cancel .warn-result {
 	font-size: 11px;
 	padding: 21px 0 5px;
-	word-spacing: -2px;
+	letter-spacing: -1px;
 }
 .dialog-payment-cancel .dialog-content-panel {
 	margin: 0 auto;
@@ -2225,6 +2255,7 @@ textarea {
 	color: #a7a7a7;
 	padding: 12px 31px 33px;
 	font-size: 11px;
+	letter-spacing: -1px;
 }
 
 .term-holder .term-signature {
@@ -2407,7 +2438,7 @@ textarea {
 }
 .account-page .coupon-holder {
 	position: relative;
-	padding: 48px 25px 0;
+	padding: 48px 0 0 25px;
 	width: 236px;
 	/*height: 172px; - 결제 완료 후 풀어야 함 */
 	height: 133px;
@@ -2415,7 +2446,17 @@ textarea {
 	border-radius: 5px;
 }
 .account-page .coupon-holder.has-coupon-ribbon {
-	background: url(../img/bg-coupon-with-ribbon.png) no-repeat right top;
+	/* background: url(../img/bg-coupon-with-ribbon.png) no-repeat right top; */
+}
+.account-page .coupon-holder.has-coupon-ribbon::after {
+	content: '';
+	display: block;
+	position: absolute;
+	top: -1px;
+	right: -1px;
+	width: 58px;
+	height: 58px;
+	background: url(../img/bg-coupon-with-ribbon.png) no-repeat;
 }
 .account-page .coupon-holder.is-placeholder {
 	opacity: 0.5;

@@ -261,16 +261,16 @@ var Showroom = (function($, U) {
 		this.el = el;
 		this.$el = $(el);
 		this.$parent = this.$el.parent();
-		this.loadTimer = null;
 	}
-
-	Video.SAFE_PLAY_CHECK_INTERVAL = 50;
 
 	Video.createVideo = function(el) {
 		var video = new Video(el);
 
 		$(video.el).off('ended').on('ended', function() {
+			//console.log('ended ' + this.id);
 			video.play();
+		}).off('loadeddata').on('loadeddata', function() {
+			//console.log('loadeddata ' + this.id);
 		});
 
 		return video;
@@ -279,45 +279,26 @@ var Showroom = (function($, U) {
 	Video.prototype.play = function() {
 		var that = this;
 
-		this.resetTimer();
-
-		// canplay가 발생하지 않는 경우가 있어서 수동으로 확인
-		if (!this._play()) {
-			that.laodTimer = setInterval(function() {
-				if (that._play()) {
-					that.resetTimer();
-				}
-			}, Video.SAFE_PLAY_CHECK_INTERVAL);
+		if (this.isReady()) {
+			this.el.play();
+			//console.log('play ' + this.el.id + ' immediately');
+		} else {
+			this.el.oncanplay = function() {
+				this.play();
+				//console.log('play ' + this.id + ' lazily');
+			}
 		}
 
 		return this;
 	};
 
-	Video.prototype.resetTimer = function() {
-		if (this.loadTimer) {
-			clearInterval(this.loadTimer);
-			this.loadTimer = null;
-		}
-	};
-
-	Video.prototype._play = function() {
-		if (this.isReady()) {
-			this.el.play();
-			return true;
-		}
-
-		return false;
-	};
-
 	Video.prototype.pause = function(reset) {
-
-		this.resetTimer();
-
 		if (!this.isReady() || this.isPaused()) {
 			return this;
 		}
 
 		this.el.pause();
+		//console.log('pause ' + this.el.id);
 
 		if (reset) {
 			this.setCurrentTime(0);

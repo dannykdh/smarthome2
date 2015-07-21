@@ -7,7 +7,7 @@
 <link rel="stylesheet" type="text/css" href="../css/base.css">
 <link rel="stylesheet" type="text/css" href="../css/smarthomeui.css">
 <style rel="stylesheet" type="text/css">
-	.dev-holder{width:956px;margin:100px auto;font-size:14px;line-height:24px;font-family:Consolas,'맑은 고딕','Malgun Gothic', '돋움', Dotum;}
+	.dev-holder{width:956px;margin:100px auto;font-size:14px;line-height:24px;font-family:Consolas,'맑은 고딕','Malgun Gothic', '돋움', Dotum, Verdana, Arial;}
 	.dev-holder h1{font-size: 40px;font-weight:bold;margin-top:30px;margin-bottom:20px;text-align:center;}
 	.dev-holder h2{font-size: 30px;font-weight:bold;margin-top:30px;margin-bottom:20px;}
 	.dev-holder h3{font-size: 20px;font-weight:bold;margin-top:30px;margin-bottom:20px;}
@@ -18,6 +18,8 @@
 	.dev-holder p{margin-bottom: 10px;}
 	.dev-holder code{display:inline-block;background:#f7f7f7;border-radius:7px;border:1px solid #ddd;padding:0 5px;font-weight:bold;letter-spacing:1px;font-family:Consolas,'맑은 고딕','Malgun Gothic', '돋움', Dotum;}
 	.dev-holder .sample{width:100px;height:30px;}
+	.dev-holder .updated-20150719 {color:blue !important;}
+	.dev-holder .not-completed {color:red !important;}
 </style>
 <script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="../js/smarthomeui.js"></script>
@@ -125,8 +127,11 @@
 			</ul>
 			<div class="dialog-content-panel dialog-content-wide">
 				<p class="description">
-					회원정보에 등록된 아이디, 휴대폰 번호를 입력하시면<br>
-					본인 확인 후 임시 비밀번호를 발급받을 수 있습니다.
+					<!-- 수정 시작 20150717_01 -->
+					회원정보에 등록된 아이디,<br>
+					휴대폰 번호를 입력하시면 본인 확인 후<br>
+					임시 비밀번호를 발급받을 수 있습니다.
+					<!-- 수정 종료 20150717_01 -->
 				</p>
 			</div>
 			<form>
@@ -613,6 +618,441 @@
 		</div>
 	</div>
 </script>
+<!-- 수정 시작 : 20150717_01 -->
+<script id="dialog-template-ie-support" type="text/x-dialog-template">
+	<div class="dialog dialog-ie-support">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">홈페이지 이용 안내</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<p class="result">
+					<strong>
+						Internet Explorer10 이상에서<br>
+						최적화된 서비스 이용이 가능합니다.
+					</strong>
+				</p>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-confirm">확인</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="dialog-coupon-register-info" type="text/x-dialog-template">
+	<div class="dialog dialog-coupon-register-info">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">쿠폰 등록 안내</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<p class="result">
+					<strong>로그인 후<br>쿠폰을 등록할 수 있습니다.</strong>
+				</p>
+				<p class="sub-result">
+					로그인 하시겠습니까?
+				</p>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-cancel">취소</button>
+				<button type="button" class="bt-change">변경하기</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="dialog-coupon-register-success" type="text/x-dialog-template">
+	<div class="dialog dialog-coupon-register-success">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">쿠폰 등록</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<p class="result">
+					<strong>쿠폰 등록이 완료되었습니다.</strong>
+				</p>
+				<div class="bg-coupon">
+					<div class="content">
+						<p class="coupon-title">경동 나비엔 보일러</p>
+						<p class="coupon-contents">1 개월 이용 쿠폰<p>
+						<p class="coupon-contents">5인용 (정회원 1인 + 가족회원 4인)</p>
+						<p class="coupon-expiry">사용 유효기한 2015.03.15까지<p>
+					</div>
+				</div>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-dialog-coupon-confirm">쿠폰 내역 확인</button>
+				<button type="button" class="bt-close">닫기</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="dialog-coupon-register-now-use" type="text/x-dialog-template">
+	<div class="dialog dialog-coupon-register-now-use">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">쿠폰 등록</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<p class="result">
+					<strong>쿠폰 등록이 완료되었습니다.</strong>
+				</p>
+				<p class="question">
+					등록된 쿠폰을 지금 바로 사용하시겠습니까?
+				</p>
+				<div class="bg-coupon">
+					<div class="content">
+						<p class="coupon-title">경동 나비엔 보일러</p>
+						<p class="coupon-contents">1 개월 이용 쿠폰<p>
+						<p class="coupon-contents">5인용 (정회원 1인 + 가족회원 4인)</p>
+						<p class="coupon-expiry">사용 유효기한 2015.03.15까지<p>
+					</div>
+				</div>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-after">나중에</button>
+				<button type="button" class="bt-now">지금 사용</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="dialog-coupon-register-user-agreement" type="text/x-dialog-template">
+	<div class="dialog dialog-coupon-register-user-agreement">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">쿠폰 등록</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<div class="bg-coupon">
+					<div class="content">
+						<p class="coupon-title">경동 나비엔 보일러</p>
+						<p class="coupon-contents">1 개월 이용 쿠폰<p>
+						<p class="coupon-contents">5인용 (정회원 1인 + 가족회원 4인)</p>
+						<p class="coupon-expiry">사용 유효기한 2015.03.15까지<p>
+					</div>
+				</div>
+			</div>
+			<div class="agreement-contents">
+				<div class="agreement-holder">
+					<p class="agreement-title">쿠폰 이용 약관</p>
+					<ol>
+						<li>
+							<p class="agreement-sub-title">1. 무료 서비스 대상 범위<p>
+							<p class="agreement-description">해당 쿠폰은 제공 받은 제품에만 서비스 제공이 가능하며, 이회의 제품은 서비스 제공이 불가능합니다.</p>
+						</li>
+						<li>
+							<p class="agreement-sub-title">2. 무료 서비스 제공기간<p>
+							<p class="agreement-description">해당 쿠폰은 제공 받은 제품에만 서비스 제공이 가능하며, 이회의 제품은 서비스 제공이 불가능합니다.</p>
+						</li>
+					</ol>
+				</div>
+			</div>
+			<div class="checkbox-area">
+				<input id="agree-service-coupon" type="checkbox" value="1"><label for="agree-service-coupon">쿠폰 이용약관에 동의합니다.</label>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-prev">이전</button>
+				<button type="button" class="bt-next">다음</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="dialog-coupon-expired" type="text/x-dialog-template">
+	<div class="dialog dialog-coupon-expired">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">쿠폰 확인</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<p class="result">
+					<strong>유효기간이 지나<br>사용할 수 없는 쿠폰입니다.</strong>
+				</p>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-cancel">취소</button>
+				<button type="button" class="bt-change">변경하기</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="dialog-coupon-invalid-number" type="text/x-dialog-template">
+	<div class="dialog dialog-coupon-invalid-number">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">쿠폰 확인</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<p class="result">
+					<strong>입력하신 쿠폰 번호가 유효하지 않습니다.</strong>
+				</p>
+				<p class="sub-result">다시 한 번 확인해 주세요.</p>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-confirm">확인</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="dialog-coupon-duplicated" type="text/x-dialog-template">
+	<div class="dialog dialog-coupon-duplicated">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">쿠폰 확인</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<p class="result">
+					<strong>입력하신 쿠폰 번호는<br>
+					<span>이미 사용된 번호</span>입니다.</strong>
+				</p>
+				<p class="sub-result">
+					다시 한 번 확인해 주세요.
+				</p>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-confirm">확인</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="dialog-ticket-purchase-info" type="text/x-dialog-template">
+	<div class="dialog dialog-ticket-purchase-info">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">이용권 구매 안내</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<p class="result">
+					<strong>로그인 후<br>이용권을 등록할 수 있습니다.</strong>
+				</p>
+				<p class="sub-result">로그인 하시겠습니까?</p>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-cancel">취소</button>
+				<button type="button" class="bt-confirm">확인</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="dialog-ticket-purchase-in-used" type="text/x-dialog-template">
+	<div class="dialog dialog-ticket-purchase-in-used">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">이용권 구매 안내</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<p class="result">
+					<strong>이미 <span>이용권 명</span>을 사용 중입니다.</strong>
+				</p>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-confirm">확인</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="dialog-ticket-change" type="text/x-dialog-template">
+	<div class="dialog dialog-ticket-change">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">이용권 변경</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<p class="result-question">1인 이용권으로 변경 하시겠습니까?</p>
+				<p class="result">사용중인 가족 이용권의 유효기간이<br>
+					<strong>N일</strong> 남았습니다.
+			</div>
+			<div class="description">
+				<ul>
+					<li>
+						<p>&bull;&nbsp;이용권 변경 시,가족회원 권한이 해지되며,기존 가족회원의 기기<br>
+							&nbsp;접근 및 제어가 불가능합니다.</p>
+					</li>
+					<li>
+						<p>&bull;&nbsp;이용권 변경 시,다음 달 부터는 변경된 이용권 금액으로 결제됩니다.</p>
+					</li>
+				</ul>
+			</div>
+			<div class="checkbox-area">
+				<input id="agree-service-right" type="checkbox" value="1"><label for="agree-service-right">위의 약관에 전체 동의</label>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-confirm">확인</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="dialog-family-ticket-change" type="text/x-dialog-template">
+	<div class="dialog dialog-family-ticket-change">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">이용권 변경</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<p class="result-question">가족 이용권(5인)으로 변경 하시겠습니까?</p>
+				<p class="result">사용중인 1인 이용권의 유효기간이<br>
+					<strong>N일</strong> 남았습니다.
+			</div>
+			<div class="description">
+				<ul>
+					<li>
+						<p>&bull;이용권 변경 시,다음 달 부터는 변경된 이용권 금액으로 결제됩니다.</p>
+					</li>
+				</ul>
+			</div>
+			<div class="checkbox-area">
+				<input id="agree-ticket-change" type="checkbox" value="1"><label for="agree-ticket-change">위의 약관에 전체 동의</label>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-confirm">확인</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="dialog-ticket-payment" type="text/x-dialog-template">
+	<div class="dialog dialog-ticket-payment">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">이용권 변경</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<p class="result">가족 이용권 (5인) 결제 완료</p>
+				<p class="sub-result">자동결제 <span>|</span> 휴대폰 결제 (2,000원/월)</p>
+				<p class="expiry">이용 유효기간 2015.03.15 - 2015.09.15</p>
+			</div>
+			<div class="description">
+				<ul>
+					<li>
+						<p>&bull;&nbsp;결제 내역 확인 및 변경은 <a href="#">내 정보 관리</a>에서 하실 수 있습니다.</p>
+					</li>
+					<li>
+						<p>&bull;&nbsp;월 정기 자동결제는 이전 결제일 포함 30일째 되는날 이루어집니다.</p>
+					</li>
+					<li>
+						<p>&bull;&nbsp;월 정기 자동결제의 해지는 자동결제 예정일 이전일(24:00)까지 처리 가능합니다.</p>
+					</li>
+				</ul>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-confirm">확인</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="dialog-payment-cancel" type="text/x-dialog-template">
+	<div class="dialog dialog-payment-cancel">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">자동 결제 해지</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<p class="result">
+					<strong>자동 결제 해지 시<br>
+						다음 달부터 결제가되지 않습니다.</strong>
+				</p>
+				<p class="sub-result">해지하시겠습니까?</p>
+				<p class="warn-result">이용권이 없을 경우 기기 조작 및 서비스 사용이 제한됩니다.</p>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-cancel">취소</button>
+				<button type="button" class="bt-confirm">확인</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="dialog-payment-cancel-complete" type="text/x-dialog-template">
+	<div class="dialog dialog-payment-cancel-complete">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">자동 결제 해지</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<p class="result">
+					<strong><span>자동 결제 해지</span>가 완료되었습니다.</strong>
+				</p>
+				<p>다음 달부터 자동 결제가 진행되지 않습니다.</p>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-confirm">확인</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="dialog-register-devices" type="text/x-dialog-template">
+	<div class="dialog dialog-register-devices">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">등록 기기 안내</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<p class="result">
+					<strong>등록된 기기가 없어<br>
+						이용권을 결제할 수 없습니다.</strong>
+				</p>
+				<p class="sub-result">스마트홈 앱에서 기기를 먼저 등록해주세요.</p>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-confirm">확인</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="dialog-name-verify-info" type="text/x-dialog-template">
+	<div class="dialog dialog-name-verify-info">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">실명 인증 안내</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<p class="result">
+					<strong>결제 전 실명 인증이 필요합니다.</strong><br>
+					<span>실명 인증을 하시겠습니까?</span>
+				</p>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-cancel">취소</button>
+				<button type="button" class="bt-confirm">확인</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="dialog-name-verify" type="text/x-dialog-template">
+	<div class="dialog dialog-name-verify">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">실명 인증</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<button class="verify-ipin">
+					<span class="verify-ipin-img">아이핀</span>
+					<span class="verify-ipin-txt">고객님의 아이핀 아이디와 비밀번호로 인증</span>
+				</button>
+				<button class="verify-mobile">
+					<span class="verify-mobile-img">휴대폰</span>
+					<span class="verify-mobile-txt">고객님 명의의 휴대폰으로 인증</span>
+				</button>
+				<p class="result">법인폰의 경우 아이핀 인증으로 실명 인증해주세요.</p>
+			</div>
+		</div>
+	</div>
+</script>
+<!--// 수정 종료 : 20150717_01 -->
 <script type="text/javascript">
 	jQuery(function($) {
 		var U = SmartHomeUI.init();
@@ -654,6 +1094,17 @@
 						$context.find('.ids').html(results.join(''));
 						//-- END
 
+					} else if (templateId === 'dialog-name-verify') {
+						$context.find('.verify-ipin').on('click', function() {
+							U.dialog(true, {
+								templateId: 'dialog-name-verify-info',
+								onOpen: function(context) {
+									$(context).find('.bt-cancel').on('click', function() {
+										U.dialog();
+									});
+								}
+							});
+						});
 					} else {
 						setTimeout(function() {
 							var $el = $context.find('form').find('input[type=text]');
@@ -700,13 +1151,13 @@
 						<td>costumer-supports.html</td>
 						<td>고객 지원</td>
 					</tr>
-					<tr>
+					<tr class="updated-20150719">
 						<td>account.html</td>
-						<td>계정 관리</td>
+						<td>[수정] 계정 관리 (쿠폰에서 이용권 변경 및 자동겔제 해지 버튼은 숨겼음)</td>
 					</tr>
-					<tr>
+					<tr class="updated-20150719">
 						<td>account-without-coupon.html</td>
-						<td>계정 관리 (쿠폰이 없는 경우)</td>
+						<td>[수정] 계정 관리 (쿠폰이 없는 경우)</td>
 					</tr>
 					<tr>
 						<td>terms-and-conditions.html</td>
@@ -715,6 +1166,18 @@
 					<tr>
 						<td>withdraw.html</td>
 						<td>회원 탈퇴</td>
+					</tr>
+					<tr class="updated-20150719">
+						<td>usage-list.html</td>
+						<td>[신규] 이용 내역</td>
+					</tr>
+					<tr class="updated-20150719">
+						<td>usage-without-list.html</td>
+						<td>[신규] 이용 내역 (이용 내역이 없는 경우)</td>
+					</tr>
+					<tr class="updated-20150719">
+						<td>voucher-purchase.html</td>
+						<td>[신규] 이용권/쿠폰 등록</td>
 					</tr>
 					<tr style="background:#f7f7f7;">
 						<td>base.css</td>
@@ -833,6 +1296,16 @@
 							<code>is-placeholder</code>를 추가합니다.
 						</td>
 					</tr>
+					<tr class="updated-20150719">
+						<td>.has-usage</td>
+						<td>usage-list.html</td>
+						<td>body</td>
+						<td>
+							usage-list.html은 사용자가 이용내역이 있을 경우과 그렇지 않은 경우 View가 달라집니다.
+							<code>&lt;body&gt;</code>에 <code>has-usage</code>가 없는 경우
+							이용내역 목록 대신, "이용내역이 없습니다."라는 메시지가 담긴 영역이 나타납니다.
+						</td>
+					</tr>
 				</tbody>
 			</table>
 		</li>
@@ -903,6 +1376,14 @@
 							</tr>
 						</tbody>
 					</table>
+				</li>
+				<li class="updated-20150719">
+					<h3>중첩된 Dialog</h3>
+					<p>Dialog를 중첩시키기 위해서는(즉 Dialog를 띄운 상태에서 그 위에 다른 Dialog를 띄우기 위해서는) <code>U.dialog()</code>의 매개변수가 달라집니다.</p>
+					<p>첫번째 매개변수는 boolean type(truthy, falsy는 안 됨)으로, 이 값을 <code>true</code>로 주면, 두 번째 매개변수 <code>config</code>(상동)에 해당하는 Dialog를 생성해 지금의 Dialog 위로 띄웁니다.</p>
+					<p>일반적인 경우와 같이, 매개변수로 <code>config</code>만을 주면, 전술한 첫번째 매개변수가 <code>false</code>로 온 것으로 간주하므로 종전과 같이 동작하며, 따라서 이전 코드를 고칠 필요는 없습니다.</p>
+					<p>매개변수 없이 <code>U.dialog()</code>를 호출하면 현재 최상위에 열려 있는 Dialog를 닫습니다.</p>
+					<p>이를 위해 예제를 만들었습니다. 아래 목록 중 마지막 Dialog(실명 인증)을 실행시키면 Dialog가 열립니다. 이 때 좌측 [아이핀 인증] 버튼을 누르면 실명인증 안내 Dialog가 중첩되어 열립니다. 이 Dialog에서 [취소] 버튼을 클릭하면 맨 위의 Dialog만 닫힙니다.</p>
 				</li>
 				<li>
 					<h3>Types</h3>
@@ -1014,6 +1495,96 @@
 								<td>dialog-template-withdraw-success</td>
 								<td>회원 탈퇴 성공</td>
 								<td><button type="button" class="sample" value="dialog-template-withdraw-success">실행</button></td>
+							</tr>
+							<tr class="updated-20150719">
+								<td>dialog-template-ie-support</td>
+								<td>홈페이지 이용안내</td>
+								<td><button type="button" class="sample" value="dialog-template-ie-support">실행</button></td>
+							</tr>
+							<tr class="updated-20150719">
+								<td>dialog-coupon-register-info</td>
+								<td>쿠폰 등록 안내</td>
+								<td><button type="button" class="sample" value="dialog-coupon-register-info">실행</button></td>
+							</tr>
+							<tr class="updated-20150719">
+								<td>dialog-coupon-register-success</td>
+								<td>쿠폰 등록 성공</td>
+								<td><button type="button" class="sample" value="dialog-coupon-register-success">실행</button></td>
+							</tr>
+							<tr class="updated-20150719">
+								<td>dialog-coupon-register-now-use</td>
+								<td>쿠폰 등록 성공 및 바로 사용</td>
+								<td><button type="button" class="sample" value="dialog-coupon-register-now-use">실행</button></td>
+							</tr>
+							<tr class="updated-20150719">
+								<td>dialog-coupon-register-user-agreement</td>
+								<td>쿠폰 등록 약관 동의</td>
+								<td><button type="button" class="sample" value="dialog-coupon-register-user-agreement">실행</button></td>
+							</tr>
+							<tr class="updated-20150719">
+								<td>dialog-coupon-expired</td>
+								<td>쿠폰 확인 - 유효기간 만료</td>
+								<td><button type="button" class="sample" value="dialog-coupon-expired">실행</button></td>
+							</tr>
+							<tr class="updated-20150719">
+								<td>dialog-coupon-invalid-number</td>
+								<td>쿠폰 확인 - 유효하지 않은 번호</td>
+								<td><button type="button" class="sample" value="dialog-coupon-invalid-number">실행</button></td>
+							</tr>
+							<tr class="updated-20150719">
+								<td>dialog-coupon-duplicated</td>
+								<td>쿠폰 확인 - 쿠폰 번호 중복</td>
+								<td><button type="button" class="sample" value="dialog-coupon-duplicated">실행</button></td>
+							</tr>
+							<tr class="updated-20150719">
+								<td>dialog-ticket-purchase-info</td>
+								<td>이용권 구매 안내</td>
+								<td><button type="button" class="sample" value="dialog-ticket-purchase-info">실행</button></td>
+							</tr>
+							<tr class="updated-20150719">
+								<td>dialog-ticket-purchase-in-used</td>
+								<td>이용권 구매 안내</td>
+								<td><button type="button" class="sample" value="dialog-ticket-purchase-in-used">실행</button></td>
+							</tr>
+							<tr class="updated-20150719">
+								<td>dialog-ticket-change</td>
+								<td>이용권 변경 - 1인 이용권으로</td>
+								<td><button type="button" class="sample" value="dialog-ticket-change">실행</button></td>
+							</tr>
+							<tr class="updated-20150719">
+								<td>dialog-family-ticket-change</td>
+								<td>이용권 변경 - 가족 이용권으로</td>
+								<td><button type="button" class="sample" value="dialog-family-ticket-change">실행</button></td>
+							</tr>
+							<tr class="updated-20150719">
+								<td>dialog-ticket-payment</td>
+								<td>이용권 변경 완료</td>
+								<td><button type="button" class="sample" value="dialog-ticket-payment">실행</button></td>
+							</tr>
+							<tr class="updated-20150719">
+								<td>dialog-payment-cancel</td>
+								<td>자동 결제 해지</td>
+								<td><button type="button" class="sample" value="dialog-payment-cancel">실행</button></td>
+							</tr>
+							<tr class="updated-20150719">
+								<td>dialog-payment-cancel-complete</td>
+								<td>자동 결제 해지 완료</td>
+								<td><button type="button" class="sample" value="dialog-payment-cancel-complete">실행</button></td>
+							</tr>
+							<tr class="updated-20150719">
+								<td>dialog-register-devices</td>
+								<td>등록 기기 안내</td>
+								<td><button type="button" class="sample" value="dialog-register-devices">실행</button></td>
+							</tr>
+							<tr class="updated-20150719">
+								<td>dialog-name-verify-info</td>
+								<td>실명 인증 안내</td>
+								<td><button type="button" class="sample" value="dialog-name-verify-info">실행</button></td>
+							</tr>
+							<tr class="updated-20150719">
+								<td>dialog-name-verify</td>
+								<td>실명 인증</td>
+								<td><button type="button" class="sample" value="dialog-name-verify">실행</button></td>
 							</tr>
 						</tbody>
 					</table>
