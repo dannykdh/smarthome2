@@ -345,7 +345,7 @@ function parseChangePasswordTransaction(response, $el) {
 	}
 }
 
-function startUseCouponTransction(url, type, dataType, callback) {
+function startUseCouponTransaction(url, type, dataType, callback) {
 	var that = this;
     $.ajax({
         url: urlHeader+url,
@@ -470,7 +470,7 @@ function setCouponList(dataList, kind) {
 			output += '<li class="coupon h-item">';
 			output += '	<div class="coupon-holder has-coupon-ribbon">';
 			output += '		<p class="coupon-title">'+dataList[i].cpnNm+'</p>';
-			output += '		<p class="coupon-payment">'+dataList[i].userCnt+'인용(Host 회원 '+dataList[i].userCnt+'인 + Sub 회원 '+dataList[i].grpUserCnt+'인)</p>';
+			output += '		<p class="coupon-payment">'+dataList[i].userCnt+'인용(정회원 '+dataList[i].grpUserCnt+'인 + 가족회원 '+dataList[i].userCnt+'인)</p>';
 			output += '		<p class="coupon-status">';
 			output += '			<span class="coupon-duration">사용 유효기간 : '+dataList[i].regValidEndDay+'까지</span>';
 			output += '		</p>';
@@ -497,7 +497,7 @@ function setCouponList(dataList, kind) {
     }
 }
 
-function startMyInfoTransction(url, type, dataType, callback) {
+function startMyInfoTransaction(url, type, dataType, callback) {
 	var that = this;
     $.ajax({
         url: urlHeader+url,

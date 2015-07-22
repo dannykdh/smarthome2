@@ -194,12 +194,12 @@ function loginComplete(response) {
 	setLoginBeforeAfterUpdate();
 
 	var params = {}, url='v1/member/info', type='GET', dataType = 'json';
-	startMyInfoTransction(url, type, dataType, function(response){
+	startMyInfoTransaction(url, type, dataType, function(response){
 		parseMyInfoTransaction(response);		
 	});	
 
 	var params = {}, url='v1/payment/pay', type='GET', dataType = 'json';
-	startUseCouponTransction(url, type, dataType, function(response){
+	startUseCouponTransaction(url, type, dataType, function(response){
 		parseUseCouponTransaction(response);		
 	});	
 

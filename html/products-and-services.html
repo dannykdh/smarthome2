@@ -12,6 +12,10 @@
 <script type="text/javascript" src="../js/popUpProcess.js"></script>
 <script type="text/javascript" src="../js/login.js"></script>
 <script type="text/javascript" src="../js/transaction.js"></script>
+<script>
+	var a = navigator.userAgent;
+	console.log("브라우저 정보 : "+a);
+</script>
 <script id="dialog-template-video" type="text/x-dialog-template">
 	<div class="dialog dialog-video">
 		<button class="bt-dialog-close" type="button">Close</button>
@@ -285,7 +289,7 @@
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
-							<input type="password" id="pass" name="pass" class="edit" placeholder="비밀번호 (대소문자 구분 영문, 숫자 포함 8자 이상)">
+							<input type="password" id="pass" name="pass" class="edit" placeholder="비밀번호 (대소문자 구분 영문, 숫자, 툭수문자 포함 9자 이상)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
@@ -543,7 +547,7 @@
 					<legend class="displayed">새 비밀번호</legend>
 					<div class="dialog-content-panel">
 						<div class="field">
-							<input type="password" class="edit" id="js_new_password" placeholder="새 비밀번호 (대소문자 구분 영문, 숫자 포함 8자 이상)">
+							<input type="password" class="edit" id="js_new_password" placeholder="새 비밀번호 (대소문자 구분 영문, 숫자, 툭수문자 포함 9자 이상)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
@@ -734,60 +738,7 @@
 					<img class="service-company-logo" src="../img/product/ex-logo-06.png" alt="coming soon">
 				</div>
 			</li>
-			<li class="service h-item">
-				<div class="service-thumb-holder">
-					<img class="service-thumb" src="../img/product/ex-thumb-robot-dim.png" alt="coming soon">
-				</div>
-				<h2 class="service-title">
-					<img src="../img/product/ex-title-aircon-dim.png" alt="coming soon">
-					<span>에어컨</span>
-				</h2>
-				<p class="service-text service-text-dimmed">
-					우리집 플러그를 똑똑하게!<br>
-					스마트 콘센트로 플러그 연결 기기별<br>
-					사용시간을 비교할 수 있습니다.
-				</p>
-				<!--<a class="bt-buy" href="" target="_blank">구매하기</a>-->
-				<div class="service-company-logo-holder">
-					<img class="service-company-logo" src="../img/product/ex-logo-06-dim.png" alt="coming soon">
-				</div>
-			</li> 
-			<li class="service h-item">
-				<div class="service-thumb-holder">
-					<img class="service-thumb" src="../img/product/ex-thumb-smartsocket-dim.png" alt="coming soon">
-				</div>
-				<h2 class="service-title">
-					<img src="../img/product/ex-title-aircon-dim.png" alt="coming soon">
-					<span>에어컨</span>
-				</h2>
-				<p class="service-text service-text-dimmed">
-					우리집 플러그를 똑똑하게!<br>
-					스마트 콘센트로 플러그 연결 기기별<br>
-					사용시간을 비교할 수 있습니다.
-				</p>
-				<!--<a class="bt-buy" href="" target="_blank">구매하기</a>-->
-				<div class="service-company-logo-holder">
-					<img class="service-company-logo" src="../img/product/ex-logo-06-dim.png" alt="coming soon">
-				</div>
-			</li>
-			<li class="service h-item">
-				<div class="service-thumb-holder">
-					<img class="service-thumb" src="../img/product/ex-thumb-dehumidifier-dim.png" alt="coming soon">
-				</div>
-				<h2 class="service-title">
-					<img src="../img/product/ex-title-aircon-dim.png" alt="coming soon">
-					<span>에어컨</span>
-				</h2>
-				<p class="service-text service-text-dimmed">
-					우리집 플러그를 똑똑하게!<br>
-					스마트 콘센트로 플러그 연결 기기별<br>
-					사용시간을 비교할 수 있습니다.
-				</p>
-				<!--<a class="bt-buy" href="" target="_blank">구매하기</a>-->
-				<div class="service-company-logo-holder">
-					<img class="service-company-logo" src="../img/product/ex-logo-06-dim.png" alt="coming soon">
-				</div>
-			</li>
+			<!-- Comming Soon 삭제 -->
 		</ul>
 		<!--// 수정 종료 : 20170517_01 -->
 		<div class="contact-us">

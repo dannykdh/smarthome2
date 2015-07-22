@@ -13,23 +13,23 @@
 <script type="text/javascript" src="../js/transaction.js"></script>
 <script type="text/javascript" src="../js/popUpProcess.js"></script>
 <script type="text/javascript" src="../js/paymentPop.js"></script>
-<script type="text/javascript" src="../js/paymentPop.js"></script>
 <script>
 	$('document').ready(function(){
 		if (isLoginCheck()) {
 			var params = {}, url='v1/member/info', type='GET', dataType = 'json';
-			startMyInfoTransction(url, type, dataType, function(response){
+			startMyInfoTransaction(url, type, dataType, function(response){
 				parseMyInfoTransaction(response);		
 			});	
 
+			//사용중인 이용권/쿠폰 리스트 
 			var params = {}, url='v1/payment/pay', type='GET', dataType = 'json';
-			startUseCouponTransction(url, type, dataType, function(response){
+			startUseCouponTransaction(url, type, dataType, function(response){
 				parseUseCouponTransaction(response);		
 			});	
 
 			//구매 가능한 이용권 - 추가됨
 			var params = {}, url='v1/payment/pay/available', type='GET', dataType = 'json';
-			startBargainousTicketTransction(url, type, dataType, function(response){
+			startBargainousTicketTransaction(url, type, dataType, function(response){
 				parseBargainousTicketTransaction(response);		
 			});	
 		} else {
@@ -310,7 +310,7 @@
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
-							<input type="password" id="pass" name="pass" class="edit" placeholder="비밀번호 (대소문자 구분 영문, 숫자 포함 8자 이상)">
+							<input type="password" id="pass" name="pass" class="edit" placeholder="비밀번호 (대소문자 구분 영문, 숫자, 특수문자 포함 9자 이상)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
@@ -568,7 +568,7 @@
 					<legend class="displayed">새 비밀번호</legend>
 					<div class="dialog-content-panel">
 						<div class="field">
-							<input type="password" class="edit" id="js_new_password" placeholder="새 비밀번호 (대소문자 구분 영문, 숫자 포함 8자 이상)">
+							<input type="password" class="edit" id="js_new_password" placeholder="새 비밀번호 (대소문자 구분 영문, 숫자, 툭수문자 포함 9자 이상)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
