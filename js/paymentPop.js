@@ -82,38 +82,22 @@ function parseBargainousTicketTransaction(response) {
 		if (response.resultCd == '1' && response.resultMsg == '성공') {
 			console.log('parseBargainousTicketTransaction : ' + response.resultMsg);
 			if (bargainousTicketList && bargainousTicketList.length > 0) {
-				//for(var i=0; i<rsUseProdList.length; i++) {
 					setTicketList(bargainousTicketList, 'UP');
-				//}
 			}
 
 			if (!bargainousTicketList && bargainousTicketList.length == 0 ) {
-				//setEmptyTicketList();
 			}
 		} else {
-			// TODO : 계정관리 통신 오류 시 처리할 예외 상황에 대한 시나리오가 없어 '사용가능한 이용권/쿠폰이 없습니다'로 처리
-			//setEmptyTicketList();
+
 		}
 	} else {
-		// TODO : 계정관리 통신 오류 시 처리할 예외 상황에 대한 시나리오가 없어 '사용가능한 이용권/쿠폰이 없습니다'로 처리
-		//setEmptyTicketList();
+
 	}
-}
-
-function setEmptyTicketList() {	
-	// var output = '';
-	// var $emptyCouponContainer = $('.coupons-holder');
-
-	// output += '<div class="no-coupon"><p class="coupon-empty">사용 가능한 이용권/쿠폰이 없습니다.</p></div>';
- //    $couponContainer.html(output);
- //임시테스트	$('body').removeClass('has-coupon');
 }
 
 function setTicketList(dataList, kind) {	
 	var output = '';
-	//임시테스트 var $ticketContainer = $('.coupons.h-bar');
 	var $ticketContainer = $('.voucher-cards');
-	// $.each(dataList, function() {
 
 		// dvcRegYn: "Y"
 		// grpUserCnt: 1
@@ -132,7 +116,6 @@ function setTicketList(dataList, kind) {
 		// prodTypeCd: "001"
 		// salePrc: 2200
 		// userCnt: 5		
-
 
 	//천단위 ,콤마
 	var numComma = function(num){
@@ -334,7 +317,6 @@ function couponReg() {
 
 // 쿠폰 등록 요청
 function startCouponRegTransaction(url, params, type, dataType, callback) {
-	console.log ('쿠폰 등록 요청 : '+type);
 	var that = this;
     $.ajax({
         url: urlHeader+url,
@@ -356,8 +338,6 @@ function startCouponRegTransaction(url, params, type, dataType, callback) {
 
 // 쿠폰 등록 요청 파싱
 function parseCouponRegTransaction(response) {
-	// U.getRemainedTimeDisplay();
-	console.log('[쿠폰 등록 요청 후 결과 처리]');
 	if (response.resultCd && response.resultMsg) {
 		if (response.resultCd == '0' && response.resultMsg == '성공') {
 			console.log("쿠폰 등록 성공"+response.resultMsg);
@@ -380,13 +360,13 @@ function couponRegFail(resultCd) {
 	var templateId;
 
 		switch (resultCd) {
-			case '1302': templateId = 'dialog-coupon-invalid-number';
+			case '1302': templateId = 'dialog-coupon-invalid-number';	//유효하지 않은 쿠폰 번
 				break;
-			case '8000': templateId = 'dialog-coupon-invalid-number';	//빈값 입력 시 (버튼 비활성화로 막음)
+			case '8000': templateId = 'dialog-coupon-invalid-number';	//빈값 입력 시(버튼 비활성화로 차단됨)
 				break;				
-			case '1303': templateId = 'dialog-coupon-duplicated';
+			case '1303': templateId = 'dialog-coupon-duplicated';	//중복된 쿠폰 번호
 				break;
-			case '1304': templateId = 'dialog-coupon-expired';
+			case '1304': templateId = 'dialog-coupon-expired';		//만료된 쿠폰 번호
 				break;
 			default:
 		}	
@@ -403,7 +383,6 @@ function couponRegFail(resultCd) {
 
 // 이용내역 요청
 function startUseCouponHistoryTransaction(url, type, dataType, callback) {
-	console.log ('이용내역 : '+type);
 	var that = this;
     $.ajax({
         url: urlHeader+url,
@@ -425,10 +404,8 @@ function startUseCouponHistoryTransaction(url, type, dataType, callback) {
 
 // 이용내역 요청 파싱
 function parseUseCouponHistoryTransaction(response) {
-	console.log('[이용내역 리스트]');
 	if (response.resultCd && response.resultMsg) {
 		if (response.resultCd == '1' && response.resultMsg == '성공') {
-			console.log("조회 성공 :"+response.resultMsg);			
 			if(response.resultList.length > 0) {
 				$('#has-usage').addClass('has-usage');
 				console.log(response.resultList.length);
@@ -490,42 +467,42 @@ function parseUseCouponHistoryTransaction(response) {
 
 
 
-					
-						function goPayTransaction() {
-							//API 통신을 위한 파라미터 값
-							var params = {}, url='pay/run', type='get', dataType = 'json';
+//결제 테스트용 - 임시				
+function goPayTransaction() {
+	//API 통신을 위한 파라미터 값
+	var params = {}, url='pay/run', type='get', dataType = 'json';
 
-							var UserCertTknVal = getCookieInfo('userCertTknVal');
+	var UserCertTknVal = getCookieInfo('userCertTknVal');
 
-							params = {				
-								authToken : UserCertTknVal,
-								osType : 'W',
-								prodNo :"PRD0000001",
-								prodNm : "1인 이용권",
-								salePrc : "1100"						
-							};
+	params = {				
+		authToken : UserCertTknVal,
+		osType : 'W',
+		prodNo :"PRD0000001",
+		prodNm : "1인 이용권",
+		salePrc : "1100"						
+	};
 
-							startPopTransaction(url, params, type, dataType, function(response){
+	startPopTransaction(url, params, type, dataType, function(response){
 
-							});				
-						}
+	});				
+}
 
-						function startPopTransaction(url, params, type, dataType, callback) {
-							var that = this;
-							urlpay = 'http://61.250.21.156:9002/';
+function startPopTransaction(url, params, type, dataType, callback) {
+	var that = this;
+	urlpay = 'http://61.250.21.156:9002/';
 
-						    $.ajax({
-						        url: urlpay+url,
-						        //data: JSON.stringify(params),
-				                data: params,
-						        type: type,
-						        dataType: dataType,
-							    contentType : "application/json;charset=UTF-8", 
-						        success: function(response) {
-						            callback(response);
-						        },
-						        error: function(xhr, textStatus, errorThrown) {
-						            console.log('실패 - ', xhr);
-						        }
-						    });
-						}
+    $.ajax({
+        url: urlpay+url,
+        //data: JSON.stringify(params),
+        data: params,
+        type: type,
+        dataType: dataType,
+	    contentType : "application/json;charset=UTF-8", 
+        success: function(response) {
+            callback(response);
+        },
+        error: function(xhr, textStatus, errorThrown) {
+            console.log('실패 - ', xhr);
+        }
+    });
+}
