@@ -341,7 +341,7 @@ function parseCouponRegTransaction(response) {
 	if (response.resultCd && response.resultMsg) {
 		if (response.resultCd == '0' && response.resultMsg == '성공') {
 			console.log("쿠폰 등록 성공"+response.resultMsg);
-				//사용중인 쿠폰 유무 조회
+				//사용중인 쿠폰 유무 조회(transaction.js에서 제공하나 용도가 달라서 분리가 필요해 보임.)
 				var params = {}, url='v1/payment/pay', type='GET', dataType = 'json';
 				startUseCouponTransaction(url, type, dataType, function(response){
 					parseUseCouponTransaction(response);		

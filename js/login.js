@@ -299,19 +299,21 @@ function setLoginBeforeAfterUpdate() {
 	}
 }
 
-// 로그인 전후 Updagte. 이용권 결제 페이지
+// 로그인 전후 Updagte. 이용권 결제 페이지, 자동로그인 시 이용권 부분 공백 
 function setLoginBeforeAfterVoucherUpdate() {
 	var $reg_coupon_num = $('.reg-coupon-num'); 
 	var $voucherCard = $('.voucher-card'); 
 	var $voucher_card = $('#cardForm'); 
 	var $voucher_cards = $('#cardForms'); 
 
+	var timer = setTimeout("location.reload()", 1000);
+   		clearTimeout(timer);
+
 	if (isLoginCheck()) {
 		$reg_coupon_num.show();
 		$voucherCard.show();		
 		$voucher_card.hide();	
 		$voucher_cards.hide();
-
 	} else {
 		$reg_coupon_num.hide();
 		$voucherCard.hide();				

@@ -381,6 +381,7 @@ function parseUseCouponTransaction(response) {
 				//for(var i=0; i<rsUseCpnList.length; i++) {
 					setCouponList(rsUseCpnList, 'UC');
 				//}
+				console.log("사용중인 쿠폰이 존재합니다.");
 			} else {
 				console.log("사용중인 쿠폰이 없습니다.");
 			}

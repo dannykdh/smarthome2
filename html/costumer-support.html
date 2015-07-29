@@ -49,8 +49,8 @@
 					<legend>인증번호 요청</legend>
 					<div class="dialog-content-panel">
 						<div class="field field-auth-number">
-							<input type="text" class="edit" placeholder="휴대폰 번호(-제외)">
-							<input type="submit" class="bt-send-number" value="인증번호 전송">
+							<input type="text"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" class="edit" id="js_cellPhone" autocomplete="off" placeholder="휴대폰 번호(-제외)">
+							<input type="button" id="js_bt-send-number" class="bt-send-number" value="인증번호 전송">
 							<p class="err-msg"></p>
 						</div>
 					</div>
@@ -61,13 +61,13 @@
 					<legend>인증번호 전송</legend>
 					<div class="dialog-content-panel">
 						<div class="field">
-							<input type="text" class="edit" placeholder="인증번호 6자리">
+							<input type="text"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="6" class="edit" id="js_authNumber" placeholder="인증번호 6자리">
 							<p class="err-msg"></p>
 							<p class="remained-time">남은 시간 <strong>00:00</strong></p>
 						</div>
 					</div>
 					<div class="dialog-control-panel">
-						<button type="submit" class="bt-confirm">확인</button>
+						<button type="button" id = "js_bt-confirm" class="bt-confirm">확인</button>
 					</div>
 				</fieldset>
 			</form>
@@ -133,12 +133,12 @@
 					<legend>인증번호 요청</legend>
 					<div class="dialog-content-panel">
 						<div class="field">
-							<input type="text" class="edit" placeholder="아이디(이메일)">
+							<input type="text" id="js_userId" class="edit" placeholder="아이디(이메일)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field field-auth-number">
-							<input type="text" class="edit" placeholder="휴대폰 번호(-제외)">
-							<input type="submit" class="bt-send-number" value="인증번호 전송">
+							<input type="text" id="js_cellPhone" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" autocomplete="off" class="edit" placeholder="휴대폰 번호(-제외)">
+							<input type="button" class="bt-send-number" value="인증번호 전송">
 							<p class="err-msg"></p>
 						</div>
 					</div>
@@ -149,13 +149,13 @@
 					<legend>인증번호 전송</legend>
 					<div class="dialog-content-panel">
 						<div class="field">
-							<input type="text" class="edit" placeholder="인증번호 6자리">
+							<input type="text" class="edit"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="6" id="js_authNumber" placeholder="인증번호 6자리">
 							<p class="err-msg"></p>
 							<p class="remained-time">남은 시간 <strong>00:00</strong></p>
 						</div>
 					</div>
 					<div class="dialog-control-panel">
-						<button type="submit" class="bt-confirm">확인</button>
+						<button type="button" class="bt-confirm">확인</button>
 					</div>
 				</fieldset>
 			</form>
@@ -224,7 +224,7 @@
 						</li>
 					</ul>
 					<div class="dialog-control-panel">
-						<button type="submit" class="bt-next">다음</button>
+						<button type="button" class="bt-next">다음</button>
 					</div>
 				</fieldset>
 			</form>
@@ -249,8 +249,8 @@
 					<legend>인증번호 요청</legend>
 					<div class="dialog-content-panel">
 						<div class="field field-auth-number">
-							<input type="text" class="edit" placeholder="휴대폰 번호(-제외)">
-							<input type="submit" class="bt-send-number" value="인증번호 전송">
+							<input type="text" class="edit" autocomplete="off" id="hphone" name="hphone" placeholder="휴대폰 번호(-제외)" numberOnly="true">
+							<input type="button" class="bt-send-number" value="인증번호 전송">
 							<p class="err-msg"></p>
 						</div>
 					</div>
@@ -261,14 +261,14 @@
 					<legend>인증번호 전송</legend>
 					<div class="dialog-content-panel">
 						<div class="field">
-							<input type="text" class="edit" placeholder="인증번호 6자리">
+							<input type="text" id="authnum" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="6" name="authnum" class="edit" placeholder="인증번호 6자리">
 							<p class="err-msg"></p>
 							<p class="remained-time">남은 시간 <strong>00:00</strong></p>
 						</div>
 					</div>
 					<div class="dialog-control-panel">
 						<button type="button" class="bt-prev">이전</button>
-						<button type="submit" class="bt-next">다음</button>
+						<button type="button" class="bt-next">다음</button>
 					</div>
 				</fieldset>
 			</form>
@@ -291,25 +291,25 @@
 					<legend>사용자 정보</legend>
 					<div class="dialog-content-panel">
 						<div class="field">
-							<input type="text" class="edit" placeholder="이름 (한글, 영문, 12자 이내)">
+							<input type="text" id="name" name="name" maxlength="12" class="edit" placeholder="이름 (한글, 영문, 12자 이내)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
-							<input type="text" class="edit" placeholder="아이디 (이메일)">
+							<input type="text" id="email" name="email" class="edit" placeholder="아이디 (이메일)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
-							<input type="password" class="edit" placeholder="비밀번호 (대소문자 구분 영문, 숫자 포함 8자 이상)">
+							<input type="password" id="pass" name="pass" class="edit" placeholder="비밀번호 (대소문자 구분 영문, 숫자, 특수문자 포함 9자 이상)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
-							<input type="password" class="edit" placeholder="비밀번호 재입력">
+							<input type="password" id="passre" name="passre" class="edit" placeholder="비밀번호 재입력">
 							<p class="err-msg"></p>
 						</div>
 					</div>
 					<div class="dialog-control-panel">
 						<button type="button" class="bt-prev">이전</button>
-						<button type="submit" class="bt-next">다음</button>
+						<button type="button" class="bt-next">다음</button>
 					</div>
 				</fieldset>
 			</form>
@@ -347,16 +347,16 @@
 					<legend>로그인</legend>
 					<div class="dialog-content-panel">
 						<div class="field">
-							<input type="text" class="edit" placeholder="스마트홈 계정 (이메일)">
+							<input type="text" class="edit" id="myId" placeholder="스마트홈 계정 (이메일)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
-							<input type="password" class="edit" placeholder="비밀번호">
+							<input type="password" class="edit" id="myPass" placeholder="비밀번호">
 							<p class="err-msg"></p>
 						</div>
 					</div>
 					<div class="dialog-control-panel">
-						<button type="submit" class="bt-log-in">확인</button>
+						<button type="button" class="bt-log-in">확인</button>
 					</div>
 				</fieldset>
 			</form>
@@ -493,7 +493,7 @@
 					</div>
 				</fieldset>
 				<div class="dialog-control-panel">
-					<button type="submit" class="bt-confirm">확인</button>
+					<button type="button" class="bt-confirm">확인</button>
 				</div>
 			</form>
 		</div>
@@ -548,7 +548,7 @@
 					<legend class="displayed">현재 비밀번호</legend>
 					<div class="dialog-content-panel">
 						<div class="field">
-							<input type="password" class="edit" placeholder="현재 비밀번호">
+							<input type="password" class="edit" id="js_now_password" placeholder="현재 비밀번호">
 							<p class="err-msg"></p>
 						</div>
 					</div>
@@ -557,18 +557,18 @@
 					<legend class="displayed">새 비밀번호</legend>
 					<div class="dialog-content-panel">
 						<div class="field">
-							<input type="password" class="edit" placeholder="새 비밀번호 (대소문자 구분 영문, 숫자 포함 8자 이상)">
+							<input type="password" class="edit" id="js_new_password" placeholder="새 비밀번호 (대소문자 구분 영문, 숫자, 툭수문자 포함 9자 이상)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
-							<input type="password" class="edit" placeholder="비밀번호 재입력">
+							<input type="password" class="edit" id="js_new_password_re" placeholder="비밀번호 재입력">
 							<p class="err-msg"></p>
 						</div>
 					</div>
 				</fieldset>
 				<div class="dialog-control-panel">
 					<button type="button" class="bt-cancel">취소</button>
-					<button type="submit" class="bt-save">저장</button>
+					<button type="button" class="bt-save">저장</button>
 				</div>
 			</form>
 		</div>
@@ -614,209 +614,29 @@
 </script>
 <script type="text/javascript">
 	jQuery(function($) {
-		// home과 겹치는 부분은 home.html을 참고바랍니다.
-		var U = SmartHomeUI.init();
-
-		// home과 겹치는 부분 시작
-		$('.bt-sign-up').on('click', function() {
-			signUp(true);
-		});
-
-		function signUp() {
-
-			// 회원가입을 시작합니다.
-			goStep1();
-
-			function goStep1() {
-				U.dialog({
-					templateId: 'dialog-template-sign-up-step1',
-					onOpen: function(context) {
-						$(context).find('form').first().on('submit', function() {
-							goStep2();
-							return false;
-						});
-					},
-					onClose: function(context, finish) {
-						finish();
-					}
-				});
-			}
-
-			function goStep2() {
-				U.dialog({
-					templateId: 'dialog-template-sign-up-step2',
-					onOpen: function(context) {
-						var $context = $(context);
-						var $form = $context.find('form').last().on('submit', function() {
-							goStep3();
-							return false;
-						});
-						setTimeout(function() {
-							U.invalidate($form.find('input').first(), '테스트 에러 메시지');
-							setTimeout(function() {
-								U.invalidate($form.find('input').first());
-							}, 1500);
-						}, 1500);
-						$context.find('.bt-prev').on('click', function() {
-							goStep1();
-							return false;
-						});
-					}
-				});
-			}
-
-			function goStep3() {
-				U.dialog({
-					templateId: 'dialog-template-sign-up-step3',
-					onOpen: function(context) {
-						var $context = $(context);
-						$context.find('form').last().on('submit', function() {
-							goFinish();
-							return false;
-						});
-
-						$context.find('.bt-prev').on('click', function() {
-							goStep2();
-							return false;
-						});
-					}
-				});
-			}
-
-			function goFinish() {
-				U.dialog({
-					templateId: 'dialog-template-sign-up-success',
-					onOpen: function(context) {
-						$(context).find('.bt-confirm').on('click', function() {
-							U.dialog();
-							return false;
-						});
-					},
-					onClose: function(context, finish) {
-						finish();
-					}
-				});
-			}
-
-			return false;
-		}
-
-		$('.bt-log-in').on('click', login);
-
-		function login() {
-			U.dialog({
-				templateId: 'dialog-template-log-in',
-				onOpen: function(context) {
-					var $context = $(context);
-
-					$context.find('.bt-sign-up').on('click', function() {
-						signUp(true);
-					});
-
-					$context.find('.bt-find-id-and-password').on('click', function() {
-						findIdOrPassword('id');
-					});
-				}
-			});
-		}
-
-		function findIdOrPassword(target) {
-
-			switch (target) {
-			case 'id':
-				U.dialog({
-					templateId: 'dialog-template-find-id-form',
-					onOpen: function(context) {
-						var $context = $(context);
-
-						$context.find('.bt-find-password').on('click', function() {
-							findIdOrPassword('password');
-						});
-
-						$context.find('form').last().on('submit', function() {
-						U.dialog({
-								templateId: 'dialog-template-find-id-success',
-								onOpen: function(context) {
-									var $context = $(context);
-
-									// 서버로부터 가져온 email 목록을 추가합니다.
-									var results = [
-										'aaaa@bbbbb.com',
-										'cccc@ddddd.com',
-										'eeee@fffff.com',
-										'gggg@hhhhh.com',
-										'iiii@jjjjj.com'
-									];
-
-									results = $.map(results, function(v) {
-										return '<li>' + v + '</li>';
-									});
-
-									$context.find('.ids').html(results.join(''));
-									//-- END
-
-									$context.find('.bt-find-password').on('click', function() {
-										findIdOrPassword('password');
-									});
-
-									$context.find('.bt-log-in').on('click', login);
-								}
-							});
-						});
-					}
-				});
-				break;
-			case 'password':
-				U.dialog({
-					templateId: 'dialog-template-find-password-form',
-					onOpen: function(context) {
-						var $context = $(context);
-
-						$context.find('.bt-find-id').on('click', function() {
-							findIdOrPassword('id');
-						});
-
-						$context.find('form').last().on('submit', function() {
-							U.dialog({
-								templateId: 'dialog-template-find-password-success',
-								onOpen: function(context) {
-									var $context = $(context);
-
-									$context.find('.bt-confirm').on('click', function() {
-										U.dialog();
-									});
-								}
-							})
-						});
-					}
-				});
-				break;
-			default:
-				// NO DEFAULT
-			}
-		}
-		//-- home과 겹치는 부분 종료
-
 		$('.bt-inquiry').on('click', function() {
-			U.dialog({
-				templateId: 'dialog-template-inquiry',
-				onOpen: function(context) {
-					$(context).find('form').on('submit', function() {
-						U.dialog({
-							templateId: 'dialog-template-inquiry-success',
-							onOpen: function(context) {
-								$(context).find('.bt-confirm').on('click', function() {
-									U.dialog();
-								});
-							}
-						});
+			parent.location='mailto:sktsmarthome@sk.com';
 
-						return false;
-					});
-				}
-			});
+			//문의하기 메일폼 향후 수정 가능성이 있어서 주석 처리함.
+			// U.dialog({
+			// 	templateId: 'dialog-template-inquiry',
+			// 	onOpen: function(context) {
+			// 		$(context).find('form').on('submit', function() {
+			// 			U.dialog({
+			// 				templateId: 'dialog-template-inquiry-success',
+			// 				onOpen: function(context) {
+			// 					$(context).find('.bt-confirm').on('click', function() {
+			// 						U.dialog();
+			// 					});
+			// 				}
+			// 			});
 
-			return false;
+			// 			return false;
+			// 		});
+			// 	}
+			// });
+
+			// return false;
 		});
 	});
 </script>
@@ -855,7 +675,7 @@
 		<h1 class="page-title">고객 센터</h1>
 		<p class="page-description">고객센터를 통해 궁금증을 해결해 보세요. 서비스에 대해 자주 묻는 질문들입니다. 궁금하신 질문을 선택해 주세요.</p>
 		<ul class="faqs expandable">
-			<li class="faq expandable-item">
+			<!-- <li class="faq expandable-item">
 				<h2 class="question expandable-handle"><span>새로운 기기를 어떻게 등록하나요?</span></h2>
 				<div class="answer-holder expandable-content">
 					<p>&lt;동일한 아이디로 6개월 이내에 회원가입 불가&&gt;</p>
@@ -944,7 +764,7 @@
 					<p>&lt;회원정보 및 홈 기기 이용 삭제&&gt;</p>
 					<p>보유 중인 홈 기기 이용 쿠폰은 회원 탈퇴 즉시 모두 소멸됩니다.</p>
 				</div>
-			</li>
+			</li> -->
 		</ul>
 		<div class="contact-us">
 			<p>궁금한 항목에 대한 도움말이 없다면, 고객 센터로 문의해 주세요.</p>
