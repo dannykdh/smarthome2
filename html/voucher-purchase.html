@@ -15,27 +15,36 @@
 <script type="text/javascript" src="../js/paymentPop.js"></script>
 <script>
 	$('document').ready(function(){
-		if (isLoginCheck()) {
+
+		if (isLoginCheck()) {	
 			var params = {}, url='v1/member/info', type='GET', dataType = 'json';
-			startMyInfoTransction(url, type, dataType, function(response){
+			startMyInfoTransaction(url, type, dataType, function(response){
 				parseMyInfoTransaction(response);		
 			});	
 
 			//사용중인 이용권/쿠폰 리스트 
 			var params = {}, url='v1/payment/pay', type='GET', dataType = 'json';
-			startUseCouponTransction(url, type, dataType, function(response){
+			startUseCouponTransaction(url, type, dataType, function(response){
 				parseUseCouponTransaction(response);		
 			});	
 
+		} else {
+			//$('body').removeClass('.reg-coupon-num');
+		}
+
 			//구매 가능한 이용권
 			var params = {}, url='v1/payment/pay/available', type='GET', dataType = 'json';
-			startBargainousTicketTransction(url, type, dataType, function(response){
+			startBargainousTicketTransaction(url, type, dataType, function(response){
 				parseBargainousTicketTransaction(response);		
 			});	
-		} else {
-			$('body').removeClass('has-coupon');
-			location.replace('/html/home.html');
-		}
+
+			//쿠폰 번호 입력 전 버튼 비활성화
+			$('.bt-coupon-reg').prop("disabled", true);
+			$('#coupon-reg-input').keyup(function() {
+				if($('#coupon-reg-input').val().length > 0) {
+					$('.bt-coupon-reg').prop("disabled", false);
+				}
+			});		
 	});
 </script>
 <script id="dialog-template-video" type="text/x-dialog-template">
@@ -66,7 +75,8 @@
 				<fieldset>
 					<legend>인증번호 요청</legend>
 					<div class="dialog-content-panel">
-						<div class="field field-auth-number"> onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" class="edit" id="js_cellPhone" autocomplete="off" placeholder="휴대폰 번호(-제외)">
+						<div class="field field-auth-number"> 
+							<input type="text" id="js_cellPhone" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" autocomplete="off" class="edit" placeholder="휴대폰 번호(-제외)">
 							<input type="button" id="js_bt-send-number" class="bt-send-number" value="인증번호 전송">
 							<p class="err-msg"></p>
 						</div>
@@ -310,7 +320,7 @@
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
-							<input type="password" id="pass" name="pass" class="edit" placeholder="비밀번호 (대소문자 구분 영문, 숫자, 툭수문자 포함 9자 이상)">
+							<input type="password" id="pass" name="pass" class="edit" placeholder="비밀번호 (대소문자 구분 영문, 숫자, 특수문자 포함 9자 이상)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
@@ -624,6 +634,148 @@
 	</div>
 </script>
 <!--// 수정 시작 : 20150717_01 -->
+<script id="dialog-template-ie-support" type="text/x-dialog-template">
+	<div class="dialog dialog-ie-support">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">홈페이지 이용 안내</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<p class="result">
+					<strong>
+						Internet Explorer10 이상에서<br>
+						최적화된 서비스 이용이 가능합니다.
+					</strong>
+				</p>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-confirm">확인</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="dialog-coupon-register-info" type="text/x-dialog-template">
+	<div class="dialog dialog-coupon-register-info">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">쿠폰 등록 안내</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<p class="result">
+					<strong>로그인 후<br>쿠폰을 등록할 수 있습니다.</strong>
+				</p>
+				<p class="sub-result">
+					로그인 하시겠습니까?
+				</p>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-cancel">취소</button>
+				<button type="button" class="bt-change">변경하기</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="dialog-coupon-register-success" type="text/x-dialog-template">
+	<div class="dialog dialog-coupon-register-success">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">쿠폰 등록</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<p class="result">
+					<strong>쿠폰 등록이 완료되었습니다.</strong>
+				</p>
+				<div class="bg-coupon">
+					<div class="content">
+						<p class="coupon-title">경동 나비엔 보일러</p>
+						<p class="coupon-contents">1 개월 이용 쿠폰<p>
+						<p class="coupon-contents">5인용 (정회원 1인 + 가족회원 4인)</p>
+						<p class="coupon-expiry">사용 유효기한 2015.03.15까지<p>
+					</div>
+				</div>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-dialog-coupon-confirm">쿠폰 내역 확인</button>
+				<button type="button" class="bt-close">닫기</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="dialog-coupon-register-now-use" type="text/x-dialog-template">
+	<div class="dialog dialog-coupon-register-now-use">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">쿠폰 등록</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<p class="result">
+					<strong>쿠폰 등록이 완료되었습니다.</strong>
+				</p>
+				<p class="question">
+					등록된 쿠폰을 지금 바로 사용하시겠습니까?
+				</p>
+				<div class="bg-coupon">
+					<div class="content">
+						<p class="coupon-title">경동 나비엔 보일러</p>
+						<p class="coupon-contents">1 개월 이용 쿠폰<p>
+						<p class="coupon-contents">5인용 (정회원 1인 + 가족회원 4인)</p>
+						<p class="coupon-expiry">사용 유효기한 2015.03.15까지<p>
+					</div>
+				</div>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-after">나중에</button>
+				<button type="button" class="bt-now">지금 사용</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="dialog-coupon-register-user-agreement" type="text/x-dialog-template">
+	<div class="dialog dialog-coupon-register-user-agreement">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">쿠폰 등록</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<div class="bg-coupon">
+					<div class="content">
+						<p class="coupon-title">경동 나비엔 보일러</p>
+						<p class="coupon-contents">1 개월 이용 쿠폰<p>
+						<p class="coupon-contents">5인용 (정회원 1인 + 가족회원 4인)</p>
+						<p class="coupon-expiry">사용 유효기한 2015.03.15까지<p>
+					</div>
+				</div>
+			</div>
+			<div class="agreement-contents">
+				<div class="agreement-holder">
+					<p class="agreement-title">쿠폰 이용 약관</p>
+					<ol>
+						<li>
+							<p class="agreement-sub-title">1. 무료 서비스 대상 범위<p>
+							<p class="agreement-description">해당 쿠폰은 제공 받은 제품에만 서비스 제공이 가능하며, 이회의 제품은 서비스 제공이 불가능합니다.</p>
+						</li>
+						<li>
+							<p class="agreement-sub-title">2. 무료 서비스 제공기간<p>
+							<p class="agreement-description">해당 쿠폰은 제공 받은 제품에만 서비스 제공이 가능하며, 이회의 제품은 서비스 제공이 불가능합니다.</p>
+						</li>
+					</ol>
+				</div>
+			</div>
+			<div class="checkbox-area">
+				<input id="agree-service-coupon" type="checkbox" value="1"><label for="agree-service-coupon">쿠폰 이용약관에 동의합니다.</label>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-prev">이전</button>
+				<button type="button" class="bt-next">다음</button>
+			</div>
+		</div>
+	</div>
+</script>
 <script id="dialog-coupon-expired" type="text/x-dialog-template">
 	<div class="dialog dialog-coupon-expired">
 		<button class="bt-dialog-close" type="button">Close</button>
@@ -926,6 +1078,9 @@
 			<ul class="menus h-item h-bar">
 				<li class="menu h-item"><a class="bt-products-and-services" href="products-and-services.html">제품 및 서비스</a></li>
 				<li class="menu h-item"><a class="bt-costumer-center" href="costumer-support.html">고객 지원</a></li>
+				<!-- 수정 시작 : 20150722_01 -->
+				<!--<li class="menu h-item"><a class="bt-event" href="#">이벤트</a></li>-->
+				<!--// 수정 종료 : 20150722_01 -->
 			</ul>
 		</div>
 		<div class="account-field logged-in">
@@ -934,7 +1089,9 @@
 				<li class="account h-item"><button type="button" class="bt-log-in">로그인</button></li>
 			</ul>
 			<ul class="account-for-user h-bar">
-				<li class="account h-item"><p class="gnb-tit">이용권 / 쿠폰</p></li>
+				<!-- 수정 시작 : 20150728_01 -->
+				<li class="account h-item"><a class="gnb-tit" href="voucher-purchase.html">이용권 / 쿠폰</a></li>
+				<!--//  수정 종료 : 20150728_01 -->
 				<li class="account h-item"><a class="gnb-user-name" href="account.html">홍길동 님</a></li>
 				<li class="account h-item"><button type="button" class="bt-log-out">로그아웃</button></li>
 			</ul>
@@ -957,12 +1114,13 @@
 				</div>
 				<div class="reg-coupon-num">
 					<p>등록된 쿠폰&nbsp;<span class="reg-coupon-counter" id="jsRegCouponCounter">0</span>장</p>
+					<button type="button" onclick="goPayTransaction();">결제팝업테스트</button>
 				</div>
 			</div>
 			<div class="voucher-purchase-wrap">
 				<h2 class="voucher-purchase-tit">이용권 구매</h2>
 				<div class="voucher-cards">
-					<div class="voucher-card">
+					<div class="voucher-card" id="cardForm">
 						<div class="voucher-card-content">
 							<div class="voucher-type one-man">
 								<p class="voucher-payment">자동결제 (1,100원 / 월, VAT포함)</p>
@@ -970,11 +1128,11 @@
 							</div>
 						</div>
 						<div class="voucher-card-buttons">
-							<button class="bt-purchase-credit" type="button">신용카드 결제</button>
-							<button class="bt-purchase-cell" type="button">휴대폰 결제</button>
+							<button class="bt-purchase-credit" type="button" onclick="payLoginPopup()")>신용카드 결제</button>
+							<button class="bt-purchase-cell" type="button" onclick="payLoginPopup()">휴대폰 결제</button>
 						</div>
 					</div>
-					<div class="voucher-card">
+					<div class="voucher-card" id="cardForms">
 						<div class="voucher-card-content">
 							<div class="voucher-type familly">
 								<p class="voucher-payment">자동결제 (2,200원 / 월, VAT포함)</p>
@@ -982,8 +1140,8 @@
 							</div>
 						</div>
 						<div class="voucher-card-buttons">
-							<button class="bt-purchase-credit" type="button">신용카드 결제</button>
-							<button class="bt-purchase-cell" type="button">휴대폰 결제</button>
+							<button class="bt-purchase-credit" type="button" onclick="payLoginPopup()">신용카드 결제</button>
+							<button class="bt-purchase-cell" type="button" onclick="payLoginPopup()">휴대폰 결제</button>
 						</div>
 					</div>
 				</div>

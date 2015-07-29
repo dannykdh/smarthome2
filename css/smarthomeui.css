@@ -285,6 +285,9 @@ textarea {
 	padding-left: 28px;
 	background: url(../img/vi-menu-sep.png) no-repeat 0 -24px;
 }
+.menu:last-child {
+	padding-left: 30px;
+}
 .state-0 .menu,
 .state-1 .menu{
 	background-position: 0 0;
@@ -320,7 +323,7 @@ textarea {
 	background-position: 0 -48px;
 }
 .bt-costumer-center {
-	width: 72px;
+	width: 66px;
 	background: url(../img/bt-costumer-center.png) no-repeat 0 -72px;
 }
 .bt-costumer-center.selected,
@@ -339,6 +342,28 @@ textarea {
 }
 .state-1 .bt-costumer-center.selected,
 .state-1 .bt-costumer-center:hover {
+	background-position: 0 -48px;
+}
+.bt-event {
+	width: 72px;
+	background: url(../img/bt-event.png) no-repeat 0 -72px;
+}
+.bt-event.selected,
+.bt-event:hover {
+	background-position: 0 -96px;
+}
+.state-0 .bt-event {
+	background-position: 0 -24px;
+}
+.state-0 .bt-event.selected,
+.state-0 .bt-event:hover {
+	background-position: 0 -48px;
+}
+.state-1 .bt-event {
+	background-position: 0 -24px;
+}
+.state-1 .bt-event.selected,
+.state-1 .bt-event:hover {
 	background-position: 0 -48px;
 }
 .account-field {
@@ -730,14 +755,14 @@ textarea {
 	clip:rect(1px, 1px, 1px, 1px);
 }
 .service-thumb-holder {
-	width: 200px;
-	height: 200px;
-	padding: 40px 48px;
+	width: 270px;
+	height: 270px;
+	padding: 4px 13px;
 	background: #fafafa;
 }
 .service-thumb {
-	width: 200px;
-	height: 200px;
+	width: 270px;
+	height: 270px;
 }
 .service-title {
 	padding: 26px 20px 14px;
@@ -2349,6 +2374,7 @@ textarea {
 	font-size: 12px;
 	color: #ff9020;
 	border-right: 1px solid #f0f0f0;
+	text-indent: 0;
 }
 .account-page .table-header {
 	position: relative;
@@ -2439,9 +2465,8 @@ textarea {
 .account-page .coupon-holder {
 	position: relative;
 	padding: 48px 0 0 25px;
-	width: 236px;
-	/*height: 172px; - 결제 완료 후 풀어야 함 */
-	height: 133px;
+	width: 261px;
+	height: 172px;	
 	border: 1px solid #d9d9d9;
 	border-radius: 5px;
 }
@@ -2478,7 +2503,6 @@ textarea {
 	overflow: hidden;
 }
 .bt-coupon-holder {
-	display: none; /* 결제 오픈 시 풀어야 함 */
 	position: absolute;
 	right: 0;
 	bottom: 0;

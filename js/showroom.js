@@ -293,7 +293,10 @@ var Showroom = (function($, U) {
 	};
 
 	Video.prototype.pause = function(reset) {
-		if (!this.isReady() || this.isPaused()) {
+		if (!this.isReady()) {
+			this.el.oncanplay = undefined;
+			return this;
+		} else if (this.isPaused()) {
 			return this;
 		}
 
@@ -308,11 +311,13 @@ var Showroom = (function($, U) {
 	};
 
 	Video.prototype.getCurrentTime = function() {
-		return this.el.currentTime;
+		return this.isReady() ? this.el.currentTime : 0;
 	};
 
 	Video.prototype.setCurrentTime = function(t) {
-		this.el.currentTime = t;
+		if (this.isReady()) {
+			this.el.currentTime = t;
+		}
 		return this;
 	};
 

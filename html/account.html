@@ -26,16 +26,14 @@
 			startUseCouponTransaction(url, type, dataType, function(response){
 				parseUseCouponTransaction(response);		
 			});	
-
-			//구매 가능한 이용권 - 추가됨
-			var params = {}, url='v1/payment/pay/available', type='GET', dataType = 'json';
-			startBargainousTicketTransaction(url, type, dataType, function(response){
-				parseBargainousTicketTransaction(response);		
-			});	
 		} else {
 			$('body').removeClass('has-coupon');
 			location.replace('/html/home.html');
 		}
+    //리스트업된 li의 수 구하기
+    var liCnt = $('.coupons.h-bar>li').size();
+    console.log("+++++++ Li : "+liCnt); 
+
 	});
 </script>
 <script id="dialog-template-video" type="text/x-dialog-template">
@@ -66,7 +64,8 @@
 				<fieldset>
 					<legend>인증번호 요청</legend>
 					<div class="dialog-content-panel">
-						<div class="field field-auth-number"> onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" class="edit" id="js_cellPhone" autocomplete="off" placeholder="휴대폰 번호(-제외)">
+						<div class="field field-auth-number">
+							<input type="text" class="edit" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" class="edit" id="js_cellPhone" autocomplete="off" placeholder="휴대폰 번호(-제외)">
 							<input type="button" id="js_bt-send-number" class="bt-send-number" value="인증번호 전송">
 							<p class="err-msg"></p>
 						</div>
@@ -632,6 +631,9 @@
 			<ul class="menus h-item h-bar">
 				<li class="menu h-item"><a class="bt-products-and-services" href="products-and-services.html">제품 및 서비스</a></li>
 				<li class="menu h-item"><a class="bt-costumer-center" href="costumer-support.html">고객 지원</a></li>
+				<!-- 수정 시작 : 20150722_01 -->
+				<!--<li class="menu h-item"><a class="bt-event" href="#">이벤트</a></li>-->
+				<!--// 수정 종료 : 20150722_01 -->
 			</ul>
 		</div>
 		<div class="account-field logged-in">
@@ -640,7 +642,9 @@
 				<li class="account h-item"><button type="button" class="bt-log-in">로그인</button></li>
 			</ul>
 			<ul class="account-for-user h-bar">
-				<li class="account h-item"><p class="gnb-tit">이용권 / 쿠폰</p></li>
+				<!-- 수정 시작 : 20150728_01 -->
+				<li class="account h-item"><a class="gnb-tit" href="voucher-purchase.html">이용권 / 쿠폰</a></li>
+				<!--//  수정 종료 : 20150728_01 -->
 				<li class="account h-item"><a class="gnb-user-name" href="account.html">홍길동 님</a></li>
 				<li class="account h-item"><button type="button" class="bt-log-out">로그아웃</button></li>
 			</ul>

@@ -9,6 +9,29 @@
 <link rel="stylesheet" type="text/css" href="../css/smarthomeui.css">
 <script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="../js/smarthomeui.js"></script>
+<script type="text/javascript" src="../js/login.js"></script>
+<script type="text/javascript" src="../js/transaction.js"></script>
+<script type="text/javascript" src="../js/popUpProcess.js"></script>
+<script type="text/javascript" src="../js/paymentPop.js"></script>
+<script>
+	$('document').ready(function(){
+		if (isLoginCheck()) {
+			var params = {}, url='v1/member/info', type='GET', dataType = 'json';
+			startMyInfoTransaction(url, type, dataType, function(response){
+				parseMyInfoTransaction(response);		
+			});	
+
+			//이용내역
+			var params = {}, url='v1/payment/history', type='GET', dataType = 'json';
+			startUseCouponHistoryTransaction(url, type, dataType, function(response){
+				parseUseCouponHistoryTransaction(response);		
+			});	
+		} else {
+			$('body').removeClass('has-coupon');
+			location.replace('/html/home.html');
+		}
+	});
+</script>
 <script id="dialog-template-video" type="text/x-dialog-template">
 	<div class="dialog dialog-video">
 		<button class="bt-dialog-close" type="button">Close</button>
@@ -288,7 +311,7 @@
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
-							<input type="password" class="edit" placeholder="비밀번호 (대소문자 구분 영문, 숫자 포함 8자 이상)">
+							<input type="password" class="edit" placeholder="비밀번호 (대소문자 구분 영문, 숫자, 툭수문자 포함 9자 이상)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
@@ -546,7 +569,7 @@
 					<legend class="displayed">새 비밀번호</legend>
 					<div class="dialog-content-panel">
 						<div class="field">
-							<input type="password" class="edit" placeholder="새 비밀번호 (대소문자 구분 영문, 숫자 포함 8자 이상)">
+							<input type="password" class="edit" placeholder="새 비밀번호 (대소문자 구분 영문, 숫자, 툭수문자 포함 9자 이상)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
@@ -601,209 +624,8 @@
 		</div>
 	</div>
 </script>
-<script type="text/javascript">
-	jQuery(function($) {
-		// home과 겹치는 부분은 home.html을 참고바랍니다.
-		var U = SmartHomeUI.init();
-
-		// home과 겹치는 부분 시작
-		$('.bt-sign-up').on('click', function() {
-			signUp(true);
-		});
-
-		function signUp() {
-
-			// 회원가입을 시작합니다.
-			goStep1();
-
-			function goStep1() {
-				U.dialog({
-					templateId: 'dialog-template-sign-up-step1',
-					onOpen: function(context) {
-						$(context).find('form').first().on('submit', function() {
-							goStep2();
-							return false;
-						});
-					},
-					onClose: function(context, finish) {
-						finish();
-					}
-				});
-			}
-
-			function goStep2() {
-				U.dialog({
-					templateId: 'dialog-template-sign-up-step2',
-					onOpen: function(context) {
-						var $context = $(context);
-						var $form = $context.find('form').last().on('submit', function() {
-							goStep3();
-							return false;
-						});
-						setTimeout(function() {
-							U.invalidate($form.find('input').first(), '테스트 에러 메시지');
-							setTimeout(function() {
-								U.invalidate($form.find('input').first());
-							}, 1500);
-						}, 1500);
-						$context.find('.bt-prev').on('click', function() {
-							goStep1();
-							return false;
-						});
-					}
-				});
-			}
-
-			function goStep3() {
-				U.dialog({
-					templateId: 'dialog-template-sign-up-step3',
-					onOpen: function(context) {
-						var $context = $(context);
-						$context.find('form').last().on('submit', function() {
-							goFinish();
-							return false;
-						});
-
-						$context.find('.bt-prev').on('click', function() {
-							goStep2();
-							return false;
-						});
-					}
-				});
-			}
-
-			function goFinish() {
-				U.dialog({
-					templateId: 'dialog-template-sign-up-success',
-					onOpen: function(context) {
-						$(context).find('.bt-confirm').on('click', function() {
-							U.dialog();
-							return false;
-						});
-					},
-					onClose: function(context, finish) {
-						finish();
-					}
-				});
-			}
-
-			return false;
-		}
-
-		$('.bt-log-in').on('click', login);
-
-		function login() {
-			U.dialog({
-				templateId: 'dialog-template-log-in',
-				onOpen: function(context) {
-					var $context = $(context);
-
-					$context.find('.bt-sign-up').on('click', function() {
-						signUp(true);
-					});
-
-					$context.find('.bt-find-id-and-password').on('click', function() {
-						findIdOrPassword('id');
-					});
-				}
-			});
-		}
-
-		function findIdOrPassword(target) {
-
-			switch (target) {
-			case 'id':
-				U.dialog({
-					templateId: 'dialog-template-find-id-form',
-					onOpen: function(context) {
-						var $context = $(context);
-
-						$context.find('.bt-find-password').on('click', function() {
-							findIdOrPassword('password');
-						});
-
-						$context.find('form').last().on('submit', function() {
-							U.dialog({
-								templateId: 'dialog-template-find-id-success',
-								onOpen: function(context) {
-									var $context = $(context);
-
-									// 서버로부터 가져온 email 목록을 추가합니다.
-									var results = [
-										'aaaa@bbbbb.com',
-										'cccc@ddddd.com',
-										'eeee@fffff.com',
-										'gggg@hhhhh.com',
-										'iiii@jjjjj.com'
-									];
-
-									results = $.map(results, function(v) {
-										return '<li>' + v + '</li>';
-									});
-
-									$context.find('.ids').html(results.join(''));
-									//-- END
-
-									$context.find('.bt-find-password').on('click', function() {
-										findIdOrPassword('password');
-									});
-
-									$context.find('.bt-log-in').on('click', login);
-								}
-							});
-						});
-					}
-				});
-				break;
-			case 'password':
-				U.dialog({
-					templateId: 'dialog-template-find-password-form',
-					onOpen: function(context) {
-						var $context = $(context);
-
-						$context.find('.bt-find-id').on('click', function() {
-							findIdOrPassword('id');
-						});
-
-						$context.find('form').last().on('submit', function() {
-							U.dialog({
-								templateId: 'dialog-template-find-password-success',
-								onOpen: function(context) {
-									var $context = $(context);
-
-									$context.find('.bt-confirm').on('click', function() {
-										U.dialog();
-									});
-								}
-							})
-						});
-					}
-				});
-				break;
-			default:
-				// NO DEFAULT
-			}
-		}
-		//-- home과 겹치는 부분 종료
-
-		$('.bt-change-password').on('click', function() {
-			U.dialog({
-				templateId: 'dialog-template-change-password',
-				onOpen: function(context) {
-					$(context).find('.bt-save').on('click', function() {
-						U.dialog();
-						return false;
-					});
-				}
-			});
-
-			return false;
-		});
-	});
-</script>
-
 </head>
-<body class="has-usage">
+<body class="has-usage" id="has-usage">
 <header id="gnb-holder">
 	<div id="gnb">
 		<div class="menu-field h-bar">
@@ -811,6 +633,9 @@
 			<ul class="menus h-item h-bar">
 				<li class="menu h-item"><a class="bt-products-and-services" href="products-and-services.html">제품 및 서비스</a></li>
 				<li class="menu h-item"><a class="bt-costumer-center" href="costumer-support.html">고객 지원</a></li>
+				<!-- 수정 시작 : 20150722_01 -->
+				<!--<li class="menu h-item"><a class="bt-event" href="#">이벤트</a></li>-->
+				<!--// 수정 종료 : 20150722_01 -->
 			</ul>
 		</div>
 		<div class="account-field logged-in">
@@ -843,7 +668,7 @@
 					<col style="width: 198px;">
 					<col style="width: auto;">
 				</colgroup>
-				<thead>
+				<thead id="couponItem">
 					<tr>
 						<th class="usage-grid-header"><p class="list-tit ti-num">NO</p></th>
 						<th class="usage-grid-header"><p class="list-tit ti-coupon">이용권 / 쿠폰</p></th>
@@ -853,7 +678,7 @@
 						<th class="usage-grid-header"><p class="list-tit ti-usage-expiration">이용 유효기간</p></th>
 					</tr>
 				</thead>
-				<tbody>
+<!-- 				<tbody>
 					<tr>
 						<td class="usage-grid-data dt-num">
 							05
@@ -954,7 +779,7 @@
 							2015.03.05 - 2015.04.05
 						</td>
 					</tr>
-				</tbody>
+				</tbody> -->
 			</table>
 		</div>
 	</div>

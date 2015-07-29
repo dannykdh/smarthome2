@@ -129,7 +129,7 @@ function loginCheckForm($context) {
 		loginId:$myId.val(),
 		loginPwd:$myPass.val(),
 		pushTknVal: '',
-		dvcTknVal:'172.16.1.151',
+		dvcTknVal:'',
 		dvcOsNm:'WEB'
 	};
 	startLoginTransaction(url, params, type, dataType, function(response){
@@ -192,6 +192,7 @@ function loginComplete(response) {
 
 	setCookieInfo(cookieData);
 	setLoginBeforeAfterUpdate();
+	setLoginBeforeAfterVoucherUpdate();
 
 	var params = {}, url='v1/member/info', type='GET', dataType = 'json';
 	startMyInfoTransaction(url, type, dataType, function(response){
@@ -260,6 +261,7 @@ function getCookieInfo(cookieName) {
 function logOut() {
 	deleteCookieInfo();
 	setLoginBeforeAfterUpdate();
+	setLoginBeforeAfterVoucherUpdate();
 
 	if ( /account.html/.test(location) ) {
 		location.replace('/html/home.html');
@@ -284,8 +286,8 @@ function deleteCookieInfo() {
 // 로그인 전후 Updagte.
 function setLoginBeforeAfterUpdate() {
 	// 상단 헤더 영역 로그인 / 아웃 Update
-	var $account_for_guest = $('.account-for-guest.h-bar');; 
-	var $account_for_user = $('.account-for-user.h-bar');;
+	var $account_for_guest = $('.account-for-guest.h-bar'); 
+	var $account_for_user = $('.account-for-user.h-bar');
 	if (isLoginCheck()) {
 		$account_for_guest.hide();
 		$account_for_user.show();
@@ -294,6 +296,33 @@ function setLoginBeforeAfterUpdate() {
 	} else {
 		$account_for_guest.show();
 		$account_for_user.hide();
+	}
+}
+
+// 로그인 전후 Updagte. 이용권 결제 페이지
+function setLoginBeforeAfterVoucherUpdate() {
+	var $reg_coupon_num = $('.reg-coupon-num'); 
+	var $voucherCard = $('.voucher-card'); 
+	var $voucher_card = $('#cardForm'); 
+	var $voucher_cards = $('#cardForms'); 
+
+	if (isLoginCheck()) {
+		$reg_coupon_num.show();
+		$voucherCard.show();		
+		$voucher_card.hide();	
+		$voucher_cards.hide();
+
+	} else {
+		$reg_coupon_num.hide();
+		$voucherCard.hide();				
+		$voucher_card.show();	
+		$voucher_cards.show();									
+	}
+}
+
+function setRealNmCertYn(resultCd) {
+	if(resultCd='Y') {
+		document.cookie='rnmCertYn = Y';
 	}
 }
 
@@ -597,4 +626,5 @@ function reLogin() {
 // 로그인 여부에 따른 gnb-holder Update
 $(document).ready(function() {
 	setLoginBeforeAfterUpdate();
+	setLoginBeforeAfterVoucherUpdate();
 });

@@ -62,6 +62,12 @@ body {
 .bt-costumer-center:hover {
 	background-position: 0 -48px;
 }
+.bt-event {
+	background: url(../img/bt-event.png) no-repeat 0 -24px;
+}
+.bt-event:hover {
+	background-position: 0 -48px;
+}
 
 .bt-sign-up {
 	background-position: 0 0;

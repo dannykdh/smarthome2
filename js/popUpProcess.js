@@ -35,8 +35,13 @@ jQuery(function($) {
 	});
 
 	//쿠폰 등록 버튼
+	//$('.bt-coupon-reg').prop("disabled", true);
 	$('.bt-coupon-reg').on('click', function() {
-		couponReg();
+		if(isLoginCheck()) {
+			couponReg();
+		} else {
+			login();
+		}	
 	});	
 
 	function withDraw() {
@@ -75,7 +80,7 @@ jQuery(function($) {
 				});
 			}
 		})
-	}
+	}	
 
 	function changePassword() {
 		U.dialog({
@@ -425,7 +430,7 @@ jQuery(function($) {
 							//API 통신을 위한 파라미터 값
 							var params = {}, url='v1/member/registerMember', type='POST', dataType = 'json';
 							// var params = {}, url='v2/member/registerMember', type='GET', dataType = 'json';										
-							var ip = "127.0.0.1"; // 접속 IP구하여 대체해야 함.
+							var ip = ""; // 접속 IP Null
 
 							params = {				
 								userNickNm:uname,
@@ -840,4 +845,5 @@ jQuery(function($) {
 		// });
 	}
 	//-- home과 겹치는 부분 종료
+
 });
