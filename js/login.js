@@ -385,10 +385,7 @@ function findPWDCheckCellPhone($context, callback) {
 
 // 아이디 찾기 유효성 검사
 function findIDCheckForm($context, callback) {
-	// 정상 이동후 타이머 제거
-	if (interval) {
-		clearInterval(interval);
-	}
+
 	var $addTxt = $('.err-Txt');
 	var $leng = $addTxt.length;
 
@@ -417,6 +414,11 @@ function findIDCheckForm($context, callback) {
 		return false;
 	} else {
 		U.invalidate($elAuth);
+	}
+
+	// 정상 이동후 타이머 제거
+	if (interval) {
+		clearInterval(interval);
 	}
 
 	params = {				
