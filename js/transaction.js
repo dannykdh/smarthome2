@@ -1,7 +1,7 @@
 var urlInfo = window.location.href;
 var urlHeader;
 
-//IE9 이하 크로스 도메인 문제 해결 
+//IE9 이하 크로스 도메인 문제 해결 jQuery
 $.support.cors = true;
 
 /* 서버에 따른 API분기*/
@@ -485,6 +485,9 @@ function setCouponList(dataList, kind) {
 			output += '		<p class="coupon-status">';
 			output += '			<span class="coupon-duration">사용 유효기간 : '+dataList[i].regValidEndDay+'까지</span>';
 			output += '		</p>';
+			output += '		<div class="bt-coupon-holder">';
+			output += '			<button class="bt-coupon-item coupon-bt-type-use" type="button">쿠폰 사용</button>';
+			output += '		</div>';				
 			output += '	</div>';
 			output += '</li>';
 		} else if(kind == 'UC') {				// 사용중인 쿠폰
@@ -503,7 +506,7 @@ function setCouponList(dataList, kind) {
 			output += '		<p class="coupon-status">';
 			output += '			<span class="coupon-usable">'+dataList[i].cpnUseYn+'</span>';
 			output += '			<span class="coupon-duration">'+dataList[i].regValidStartDay +'~'+ dataList[i].regValidEndDay+'</span>';
-			output += '		</p>';
+			output += '		</p>';	
 			output += '	</div>';
 			output += '</li>';
 		}

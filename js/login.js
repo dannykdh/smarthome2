@@ -306,9 +306,6 @@ function setLoginBeforeAfterVoucherUpdate() {
 	var $voucher_card = $('#cardForm'); 
 	var $voucher_cards = $('#cardForms'); 
 
-	var timer = setTimeout("location.reload()", 1000);
-   		clearTimeout(timer);
-
 	if (isLoginCheck()) {
 		$reg_coupon_num.show();
 		$voucherCard.show();		
@@ -320,6 +317,10 @@ function setLoginBeforeAfterVoucherUpdate() {
 		$voucher_card.show();	
 		$voucher_cards.show();									
 	}
+
+	//새로고침해야 나오는 문제로 
+	var timer = setTimeout("location.reload()", 1000);
+   		clearTimeout(timer);
 }
 
 function setRealNmCertYn(resultCd) {
