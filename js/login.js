@@ -319,7 +319,7 @@ function setLoginBeforeAfterVoucherUpdate() {
 	}
 
 	//새로고침해야 나오는 문제로 
-	var timer = setTimeout("location.reload()", 1000);
+	var timer = setTimeout("location.reload()", 2000);
    		clearTimeout(timer);
 }
 
