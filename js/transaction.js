@@ -1,6 +1,18 @@
 var urlInfo = window.location.href;
 var urlHeader;
 
+//http프로토콜 접속 시 https로 리다이렉트(IE9.0이하 크로스 도메인 오류문제로)
+if (document.location.protocol !== 'https:') {
+	 var sHref = location.href;
+	 console.log('HTTP접속: ' + sHref);
+	 var goUrl = sHref.replace('http','https')
+	 console.log('HTTP접속변경주소: ' + goUrl);
+	 //location.replace(goUrl);
+
+} else {
+	console.log('HTTPS 접속중');
+}
+
 //IE9 이하 크로스 도메인 문제 해결 jQuery
 $.support.cors = true;
 
@@ -366,14 +378,28 @@ function parseUseCouponTransaction(response) {
 
 		if (response.resultCd == '1' && response.resultMsg == '성공') {
 			if (rsUseProdList && rsUseProdList.length > 0) {
-				//for(var i=0; i<rsUseProdList.length; i++) {
+				for(var i=0; i<rsUseProdList.length; i++) {
+					var endDtm = diff_day(rsUseProdList[i].svcEndDtm);
+					if(endDtm > -1) {
+						diffDay = 'Y';
+					}
+				}					
 					setCouponList(rsUseProdList, 'UP');
-					console.log("사용중인 이용권이 존재합니다.결제 불가 팝업이나 안내 문구 추가 필요함.");
-					
-					$('.bt-purchase-credit').prop("disabled", true);								
-					$('.bt-purchase-cell').prop("disabled", true);								
 
-				//}
+					var $js_use = $('#useTicketmsg');				
+					var useTicketMsg = '이미 사용중인 이용권이 있습니다.';
+
+					//기간이 유효한 이용권이 남아 있는 경우 
+					if(diffDay == 'Y') {
+					console.log("사용중인 이용권이 존재합니다."+endDtm+'일');	
+	
+						$js_use.html(useTicketMsg);	
+						this.useTicket = 'Y';
+
+						//$('.voucher-card-buttons').hide();
+						$('.bt-purchase-credit').prop("disabled", true);								
+						$('.bt-purchase-cell').prop("disabled", true);
+					}	
 			}
 
 			if (rsRegCpnList && rsRegCpnList.length > 0) {
@@ -387,6 +413,7 @@ function parseUseCouponTransaction(response) {
 					setCouponList(rsUseCpnList, 'UC');
 				//}
 				console.log("사용중인 쿠폰이 존재합니다.");
+				this.useCoupon = 'Y';	
 			} else {
 				console.log("사용중인 쿠폰이 없습니다.");
 			}
@@ -412,6 +439,12 @@ function setEmptyCouponList() {
  //    $couponContainer.html(output);
  	$('body').removeClass('has-coupon');
 }
+
+//천단위 ,콤마
+function numComma(num){
+   num = String(num);
+   return num.replace(/(\d)(?=(?:\d{3})+(?!\d))/g,"$1,");
+};	
 
 function setCouponList(dataList, kind) {	
 	var output = '';
@@ -448,12 +481,6 @@ function setCouponList(dataList, kind) {
 			}
 
 			var UpCnt = dataList.length;
-
-			//천단위 ,콤마
-			var numComma = function(num){
-			   num = String(num);
-			   return num.replace(/(\d)(?=(?:\d{3})+(?!\d))/g,"$1,");
-			};
 
 			output += '<li class="coupon h-item">';
 			output += '	<div class="coupon-holder has-coupon-active">';
@@ -495,7 +522,13 @@ function setCouponList(dataList, kind) {
 			output += '			<span class="coupon-duration">사용 유효기간 : '+dataList[i].regValidEndDay+'까지</span>';
 			output += '		</p>';
 			output += '		<div class="bt-coupon-holder">';
-			output += '			<button class="bt-coupon-item coupon-bt-type-use" type="button" onclick=couponAgreePopup("'+dataList[i].cpnNo+'^'+encodeURIComponent(dataList[i].cpnNm)+'^'+dataList[i].userCnt+'^'+dataList[i].regValidEndDay+'")>쿠폰 사용</button>';
+			//이용권이 먼저 사용 중이면 쿠폰 사용 불가, 반대는 가능함.
+			if(this.useTicket == 'Y' || this.useCoupon =='Y') {
+			output += '			<button class="bt-coupon-item coupon-bt-type-use" type="button" onclick=couponRegFail("USE")>쿠폰 사용</button>';	
+			} else {	
+			//output += '			<button class="bt-coupon-item coupon-bt-type-use" type="button" onclick=couponUsePopup("'+dataList[i].cpnPubNo+'^'+encodeURIComponent(dataList[i].cpnNm)+'^'+dataList[i].userCnt+'^'+dataList[i].regValidEndDay+'")>쿠폰 사용</button>';
+			output += '			<button class="bt-coupon-item coupon-bt-type-use" type="button" onclick=couponUsePopup("'+dataList[i].cpnPubNo+'")>쿠폰 사용</button>';
+			}
 			output += '		</div>';				
 			output += '	</div>';
 			output += '</li>';
@@ -513,8 +546,12 @@ function setCouponList(dataList, kind) {
 				output += '		<p class="coupon-payment">'+dataList[i].userCnt+'인용(정회원 1인)</p>';				
 			}			
 			output += '		<p class="coupon-status">';
-			output += '			<span class="coupon-usable">'+dataList[i].cpnUseYn+'</span>';
+			//output += '			<span class="coupon-usable">'+dataList[i].cpnUseYn+'</span>';
+			if(dataList[i].regValidEndDay != '9999') {
 			output += '			<span class="coupon-duration">'+dataList[i].regValidStartDay +'~'+ dataList[i].regValidEndDay+'</span>';
+			} else {
+			output += '			<span class="coupon-duration">사용 유효기간 : 무기한</span>';			
+			}
 			output += '		</p>';	
 			output += '	</div>';
 			output += '</li>';

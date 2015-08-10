@@ -208,8 +208,12 @@ function loginComplete(response) {
 		$('body').addClass('has-coupon')
 	}
 
+	if ( /voucher-purchase.html/.test(location) ) {
+		$('body').addClass('voucher-cards')		
+	}
+
 	//팝업 닫기
-	U.closeDialog();
+	U.closeDialog();	
 }
 
 // 로그인 성공시 쿠키 정보 세팅
@@ -263,7 +267,7 @@ function logOut() {
 	setLoginBeforeAfterUpdate();
 	setLoginBeforeAfterVoucherUpdate();
 
-	if ( /account.html/.test(location) ) {
+	if ( /account.html/.test(location) || /usage-list.html/.test(location) || /voucher-purchase.html/.test(location) ) {
 		location.replace('/html/home.html');
 	}
 
@@ -311,6 +315,7 @@ function setLoginBeforeAfterVoucherUpdate() {
 		$voucherCard.show();		
 		$voucher_card.hide();	
 		$voucher_cards.hide();
+
 	} else {
 		$reg_coupon_num.hide();
 		$voucherCard.hide();				
@@ -323,6 +328,7 @@ function setLoginBeforeAfterVoucherUpdate() {
    		clearTimeout(timer);
 }
 
+//실명인증 완료 후 쿠키 정보 갱신처리(API팝업에서 창닫기 시 호출함)
 function setRealNmCertYn(resultCd) {
 	if(resultCd='Y') {
 		document.cookie='rnmCertYn = Y';
