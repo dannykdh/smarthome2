@@ -209,11 +209,15 @@ function loginComplete(response) {
 	}
 
 	if ( /voucher-purchase.html/.test(location) ) {
-		$('body').addClass('voucher-cards')		
+		$('body').addClass('voucher-cards')	
 	}
 
 	//팝업 닫기
 	U.closeDialog();	
+	
+	//부모창 새로고침하기 위해 다시 리다이렉.
+	var goHref = location.href;
+	location.replace(goHref);	
 }
 
 // 로그인 성공시 쿠키 정보 세팅
@@ -323,9 +327,10 @@ function setLoginBeforeAfterVoucherUpdate() {
 		$voucher_cards.show();									
 	}
 
-	//새로고침해야 나오는 문제로 
-	var timer = setTimeout("location.reload()", 2000);
+	//새로고침해야 나오는 문제로 (로그인 만료되어 재로그인 시 폼이 display:none상태고 새로고침 후 결제버튼 화면으로 정상 노출되는 문제)
+	var timer = setTimeout("location.reload(true)", 1000);
    		clearTimeout(timer);
+
 }
 
 //실명인증 완료 후 쿠키 정보 갱신처리(API팝업에서 창닫기 시 호출함)

@@ -1,6 +1,7 @@
 var U = SmartHomeUI.init();
 
-/* 서버에 따른 URL 분기(모바일 링크를 사용해야 오류가 안남 - 실명인증과 결제가 모바일 URL로 되어 있음 */
+/* 서버에 따른 URL 분기(모바일 링크를 사용해야 오류가 안남 - 실명인증과 결제가 모바일 URL로 되어 있음 || urlInfo.indexOf('localhost') > 0  이 조건을 transaction과 아래에 추가해야
+로컬 소스로 dev/stg 결제 테스트 가능함.	*/
 var urlIp;
 //개발 서버
 if( urlInfo.indexOf('dev') > 0 || urlInfo.indexOf('61.250.21.156') > 0 ) {
@@ -115,13 +116,55 @@ function setTicketList(dataList, kind) {
 		// prodNo: "PRD0000002"
 		// prodTypeCd: "001"
 		// salePrc: 2200
-		// userCnt: 5		
+		// userCnt: 5
 
-/*	//천단위 ,콤마
-	var numComma = function(num){
-	   num = String(num);
-	   return num.replace(/(\d)(?=(?:\d{3})+(?!\d))/g,"$1,");
-	};*/
+	//사용중인 이용권 정보
+	var params = {}, url='v1/payment/pay', type='GET', dataType = 'json';
+	var userCnt;
+	startUseTicketTransaction(url, type, dataType, function(payNo,userCnt,prodNm,prodNum,svcEndDtm){
+			if(userCnt) {	//사용중인 이용권이 존재하면 버튼 링크 교체(dialog-ticket-purchase-in-used) 
+				$('.voucher-card-buttons').remove()
+				var outputChg='';
+				var outputF='';
+				var outputO='';
+				var $ticketChgContainer = $('.voucher-cards');
+
+			console.log("res: "+payNo+"/"+userCnt+"/"+prodNm);
+
+			outputF += '<div class="voucher-card-buttons">';
+			outputF += '	<button class="bt-purchase-credit" type="button" onclick=ticketPopup("ticketUsed","","'+encodeURIComponent(prodNm)+'","","","")>신용카드 결제</button>';
+			outputF += '	<button class="bt-purchase-cell" type="button" onclick=ticketPopup("ticketUsed","","'+encodeURIComponent(prodNm)+'","","","")>휴대폰 결제</button>';	
+			outputF += '</div>';
+
+			outputO += '<div class="voucher-card-buttons">';
+			outputO += '	<button class="bt-purchase-credit" type="button" onclick=ticketPopup("ticketUsed","","'+encodeURIComponent(prodNm)+'","","","")>신용카드 결제</button>';
+			outputO += '	<button class="bt-purchase-cell" type="button" onclick=ticketPopup("ticketUsed","","'+encodeURIComponent(prodNm)+'","","","")>휴대폰 결제</button>';							
+			outputO += '</div>';
+
+			//msgId,payNo,prodNm,userCnt
+			outputChg += '<div class="voucher-card-buttons">';					
+			outputChg += '	<button class="bt-purchase-credit" type="button" onclick=ticketPopup("ticketChange","'+payNo+'","'+encodeURIComponent(prodNm)+'","'+userCnt+'","'+prodNum+'","'+svcEndDtm+'")>신용카드 결제</button>';
+			outputChg += '	<button class="bt-purchase-cell" type="button" onclick=ticketPopup("ticketChange","'+payNo+'","'+encodeURIComponent(prodNm)+'","'+userCnt+'","'+prodNum+'","'+svcEndDtm+'")>휴대폰 결제</button>';							
+			outputChg += '</div>';
+
+			//$ticketChgContainer.html(outputChg);
+			if ($ticketChgContainer.children().length > 0) {
+				if(userCnt > 1) {
+		     		$('.voucher-type.familly').prepend($(outputF));
+		     		$('.voucher-type.one-man').prepend($(outputChg));				     		
+		     	} else if(userCnt == 1) {
+		     		$('.voucher-type.one-man').prepend($(outputO));	
+		     		$('.voucher-type.familly').prepend($(outputChg));				     						     					     	
+		     	} else {
+		     		$('.voucher-card-content').prepend($(outputChg));
+		     	}	
+
+		    } else {
+		     	$ticketChgContainer.append($(outputChg));
+		    }
+
+			}
+	});	
 
 	for (var i=0; i<dataList.length; i++) {
 		if (kind == 'UP') { // 구매 가능 이용권
@@ -156,7 +199,8 @@ function setTicketList(dataList, kind) {
 			output += '			<button class="bt-purchase-credit" type="button" onclick=payPopupFail("realName")>신용카드 결제</button>';
 			output += '			<button class="bt-purchase-cell" type="button" onclick=payPopupFail("realName")>휴대폰 결제</button>';	
 			} else {
-				if(dataList[i].dvcRegYn !='Y') {	//등록된 기기가 없으면 
+
+				if(dataList[i].dvcRegYn !='Y') {	//등록된 기기가 없으면
 					output += '		<button class="bt-purchase-credit" type="button" onclick=guidePopup("haveDevice")>신용카드 결제</button>';
 					output += '		<button class="bt-purchase-cell" type="button" onclick=guidePopup("haveDevice")>휴대폰 결제</button>';	
 				} else {				
@@ -175,6 +219,80 @@ function setTicketList(dataList, kind) {
     } else {
     	$ticketContainer.append($(output));
     }
+}
+
+function startUseTicketTransaction(url, type, dataType, callback) {
+	var that = this;
+    $.ajax({
+        url: urlHeader+url,
+        data: '',
+        type: type,
+        dataType: dataType,
+        headers: {
+            "Authorization":getCookieInfo('userCertTknVal')
+        },
+	    contentType: "application/json;charset=UTF-8", 
+        success: function(response) {
+
+        	var rsUseProdList = response.useProdList;
+
+			if (rsUseProdList && rsUseProdList.length > 0) {
+				for(var i=0; i<rsUseProdList.length; i++) {
+					var userCnt = rsUseProdList[i].userCnt;
+					var payNo = rsUseProdList[i].payNo;
+					var prodNm = rsUseProdList[i].prodNm;
+					var prodNum = rsUseProdList[i].prodNo;
+					var svcEndDtm = rsUseProdList[i].svcEndDtm;
+				}			
+            	callback(payNo,userCnt,prodNm,prodNum,svcEndDtm);
+			}
+
+        },
+        error: function(xhr, textStatus, errorThrown) {
+            console.log('실패 - ', xhr);
+        }
+    });
+}
+
+//사용권 결제 시도 시 팝업 : 다른 포맷 
+function ticketPopup(msgId,payNo,prodNm,userCnt,prodNum,svcEndDtm) {
+
+	var templateId;	
+
+		switch (msgId) {
+			case 'ticketUsed': templateId = 'dialog-ticket-purchase-in-used';	//이용권 결제 시도 시 확인 팝업 : 이미 사용중 
+				break;	
+			case 'ticketChange': templateId = 'dialog-ticket-purchase-change';	//이용권 결제 시도 시 확인 팝업 : 변경 안내 팝업
+				break;		
+			default:
+		}	
+
+	U.dialog({
+		templateId: templateId,
+		onOpen: function(context) {
+
+			var $js_prodNm = $('#js_prodNm');
+			var $js_chgProdNm = $('#js_chgProdNm');
+
+			var chgProdNm = (userCnt > 1)?"1인 이용권":"가족 이용권 (5인)";			
+
+			$js_prodNm.html(decodeURIComponent(prodNm));	
+			$js_chgProdNm.html(decodeURIComponent(chgProdNm));	
+
+			if(templateId == 'dialog-ticket-purchase-in-used') {
+				$(context).find('.bt-confirm').on('click', function() {
+					U.dialog();
+				});	
+			} else {
+				$(context).find('.bt-cancel').on('click', function() {
+					U.dialog();
+				});	
+				$(context).find('.bt-change').on('click', function() {
+					ticketChangePopup(userCnt,payNo,prodNum,svcEndDtm);
+				});	
+			}
+		}
+	})
 }
 
 function payPopupFail(msgId) {
@@ -618,48 +736,42 @@ function parseCouponRegProcTransaction(response) {
 //날짜 차이 
 function diff_day(value2){
 
-	var dt;
-    dt = new Date();
-    dt = dt.getFullYear() + "." + (dt.getMonth() + 1) + "." + dt.getDate();
+	if(value2) {
+		var dt;
+	    dt = new Date();
+	    dt = dt.getFullYear() + "." + (dt.getMonth() + 1) + "." + dt.getDate();
 
-	var arr1 = dt.split('.');
-	var arr2 = value2.split('.');
+		var arr1 = dt.split('.');
+		var arr2 = value2.split('.');
 
-	var dt1 = new Date(arr1[0], arr1[1], arr1[2]);
-	var dt2 = new Date(arr2[0], arr2[1], arr2[2]);
+		var dt1 = new Date(arr1[0], arr1[1], arr1[2]);
+		var dt2 = new Date(arr2[0], arr2[1], arr2[2]);
 
-	var diff = dt2 - dt1;
-	var day = 1000 * 60 * 60 *  24;
-	var month = day * 30;
+		var diff = dt2 - dt1;
+		var day = 1000 * 60 * 60 *  24;
+		var month = day * 30;
 
-	//console.log("차이 일수 : " + (parseInt(diff/day)));
-    return (parseInt(diff/day));
-	//console.log("차이 월수 : " + parseInt(diff/month));
-
-	// document.write("차이 년수 : " + parseInt(diff/year));
+		//console.log("차이 일수 : " + (parseInt(diff/day)));
+	    return (parseInt(diff/day));
+		//console.log("차이 월수 : " + parseInt(diff/month));
+		// document.write("차이 년수 : " + parseInt(diff/year));
+	} else {
+		return;
+	}	
 }
 
-//이용권 변경(1인 <-> 가족)
-function ticketChangePopup(userCntPayNo) {
+//이용권 변경(1인 <-> 가족) 
+function ticketChangePopup(userCnt,payNumber,prodNum,svcEndDtm) {
 
 	var templateId;
+	var diffDay = diff_day(svcEndDtm);
+	var $msgPanel = $('.dialog-content-panel'); 
 
-		/*넘어온 정보를 분리하기 : 이용권 번호로 트랜잭션 */
-		//현재 사용중인 이용권 정보
-		var userCntPayInfo = userCntPayNo.split(',');
-		var userCnt = userCntPayInfo[0];
-		var payNumber = userCntPayInfo[1];
-		var prodNum = userCntPayInfo[2];	
-		var svcEndDtm = userCntPayInfo[3];
-		var diffDay = diff_day(svcEndDtm);
-
-		var $msgPanel = $('.dialog-content-panel'); 
-
-		if (userCnt > 1) {
-			templateId =  'dialog-ticket-change';	//1인 이용권 변경 팝업
-		} else {
-			templateId = 'dialog-family-ticket-change';	//가족 이용권 변경 팝업 
-		}
+	if (userCnt > 1) {
+		templateId =  'dialog-ticket-change';	//1인 이용권 변경 팝업
+	} else {
+		templateId = 'dialog-family-ticket-change';	//가족 이용권 변경 팝업 
+	}
 
 	U.dialog({
 		templateId: templateId,
@@ -837,7 +949,7 @@ function parseTicketChangeDoTransaction(response, userCnt, payNo) {
 	}
 }
 
-/*이용권 변경 후 결제 완료 후 결과 조회 */
+/*결제 완료 후 결과 조회 */
 function ticketChangeProc(payNumber,callback) {
 	var payNo = payNumber;
 	var params = {}, url='v1/payment/payResultInfo', type='GET', dataType = 'json';
@@ -896,7 +1008,7 @@ userCnt: 5
     });
  }
 
-//이용권 변경 완료 확인 팝업  
+//이용권 변경 완료 확인 팝업 : ticketChangeProc > 결제한 이용권 결과만 나와서 수정 필요함.
 function finishPopup(msgId, payNo) {
 
 	var templateId = 'dialog-ticket-payment';	
@@ -914,9 +1026,18 @@ function finishPopup(msgId, payNo) {
 		};
 
 		var rst, subRst, expiry;
-			rst = prodNm;
-			subRst = "자동결제 <span>|</span> "+payWayCdDp+" 결제 ("+numComma(salePrc)+"원/월)";
+			//rst = prodNm;
+			//subRst = "자동결제 <span>|</span> "+payWayCdDp+" 결제 ("+numComma(salePrc)+"원/월)";
+			if(userCnt > 1) {	//조회한 이용권 정보에 맞게 분기 처리
+				rst = "가족 이용권 (5인)";
+				subRst = "자동결제 <span>|</span> "+payWayCdDp+" 결제 (1,100원/월)";
+			} else {
+				rst = "1인 이용권";
+				subRst = "자동결제 <span>|</span> "+payWayCdDp+" 결제 (2,200원/월)";				
+			}
 			expiry = "이용 유효기간 "+svcStartDtm+" ~ "+svcEndDtm;
+
+
 
 		$js_result.html(rst);
 		$js_sub_result.html(subRst);
@@ -1022,6 +1143,9 @@ function AutoPayCancelPopup(msgId) {
 		onOpen: function(context) {
 			$(context).find('.bt-confirm').on('click', function() {
 				U.dialog();
+				//부모창 새로고침하기 위해 다시 리다이렉.
+				var goHref = location.href;
+				location.replace(goHref);				
 			});		
 		}
 	})
@@ -1114,7 +1238,11 @@ function parseUseCouponHistoryTransaction(response) {
 					output += '<td class="usage-grid-data dt-settling-day">'+dataList[i].payDtm+'</td>';
 					output += '<td class="usage-grid-data dt-payment">'+numComma(dataList[i].payAmt)+'원</td>';
 					output += '<td class="usage-grid-data dt-payment-option">'+dataList[i].payWayCdNm+' 결제</td>';
+					if(dataList[i].svcEndDtm == '9999') {
+					output += '<td class="usage-grid-data dt-usage-expiration">무기한</td>';		
+					} else {	
 					output += '<td class="usage-grid-data dt-usage-expiration">'+dataList[i].svcStartDtm+'~'+dataList[i].svcEndDtm+'</td>';
+					}
 					output += '</tr>';
 					output += '</tbody>';
 				}	
@@ -1136,4 +1264,11 @@ function parseUseCouponHistoryTransaction(response) {
 	} else {
 			console.log("System Fail");
 	}
+}
+
+//이용권 변경 완료 팝업에서 창닫고 내 정보 관리페이지로 이동 
+function goMyinfo() {
+	U.dialog();
+	var goHref = "account.html";
+	location.replace(goHref);	
 }

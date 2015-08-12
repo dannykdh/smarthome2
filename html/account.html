@@ -851,7 +851,7 @@
 		<div class="dialog-body">
 			<div class="dialog-content-panel">
 				<p class="result">
-					<strong>이미 <span>이용권 명</span>을 사용 중입니다.</strong>
+					<strong>이미 <span id="js_prodNm">이용권 명</span>을 사용 중입니다.</strong>
 				</p>
 			</div>
 			<div class="dialog-control-panel">
@@ -935,7 +935,7 @@
 			<div class="description">
 				<ul>
 					<li>
-						<p>&bull;&nbsp;결제 내역 확인 및 변경은 <a href="#">내 정보 관리</a>에서 하실 수 있습니다.</p>
+						<p>&bull;&nbsp;결제 내역 확인 및 변경은 <a href="javascript:goMyinfo();">내 정보 관리</a>에서 하실 수 있습니다.</p>
 					</li>
 					<li>
 						<p>&bull;&nbsp;월 정기 자동결제는 이전 결제일 포함 30일째 되는날 이루어집니다.</p>
@@ -1172,7 +1172,7 @@
 			<div class="description">
 				<ul>
 					<li>
-						<p>&bull;&nbsp;결제 내역 확인 및 변경은 <a href="#">내 정보 관리</a>에서 하실 수 있습니다.</p>
+						<p>&bull;&nbsp;결제 내역 확인 및 변경은 <a href="javascript:goMyinfo();">내 정보 관리</a>에서 하실 수 있습니다.</p>
 					</li>
 					<li>
 						<p>&bull;&nbsp;월 정기 자동결제는 이전 결제일 포함 30일째 되는날 이루어집니다.</p>
@@ -1204,6 +1204,27 @@
 			</div>
 			<div class="dialog-control-panel">
 				<button type="button" class="bt-confirm">확인</button>
+			</div>
+		</div>
+	</div>
+</script>
+
+<script id="dialog-ticket-purchase-change" type="text/x-dialog-template">
+	<div class="dialog dialog-ticket-purchase-info">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">이용권 구매 안내</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<p class="result">
+					<strong><span id="js_prodNm">이용권 명</span>을 사용 중입니다.</strong>
+				</p>
+				<p class="sub-result"><span id="js_chgProdNm">이용권 명</span>으로 변경하시겠습니까?</p>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-cancel">취소</button>
+				<button type="button" class="bt-change">변경하기</button>
 			</div>
 		</div>
 	</div>
