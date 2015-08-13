@@ -423,7 +423,7 @@ jQuery(function($) {
 						if(uname != "" && uemail != "" && upass != "" && upassre != "") { 
 							gotoJoinTransaction();
 						} else {
-							console.log(uname+"/"+uemail+"/"+upass+"/"+upassre);
+
 						}
 
 						function gotoJoinTransaction () {

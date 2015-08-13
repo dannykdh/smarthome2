@@ -1,7 +1,7 @@
 var U = SmartHomeUI.init();
 
-/* 서버에 따른 URL 분기(모바일 링크를 사용해야 오류가 안남 - 실명인증과 결제가 모바일 URL로 되어 있음 || urlInfo.indexOf('localhost') > 0  이 조건을 transaction과 아래에 추가해야
-로컬 소스로 dev/stg 결제 테스트 가능함.	*/
+/* 서버에 따른 URL 분기(모바일 링크를 사용해야 오류가 안남 - 실명인증과 결제가 모바일 URL로 협의됨.
+ || urlInfo.indexOf('localhost') > 0  이 조건을 transaction과 아래에 추가해야 로컬 소스로 dev/stg 결제 테스트 가능함.	*/
 var urlIp;
 //개발 서버
 if( urlInfo.indexOf('dev') > 0 || urlInfo.indexOf('61.250.21.156') > 0 ) {
@@ -14,12 +14,9 @@ if( urlInfo.indexOf('dev') > 0 || urlInfo.indexOf('61.250.21.156') > 0 ) {
 	urlpay = 'https://mobile.sktsmarthome.com:9002/';
 }
 
-
 //사용자 토큰 정보 
 var UserCertTknVal = getCookieInfo('userCertTknVal');
 var UserCertTknValPay = encodeURIComponent(UserCertTknVal);
-
-//본인인증 연동 도메인 - transation.js에서 분기 필요
 
 //아이핀 실명인증 팝업 호출	rnmCertYn 실명인증 결과 업데이트 필요!!!(jsp에서?)
 function realNmIpin() {
@@ -30,7 +27,6 @@ function realNmIpin() {
 function realNmHphone() {
 	window.open(urlpay+'auth/impay?authToken='+UserCertTknValPay+'&osType=W','Phone','width=450,height=650,toolbar=no,menubar=no,location=no,status=no,scrollbars=no,noresize');
 }
-
 		// dvcRegYn: "Y"
 		// grpUserCnt: 1
 		// prodKindCd: "001"
@@ -81,7 +77,6 @@ function parseBargainousTicketTransaction(response) {
 		var bargainousTicketList = response.resultList;	//구매 가능한 이용권 리스트
 
 		if (response.resultCd == '1' && response.resultMsg == '성공') {
-			console.log('parseBargainousTicketTransaction : ' + response.resultMsg);
 			if (bargainousTicketList && bargainousTicketList.length > 0) {
 					setTicketList(bargainousTicketList, 'UP');
 			}
@@ -99,7 +94,6 @@ function parseBargainousTicketTransaction(response) {
 function setTicketList(dataList, kind) {	
 	var output = '';
 	var $ticketContainer = $('.voucher-cards');
-
 		// dvcRegYn: "Y"
 		// grpUserCnt: 1
 		// prodKindCd: "001"
@@ -129,8 +123,6 @@ function setTicketList(dataList, kind) {
 				var outputO='';
 				var $ticketChgContainer = $('.voucher-cards');
 
-			console.log("res: "+payNo+"/"+userCnt+"/"+prodNm);
-
 			outputF += '<div class="voucher-card-buttons">';
 			outputF += '	<button class="bt-purchase-credit" type="button" onclick=ticketPopup("ticketUsed","","'+encodeURIComponent(prodNm)+'","","","")>신용카드 결제</button>';
 			outputF += '	<button class="bt-purchase-cell" type="button" onclick=ticketPopup("ticketUsed","","'+encodeURIComponent(prodNm)+'","","","")>휴대폰 결제</button>';	
@@ -147,22 +139,21 @@ function setTicketList(dataList, kind) {
 			outputChg += '	<button class="bt-purchase-cell" type="button" onclick=ticketPopup("ticketChange","'+payNo+'","'+encodeURIComponent(prodNm)+'","'+userCnt+'","'+prodNum+'","'+svcEndDtm+'")>휴대폰 결제</button>';							
 			outputChg += '</div>';
 
-			//$ticketChgContainer.html(outputChg);
-			if ($ticketChgContainer.children().length > 0) {
-				if(userCnt > 1) {
-		     		$('.voucher-type.familly').prepend($(outputF));
-		     		$('.voucher-type.one-man').prepend($(outputChg));				     		
-		     	} else if(userCnt == 1) {
-		     		$('.voucher-type.one-man').prepend($(outputO));	
-		     		$('.voucher-type.familly').prepend($(outputChg));				     						     					     	
-		     	} else {
-		     		$('.voucher-card-content').prepend($(outputChg));
-		     	}	
+				//$ticketChgContainer.html(outputChg);
+				if ($ticketChgContainer.children().length > 0) {
+					if(userCnt > 1) {
+			     		$('.voucher-type.familly').prepend($(outputF));
+			     		$('.voucher-type.one-man').prepend($(outputChg));				     		
+			     	} else if(userCnt == 1) {
+			     		$('.voucher-type.one-man').prepend($(outputO));	
+			     		$('.voucher-type.familly').prepend($(outputChg));				     						     					     	
+			     	} else {
+			     		$('.voucher-card-content').prepend($(outputChg));
+			     	}	
 
-		    } else {
-		     	$ticketChgContainer.append($(outputChg));
-		    }
-
+			    } else {
+			     	$ticketChgContainer.append($(outputChg));
+			    }
 			}
 	});	
 
@@ -175,29 +166,28 @@ function setTicketList(dataList, kind) {
 			cardHref[i] = urlpay+'pay/iniRun?authToken='+encodeURIComponent(UserCertTknVal)+'&osType=W'+'&prodNo='+dataList[i].prodNo+'&prodNm='+encodeURIComponent(dataList[i].prodNm)+'&salePrc='+dataList[i].salePrc;
 
 		var rnmCertYn = getCookieInfo("rnmCertYn");
-			console.log("실명인증 여부: "+rnmCertYn);
 
 			if(i==0) {
-			output += '<div class="voucher-card" style="margin-right: 21px;">';
+				output += '<div class="voucher-card" style="margin-right: 21px;">';
 			} else {
-			output += '<div class="voucher-card">';
+				output += '<div class="voucher-card">';
 			}
-			output += '		<div class="voucher-card-content">';
+				output += '		<div class="voucher-card-content">';
 			if(dataList[i].prodKindCd == '002') {
-			output += '			<div class="voucher-type familly">';
-			output += '				<p class="voucher-payment">자동결제 ('+numComma(dataList[i].salePrc)+'원 / 월, VAT포함)</p>';
-			output += '				<p class="voucher-info">정회원 1인 + 가족회원 '+ (dataList[i].userCnt - 1) +'인</p>';
+				output += '			<div class="voucher-type familly">';
+				output += '				<p class="voucher-payment">자동결제 ('+numComma(dataList[i].salePrc)+'원 / 월, VAT포함)</p>';
+				output += '				<p class="voucher-info">정회원 1인 + 가족회원 '+ (dataList[i].userCnt - 1) +'인</p>';
 			} else {
-			output += '			<div class="voucher-type one-man">';
-			output += '				<p class="voucher-payment">자동결제 ('+numComma(dataList[i].salePrc)+'원 / 월, VAT포함)</p>';
-			output += '				<p class="voucher-info">정회원 1인</p>';
+				output += '			<div class="voucher-type one-man">';
+				output += '				<p class="voucher-payment">자동결제 ('+numComma(dataList[i].salePrc)+'원 / 월, VAT포함)</p>';
+				output += '				<p class="voucher-info">정회원 1인</p>';
 			}
-			output += '			</div>';
-			output += '		</div>';
-			output += '		<div class="voucher-card-buttons">';
+				output += '			</div>';
+				output += '		</div>';
+				output += '		<div class="voucher-card-buttons">';
 			if(rnmCertYn != "Y") {	//실명인증 전이면
-			output += '			<button class="bt-purchase-credit" type="button" onclick=payPopupFail("realName")>신용카드 결제</button>';
-			output += '			<button class="bt-purchase-cell" type="button" onclick=payPopupFail("realName")>휴대폰 결제</button>';	
+				output += '			<button class="bt-purchase-credit" type="button" onclick=payPopupFail("realName")>신용카드 결제</button>';
+				output += '			<button class="bt-purchase-cell" type="button" onclick=payPopupFail("realName")>휴대폰 결제</button>';	
 			} else {
 
 				if(dataList[i].dvcRegYn !='Y') {	//등록된 기기가 없으면
@@ -208,8 +198,8 @@ function setTicketList(dataList, kind) {
 					output += '		<button class="bt-purchase-cell" type="button" onclick=window.open("'+hphoneHref[i]+'","휴대폰결제","width=480,height=750,toolbar=no,menubar=no,location=no,status=no,scrollbars=no,resizable=no")>휴대폰 결제</button>';				
 				}
 			}
-			output += '		</div>';
-			output += '</div>';			
+				output += '		</div>';
+				output += '</div>';			
 		} 
     };
 
@@ -328,7 +318,6 @@ function payPopupFail(msgId) {
 function guidePopup(msgId) {
 
 	var templateId;	
-
 		switch (msgId) {
 			case 'haveDevice': templateId = 'dialog-register-devices';	//등록 기기 안내
 				break;	
@@ -512,8 +501,7 @@ function startUseCouponRegTransaction(response) {
 //쿠폰 등록 시 동의 팝업
 function couponAgreePopup(haveCpnYn,couponPubNum,response) {
 
-	var templateId;
-		templateId = 'dialog-coupon-register-user-agreement';
+	var templateId = 'dialog-coupon-register-user-agreement';
 
 	U.dialog({
 		templateId: templateId,
@@ -636,8 +624,6 @@ function confirmPopup(msgId,cpnPubNum,response) {
 				$js_coupon_expiry.html("사용 유효기한 : 무기한");
 			}
 
-			var couponInfo = response.cpnPubNo+'^'+encodeURIComponent(response.cpnNm)+'^'+cnt+'^'+response.regValidEndDay;
-
 			if(templateId == 'dialog-coupon-register-success') {
 				$(context).find('.bt-dialog-coupon-confirm').on('click', function() {
 					U.dialog();		
@@ -687,7 +673,6 @@ function couponRegproc(cpnPubNum) {
 		cpnPubNo: cpnPubNum
 	};
 
-	console.log("cpnPubNo: "+cpnPubNum);
 	startCouponRegProcTransaction(url, params, type, dataType, function(response){
 		parseCouponRegProcTransaction(response);
 	});
@@ -731,33 +716,6 @@ function parseCouponRegProcTransaction(response) {
 	} else {
 			console.log("System Fail");
 	}
-}
-
-//날짜 차이 
-function diff_day(value2){
-
-	if(value2) {
-		var dt;
-	    dt = new Date();
-	    dt = dt.getFullYear() + "." + (dt.getMonth() + 1) + "." + dt.getDate();
-
-		var arr1 = dt.split('.');
-		var arr2 = value2.split('.');
-
-		var dt1 = new Date(arr1[0], arr1[1], arr1[2]);
-		var dt2 = new Date(arr2[0], arr2[1], arr2[2]);
-
-		var diff = dt2 - dt1;
-		var day = 1000 * 60 * 60 *  24;
-		var month = day * 30;
-
-		//console.log("차이 일수 : " + (parseInt(diff/day)));
-	    return (parseInt(diff/day));
-		//console.log("차이 월수 : " + parseInt(diff/month));
-		// document.write("차이 년수 : " + parseInt(diff/year));
-	} else {
-		return;
-	}	
 }
 
 //이용권 변경(1인 <-> 가족) 
@@ -1060,8 +1018,7 @@ function finishPopup(msgId, payNo) {
 //자동결제 해지요청 팝업 
 function ticketAutoPayStopPopup() {
 
-	var templateId;
-		templateId = 'dialog-payment-cancel';
+	var templateId = 'dialog-payment-cancel';
 
 	U.dialog({
 		templateId: templateId,
@@ -1206,7 +1163,6 @@ function parseUseCouponHistoryTransaction(response) {
 		if (response.resultCd == '1' && response.resultMsg == '성공') {
 			if(response.resultList.length > 0) {
 				$('#has-usage').addClass('has-usage');
-				console.log(response.resultList.length);
 
 				var output = '';
 				var $couponContainer = $('.usage-grid-list');

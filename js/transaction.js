@@ -3,12 +3,14 @@ var urlHeader;
 
 //http프로토콜 접속 시 https로 리다이렉트(IE9.0이하 크로스 도메인 오류문제로)
 if (document.location.protocol !== 'https:') {
-	 var sHref = location.href;
-	 console.log('HTTP접속: ' + sHref);
-	 var goUrl = sHref.replace('http','https')
-	 console.log('HTTP접속변경주소: ' + goUrl);
-	 //location.replace(goUrl);
-
+	var sHref = location.href;
+	console.log('HTTP접속: ' + sHref);
+	var goUrl = sHref.replace('http','https')
+	console.log('HTTP접속변경주소: ' + goUrl);
+	//개발기가 아닐 경우만 포워딩
+	if( urlInfo.indexOf('dev') == -1 && urlInfo.indexOf('61.250.21.156' ) == -1 ) {
+		//location.replace(goUrl);
+	}	
 } else {
 	console.log('HTTPS 접속중');
 }
@@ -19,7 +21,7 @@ $.support.cors = true;
 /* 서버에 따른 API분기*/
 //개발 서버
 if( urlInfo.indexOf('dev') > 0 || urlInfo.indexOf('61.250.21.156') > 0 ) {
-	urlHeader = 'https://webdev.sktsmarthome.com:9002/';
+	urlHeader = 'http://webdev.sktsmarthome.com:9002/';
 //스테이징 서버	
 } else if( urlInfo.indexOf('stg') > 0 || urlInfo.indexOf('61.250.21.180') > 0 || urlInfo.indexOf('localhost') > 0 ) {
 	urlHeader = 'https://webstg.sktsmarthome.com:9002/';
@@ -215,7 +217,6 @@ function startJoinTransaction(url, params, type, dataType, callback) {
 }
 
 function parseJoinTransaction(response, callback) {
-	console.log('parseJoinTransaction : ' + response);
 	if (response.resultCd && response.resultMsg) {
 		if (response.resultCd == '1' && response.resultMsg == '성공') {
 			callback(true, response);
@@ -449,6 +450,10 @@ function parseUseCouponTransaction(response) {
 			// TODO : 계정관리 통신 오류 시 처리할 예외 상황에 대한 시나리오가 없어 '사용가능한 이용권/쿠폰이 없습니다'로 처리
 			setEmptyCouponList();
 		}
+
+	//공백 Li이미지로 채우기 	
+	setBlankLi();
+
 	} else {
 		// TODO : 계정관리 통신 오류 시 처리할 예외 상황에 대한 시나리오가 없어 '사용가능한 이용권/쿠폰이 없습니다'로 처리
 		setEmptyCouponList();
@@ -592,24 +597,45 @@ function setCouponList(dataList, kind) {
 		}
     };
 
-    	var liCnt = (liCnt1)?liCnt1:0+(liCnt2)?liCnt2:0+(liCnt3)?liCnt3:0;    	
-		var j = (liCnt<3)?3-(liCnt):liCnt%3;
-
-		if (liCnt > 0) {
-			for (var i=0; i < j; i++) {
-				output += '<li class="coupon h-item">';
-					output += '<div class="coupon-holder is-placeholder">';
-					output += '</div>';
-				output += '</li>';
-			}
-		}
-    	console.log("Size: "+liCnt+", j:"+j+" ,"+output);
 	// $couponContainer.html(output);
 	if ($couponContainer.children().length > 0) {
     	$couponContainer.children().last().after($(output));
     } else {
     	$couponContainer.append($(output));
     }   	
+}
+
+function setBlankLi() {
+
+	var liCnt = $('.coupon.h-item').length; 	
+	var j = (liCnt<3)?3-(liCnt):3-(liCnt%3);
+
+	var j;
+	if(liCnt<3) {
+		j=3-liCnt;
+	} else {	
+		j=3-(liCnt%3);
+		if (j==3) {
+			j=0;
+		}
+	}		
+
+	var $couponContainer = $('.coupons.h-bar');	if (j > 0) {
+	var output = '';
+		for (var i=0; i < j; i++) {
+			output += '<li class="coupon h-item">';
+				output += '<div class="coupon-holder is-placeholder">';
+				output += '</div>';
+			output += '</li>';
+		}
+	}
+    	console.log("liCnt: "+liCnt+", j:"+j+'liCnt%3: '+liCnt%3);
+
+	if ($couponContainer.children().length > 0) {
+    	$couponContainer.children().last().after($(output));
+    } else {
+    	$couponContainer.append($(output));
+    } 
 }
 
 function startMyInfoTransaction(url, type, dataType, callback) {
@@ -741,4 +767,31 @@ function parseFaqListTransaction(response) {
 	} else {
 			console.log("System Fail");
 	}
+}
+
+//날짜 차이 
+function diff_day(value2){
+
+	if(value2) {
+		var dt;
+	    dt = new Date();
+	    dt = dt.getFullYear() + "." + (dt.getMonth() + 1) + "." + dt.getDate();
+
+		var arr1 = dt.split('.');
+		var arr2 = value2.split('.');
+
+		var dt1 = new Date(arr1[0], arr1[1], arr1[2]);
+		var dt2 = new Date(arr2[0], arr2[1], arr2[2]);
+
+		var diff = dt2 - dt1;
+		var day = 1000 * 60 * 60 *  24;
+		var month = day * 30;
+
+		//console.log("차이 일수 : " + (parseInt(diff/day)));
+	    return (parseInt(diff/day));
+		//console.log("차이 월수 : " + parseInt(diff/month));
+		// document.write("차이 년수 : " + parseInt(diff/year));
+	} else {
+		return;
+	}	
 }
