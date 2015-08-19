@@ -61,7 +61,7 @@ function startBargainousTicketTransaction(url, type, dataType, callback) {
             callback(response);
         },
         error: function(xhr, textStatus, errorThrown) {
-            console.log('실패 - ', xhr);
+            //console.log('실패 - ', xhr);
 	        if(xhr.status == 401) {
             	//타 단말에서 로그인 시 쿠키 정보 삭제하고 재로그인, 쿠키 정보 만료(60분 초과)
             	//alert('로그인이 정보가 만료되어 재로그인이 필요합니다.');
@@ -157,6 +157,8 @@ function setTicketList(dataList, kind) {
 			}
 	});	
 
+	var rnmCertYn = getCookieInfo("rnmCertYn");
+
 	for (var i=0; i<dataList.length; i++) {
 		if (kind == 'UP') { // 구매 가능 이용권
 
@@ -164,8 +166,6 @@ function setTicketList(dataList, kind) {
 			hphoneHref[i] = urlpay+'pay/run?authToken='+encodeURIComponent(UserCertTknVal)+'&osType=W'+'&prodNo='+dataList[i].prodNo+'&prodNm='+encodeURIComponent(dataList[i].prodNm)+'&salePrc='+dataList[i].salePrc;
 		var cardHref = [];
 			cardHref[i] = urlpay+'pay/iniRun?authToken='+encodeURIComponent(UserCertTknVal)+'&osType=W'+'&prodNo='+dataList[i].prodNo+'&prodNm='+encodeURIComponent(dataList[i].prodNm)+'&salePrc='+dataList[i].salePrc;
-
-		var rnmCertYn = getCookieInfo("rnmCertYn");
 
 			if(i==0) {
 				output += '<div class="voucher-card" style="margin-right: 21px;">';
@@ -239,7 +239,7 @@ function startUseTicketTransaction(url, type, dataType, callback) {
 
         },
         error: function(xhr, textStatus, errorThrown) {
-            console.log('실패 - ', xhr);
+            //console.log('실패 - ', xhr);
         }
     });
 }
@@ -422,7 +422,7 @@ function pgFinishPopup(payNo) {
 //쿠폰 등록
 function couponReg() {
 	var $couponNum = $('#coupon-reg-input');
-	var agreeYn = 'Y';
+	var agreeYn = '';
 	var params = {}, url='v1/payment/regCoupon', type='POST', dataType = 'json';
 
 	params = {					
@@ -435,7 +435,7 @@ function couponReg() {
 
  }
 
-// 쿠폰 등록 요청
+// 쿠폰 등록 요청(이용동의 전)
 function startCouponRegTransaction(url, params, type, dataType, callback) {
 	var that = this;
     $.ajax({
@@ -451,25 +451,58 @@ function startCouponRegTransaction(url, params, type, dataType, callback) {
             callback(response);
         },
         error: function(xhr, textStatus, errorThrown) {
-            console.log('실패 - ', xhr);
+            //console.log('실패 - ', xhr);
         }
     });
 }
 
-// 쿠폰 등록 요청 파싱
+// 쿠폰 등록 요청 파싱(이용동의 전)
 function parseCouponRegTransaction(response) {
 	if (response.resultCd && response.resultMsg) {
 		if (response.resultCd == '1' && response.resultMsg == '성공') {
-			console.log("쿠폰 등록 :"+response.resultMsg);
 				//사용중인 쿠폰 유무 조회
 				var params = {}, url='v1/payment/pay', type='GET', dataType = 'json';
 					startUseCouponRegTransaction(response);					
 		} else {
-			console.log("쿠폰 등록 실패 사유 :"+response.resultCd);
+			//console.log("쿠폰 등록 실패 사유 :"+response.resultCd);
 			couponRegFail(response.resultCd);
 		}
 	} else {
-			console.log("쿠폰 등록 System Fail");
+			//console.log("쿠폰 등록 System Fail");
+	}
+}
+
+// 쿠폰 등록 요청(이용동의 후)
+function startCouponAgreeOkTransaction(url, params, type, dataType, callback) {
+	var that = this;
+    $.ajax({
+        url: urlHeader+url,
+        data: JSON.stringify(params),
+        type: type,
+        dataType: dataType,
+        headers: {
+            "Authorization":getCookieInfo('userCertTknVal')
+        },
+	    contentType : "application/json;charset=UTF-8",         
+        success: function(response) {
+            callback(response);
+        },
+        error: function(xhr, textStatus, errorThrown) {
+            //console.log('실패 - ', xhr);
+        }
+    });
+}
+
+// 쿠폰 등록 요청 파싱(이용동의 후)
+function parseCouponAgreeOkTransaction(response,couponPubNum,haveCpnYn) {
+	if (response.resultCd && response.resultMsg) {
+		if (response.resultCd == '1' && response.resultMsg == '성공') {
+			confirmPopup(haveCpnYn,couponPubNum,response);					
+		} else {
+			couponRegFail(response.resultCd);
+		}
+	} else {
+			//console.log("쿠폰 등록 처리 System Fail");
 	}
 }
 
@@ -484,10 +517,8 @@ function startUseCouponRegTransaction(response) {
 		if (response.resultCd == '1' && response.resultMsg == '성공') {
 			if(this.useTicket == 'Y' || this.useCoupon =='Y') {
 				haveCpnYn = 'Y'
-				console.log("사용중인 쿠폰이나 이용권이 존재합니다.");
 			} else {
 				haveCpnYn = 'N'
-				console.log("사용중인 쿠폰이나 이용권이 없습니다.");
 			}
 			couponAgreePopup(haveCpnYn,couponPubNum,response);							
 		} else {
@@ -501,7 +532,13 @@ function startUseCouponRegTransaction(response) {
 //쿠폰 등록 시 동의 팝업
 function couponAgreePopup(haveCpnYn,couponPubNum,response) {
 
-	var templateId = 'dialog-coupon-register-user-agreement';
+	var templateId;
+
+	if(response.usePeriCd == '999') {
+		templateId = 'dialog-coupon-register-user-agreement';
+	} else {
+		templateId = 'dialog-coupon-register-user-agreement-24';
+	}	
 
 	U.dialog({
 		templateId: templateId,
@@ -536,16 +573,18 @@ function couponAgreePopup(haveCpnYn,couponPubNum,response) {
 				userCntInfo = "1인용 (정회원 1인)";
 			}
 
-			var peri = response.userPeriCd;
+			var peri = response.usePeriCd;
 			var periDp;
 			if(peri == '999') {
 				periDp = '무제한';
 			} else if (peri == '006') {
-				periDp = '6 개월'
+				periDp = '6 개월';
 			} else if (peri == '012') {
-				periDp = '12 개월'
+				periDp = '12 개월';
 			} else if (peri == '024') {
-				periDp = '24 개월'
+				periDp = '24 개월';
+			} else {
+				periDp = '';
 			}
 
 			$js_coupon_title.html(response.cpnNm);
@@ -559,9 +598,20 @@ function couponAgreePopup(haveCpnYn,couponPubNum,response) {
 			}	
 
 			$(context).find('.bt-next').on('click', function() {				
-				//약관 동의 후 확인 팝업으로		
+				
+				//약관 동의 시 다시 한번 등록 시도.(동의 취소 시엔 등록이 안됨) > 확인 팝업으로
+				var agreeYn = 'Y';
+				var params = {}, url='v1/payment/regCoupon', type='POST', dataType = 'json';
+
+				params = {					
+					cpnPubNo:couponPubNum,
+					useAgrYn:agreeYn
+				};
+				startCouponAgreeOkTransaction(url, params, type, dataType, function(response){
+					parseCouponAgreeOkTransaction(response,couponPubNum, haveCpnYn);					
+				});
+
 				U.dialog();
-				confirmPopup(haveCpnYn,couponPubNum,response);
 			});
 			$(context).find('.bt-prev').on('click', function() {
 				//팝업 취소 
@@ -603,22 +653,24 @@ function confirmPopup(msgId,cpnPubNum,response) {
 				userCntInfo = "1인용 (정회원 1인)";
 			}
 
-			var peri = response.userPeriCd;
+			var peri = response.usePeriCd;
 			var periDp;
 			if(peri == '999') {
 				periDp = '무제한';
 			} else if (peri == '006') {
-				periDp = '6 개월'
+				periDp = '6 개월';
 			} else if (peri == '012') {
-				periDp = '12 개월'
+				periDp = '12 개월';
 			} else if (peri == '024') {
-				periDp = '24 개월'
+				periDp = '24 개월';
+			} else {
+				periDp = '';
 			}
 
 			$js_coupon_title.html(response.cpnNm);
 			$js_coupon_peri.html(periDp+' 이용 쿠폰');	
 			$js_coupon_contents.html(userCntInfo);
-			if(response.userPeriCd != '999') {
+			if(response.usePeriCd != '999') {
 				$js_coupon_expiry.html("사용 유효기한 "+response.regValidEndDay+"까지");
 			} else {
 				$js_coupon_expiry.html("사용 유효기한 : 무기한");
@@ -695,7 +747,7 @@ function startCouponRegProcTransaction(url, params, type, dataType, callback) {
             callback(response);
         },
         error: function(xhr, textStatus, errorThrown) {
-            console.log('실패 - ', xhr);
+            //console.log('실패 - ', xhr);
         }
     });
 }
@@ -704,17 +756,16 @@ function startCouponRegProcTransaction(url, params, type, dataType, callback) {
 function parseCouponRegProcTransaction(response) {
 	if (response.resultCd && response.resultMsg) {
 		if (response.resultCd == '1' && response.resultMsg == '성공') {
-			console.log("쿠폰 바로 사용 처리 성공"+response.resultMsg);
 				//부모창 새로고침하기 위해 다시 리다이렉.
 				var goHref = location.href;
 				location.replace(goHref);						
 		} else {
-			console.log("실패 사유 :"+response.resultCd);
+			//console.log("실패 사유 :"+response.resultCd);
 			//기기 등록 후 사용 안내 팝업 
 				guidePopup(response.resultCd);
 		}
 	} else {
-			console.log("System Fail");
+			//console.log("System Fail");
 	}
 }
 
@@ -809,7 +860,7 @@ function startTicketChangeProcTransaction(url, params, type, dataType, userCnt, 
             callback(response);          
         },
         error: function(xhr, textStatus, errorThrown) {
-            console.log('실패 - ', xhr);
+            //console.log('실패 - ', xhr);
         }
     });
 }
@@ -845,10 +896,10 @@ function parseTicketChangeProcTransaction(response, userCnt, callback) {
 			callback(response, usrCnt, prodNumber);
 
 		} else {
-			console.log("실패 :"+response.resultCd);
+			//console.log("실패 :"+response.resultCd);
 				}
 	} else {
-			console.log("System Fail");
+			//console.log("System Fail");
 	}
 } 
 
@@ -888,7 +939,7 @@ function startTicketChangeDoTransaction(url, params, type, dataType, callback) {
             callback(response);
         },
         error: function(xhr, textStatus, errorThrown) {
-            console.log('실패 - ', xhr);
+            //console.log('실패 - ', xhr);
         }
     });
 }
@@ -897,13 +948,12 @@ function startTicketChangeDoTransaction(url, params, type, dataType, callback) {
 function parseTicketChangeDoTransaction(response, userCnt, payNo) {
 	if (response.resultCd && response.resultMsg) {
 		if (response.resultCd == '1' && response.resultMsg == '성공') {
-			console.log("성공 :"+response.resultMsg);		
 			finishPopup(userCnt, payNo)
 		} else {
-			console.log("실패 :"+response.resultCd);
+			//console.log("실패 :"+response.resultCd);
 		}
 	} else {
-			console.log("System Fail");
+			//console.log("System Fail");
 	}
 }
 
@@ -961,7 +1011,7 @@ userCnt: 5
             callback(prodNm, payWayCdDp, salePrc, svcStartDtm, svcEndDtm);          
         },
         error: function(xhr, textStatus, errorThrown) {
-            console.log('실패 - ', xhr);
+            //console.log('실패 - ', xhr);
         }
     });
  }
@@ -988,10 +1038,10 @@ function finishPopup(msgId, payNo) {
 			//subRst = "자동결제 <span>|</span> "+payWayCdDp+" 결제 ("+numComma(salePrc)+"원/월)";
 			if(userCnt > 1) {	//조회한 이용권 정보에 맞게 분기 처리
 				rst = "가족 이용권 (5인)";
-				subRst = "자동결제 <span>|</span> "+payWayCdDp+" 결제 (1,100원/월)";
+				subRst = "자동결제 <span>|</span> "+payWayCdDp+" 결제 (2,200원/월)";
 			} else {
 				rst = "1인 이용권";
-				subRst = "자동결제 <span>|</span> "+payWayCdDp+" 결제 (2,200원/월)";				
+				subRst = "자동결제 <span>|</span> "+payWayCdDp+" 결제 (1,100원/월)";				
 			}
 			expiry = "이용 유효기간 "+svcStartDtm+" ~ "+svcEndDtm;
 
@@ -1063,7 +1113,7 @@ function startAutoPayCancelTransaction(url, type, dataType, callback) {
             callback(response);
         },
         error: function(xhr, textStatus, errorThrown) {
-            console.log('실패 - ', xhr);
+            //console.log('실패 - ', xhr);
         }
     });
 }
@@ -1072,13 +1122,16 @@ function startAutoPayCancelTransaction(url, type, dataType, callback) {
 function parseAutoPayCancelTransaction(response) {
 	if (response.resultCd && response.resultMsg) {
 		if (response.resultCd == '1' && response.resultMsg == '성공') {
-			console.log("성공 :"+response.resultMsg);		
+			//부모창 새로고침하기 위해 다시 리다이렉.
+			var goHref = location.href;
+			location.replace(goHref);	
+			//결과 팝업				
 			AutoPayCancelPopup('AutoPayCancel');
 		} else {
-			console.log("실패 :"+response.resultCd);
+			//console.log("실패 :"+response.resultCd);
 		}
 	} else {
-			console.log("System Fail");
+			//console.log("System Fail");
 	}
 }
 
@@ -1152,7 +1205,7 @@ function startUseCouponHistoryTransaction(url, type, dataType, callback) {
             callback(response);
         },
         error: function(xhr, textStatus, errorThrown) {
-            console.log('실패 - ', xhr);
+            //console.log('실패 - ', xhr);
         }
     });
 }
@@ -1187,17 +1240,32 @@ function parseUseCouponHistoryTransaction(response) {
 						k = '0'+k;	
 					}
 					
+					var diffMonth;
+					if(dataList[i].svcEndDtm == '9999') {
+						diffMonth = "(무기한)";
+					} else {
+						diffMonth = diff_month(dataList[i].svcStartDtm,dataList[i].svcEndDtm);
+						if(diffMonth < 2) {
+							diffMonth = '';
+						} else {
+							diffMonth = "("+diffMonth+"개월)";
+						}
+					}
+
+					var payWayCdDp = (dataList[i].payWayCd != 'CPN')?"(자동결제)":"";
+					var payMsg = (dataList[i].payWayCd != 'CPN')?" 결제":" 이용";
+
 					output += '<tbody>';
 					output += '<tr>';
 					output += '<td class="usage-grid-data dt-num">'+k+'</td>';
-					output += '<td class="usage-grid-data dt-coupon">'+dataList[i].prodNm+'</td>';
+					output += '<td class="usage-grid-data dt-coupon">'+dataList[i].prodNm+' '+diffMonth+'</td>';
 					output += '<td class="usage-grid-data dt-settling-day">'+dataList[i].payDtm+'</td>';
 					output += '<td class="usage-grid-data dt-payment">'+numComma(dataList[i].payAmt)+'원</td>';
-					output += '<td class="usage-grid-data dt-payment-option">'+dataList[i].payWayCdNm+' 결제</td>';
+					output += '<td class="usage-grid-data dt-payment-option">'+dataList[i].payWayCdNm+' '+payMsg+' '+payWayCdDp+' </td>';
 					if(dataList[i].svcEndDtm == '9999') {
-					output += '<td class="usage-grid-data dt-usage-expiration">무기한</td>';		
+						output += '<td class="usage-grid-data dt-usage-expiration">무기한</td>';		
 					} else {	
-					output += '<td class="usage-grid-data dt-usage-expiration">'+dataList[i].svcStartDtm+'~'+dataList[i].svcEndDtm+'</td>';
+						output += '<td class="usage-grid-data dt-usage-expiration">'+dataList[i].svcStartDtm+'~'+dataList[i].svcEndDtm+'</td>';
 					}
 					output += '</tr>';
 					output += '</tbody>';
@@ -1215,10 +1283,10 @@ function parseUseCouponHistoryTransaction(response) {
 				$('#has-usage').removeClass('has-usage');
 			}
 		} else {
-			console.log("실패 사유 :"+response.resultMsg);
+			//console.log("실패 사유 :"+response.resultMsg);
 		}
 	} else {
-			console.log("System Fail");
+			//console.log("System Fail");
 	}
 }
 

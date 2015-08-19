@@ -4,19 +4,18 @@ var urlHeader;
 //http프로토콜 접속 시 https로 리다이렉트(IE9.0이하 크로스 도메인 오류문제로)
 if (document.location.protocol !== 'https:') {
 	var sHref = location.href;
-	console.log('HTTP접속: ' + sHref);
 	var goUrl = sHref.replace('http','https')
-	console.log('HTTP접속변경주소: ' + goUrl);
 	//개발기가 아닐 경우만 포워딩
 	if( urlInfo.indexOf('dev') == -1 && urlInfo.indexOf('61.250.21.156' ) == -1 ) {
 		//location.replace(goUrl);
 	}	
 } else {
-	console.log('HTTPS 접속중');
+	//console.log('HTTPS 접속중');
 }
 
 //IE9 이하 크로스 도메인 문제 해결 jQuery
 $.support.cors = true;
+//document.domain = 'sktsmarthome.com';
 
 /* 서버에 따른 API분기*/
 //개발 서버
@@ -48,7 +47,7 @@ function startLoginTransaction(url, params, type, dataType, callback) {
             callback(response);
         },
         error: function(xhr, textStatus, errorThrown) {
-            console.log('실패 - ', xhr);
+            //console.log('실패 - ', xhr);
         }
     });
 }
@@ -78,7 +77,7 @@ function startAuthRequestTransaction(url, params, type, dataType, callback) {
             callback(response);
         },
         error: function(xhr, textStatus, errorThrown) {
-            console.log('실패 - ', xhr);
+            //console.log('실패 - ', xhr);
         }
     });
 }
@@ -105,7 +104,7 @@ function startAuthNumTransaction(url, params, type, dataType, callback) {
             callback(response);
         },
         error: function(xhr, textStatus, errorThrown) {
-            console.log('실패 - ', xhr);
+            //console.log('실패 - ', xhr);
         }
     });
 }
@@ -159,7 +158,7 @@ function startFindIDTransaction(url, params, type, dataType, callback) {
             callback(response);
         },
         error: function(xhr, textStatus, errorThrown) {
-            console.log('실패 - ', xhr);
+            //console.log('실패 - ', xhr);
         }
     });
 }
@@ -176,7 +175,7 @@ function startFindPWDTransaction(url, params, type, dataType, callback) {
             callback(response);
         },
         error: function(xhr, textStatus, errorThrown) {
-            console.log('실패 - ', xhr);
+            //console.log('실패 - ', xhr);
         }
     });
 }
@@ -193,7 +192,7 @@ function startJoinNextStepTransaction(url, params, type, dataType, callback) {
             callback(response);
         },
         error: function(xhr, textStatus, errorThrown) {
-            console.log('실패 - ', xhr);
+            //console.log('실패 - ', xhr);
         }
     });
 }
@@ -211,7 +210,7 @@ function startJoinTransaction(url, params, type, dataType, callback) {
             callback(response);
         },
         error: function(xhr, textStatus, errorThrown) {
-            console.log('실패 - ', xhr);
+            //console.log('실패 - ', xhr);
         }
     });
 }
@@ -300,7 +299,7 @@ function startChkNowPasswordTransaction(url, params, type, dataType, callback) {
             callback(response);
         },
         error: function(xhr, textStatus, errorThrown) {
-            console.log('실패 - ', xhr);
+            //console.log('실패 - ', xhr);
         }
     });
 }
@@ -335,7 +334,7 @@ function startChangPasswordTransaction(url, params, type, dataType, callback) {
             callback(response);
         },
         error: function(xhr, textStatus, errorThrown) {
-            console.log('실패 - ', xhr);
+            //console.log('실패 - ', xhr);
         }
     });
 }
@@ -367,7 +366,7 @@ function startUseCouponTransaction(url, type, dataType, callback) {
             callback(response);
         },
         error: function(xhr, textStatus, errorThrown) {
-            console.log('실패 - ', xhr);
+            //console.log('실패 - ', xhr);
         }
     });
 }
@@ -379,6 +378,7 @@ function parseUseCouponTransaction(response) {
 		var rsUseCpnList = response.useCpnList;		// 사용중인 쿠폰 리스트
 
 		var rsRegCpnCnt = response.regCpnList.length;		// 등록한 쿠폰 갯수
+			rsRegCpnCnt = '<a href="javascript:goMyinfo()">'+rsRegCpnCnt+'</a>';
 		var $jsRegCouponCounter = $('#jsRegCouponCounter');
 			$jsRegCouponCounter.html(rsRegCpnCnt);
 
@@ -396,7 +396,6 @@ function parseUseCouponTransaction(response) {
 				setCouponList(rsUseProdList, 'UP');
 					//기간이 유효한 이용권이 남아 있는 경우 
 					if(diffDay == 'Y') {
-					console.log("사용중인 유효 이용권이 존재합니다."+endDtm+'일 남음');	
 						this.useTicket = 'Y';
 					}	
 			}
@@ -416,7 +415,6 @@ function parseUseCouponTransaction(response) {
 				}
 				setCouponList(rsRegCpnList, 'RC');
 					if(diffDay == 'Y') {
-					console.log("등록된 유효 쿠폰이 존재합니다."+endDtm+'일 남음');	
 						this.useRegCoupon = 'Y';
 					}
 			}
@@ -436,11 +434,10 @@ function parseUseCouponTransaction(response) {
 				}
 				setCouponList(rsUseCpnList, 'UC');
 					if(diffDay == 'Y') {
-					console.log("사용중인 유효 쿠폰이 존재합니다."+endDtm+'일 남음');	
 						this.useCoupon = 'Y';
 					}				
 			} else {
-				console.log("사용중인 유효 쿠폰이 없습니다.");
+				//console.log("사용중인 유효 쿠폰이 없습니다.");
 			}
 
 			if (this.useTicket != 'Y' && this.useRegCoupon != 'Y' && this.useCoupon != 'Y' && rsUseProdList.length == 0 && rsRegCpnList.length == 0 && rsUseCpnList.length == 0 && rsRegCpnList.length == 0) {
@@ -629,7 +626,6 @@ function setBlankLi() {
 			output += '</li>';
 		}
 	}
-    	console.log("liCnt: "+liCnt+", j:"+j+'liCnt%3: '+liCnt%3);
 
 	if ($couponContainer.children().length > 0) {
     	$couponContainer.children().last().after($(output));
@@ -653,7 +649,7 @@ function startMyInfoTransaction(url, type, dataType, callback) {
             callback(response);
         },
         error: function(xhr, textStatus, errorThrown) {
-            console.log('실패 - ', xhr);
+            //console.log('실패 - ', xhr);
             if(xhr.status == 401) {
             	//타 단말에서 로그인 시 쿠키 정보 삭제하고 재로그인, 쿠키 정보 만료(60분 초과)
             	//alert('로그인이 정보가 만료되어 재로그인이 필요합니다.');
@@ -680,7 +676,7 @@ function startWithDrawTransaction(url, type, dataType, callback) {
             callback(response);
         },
         error: function(xhr, textStatus, errorThrown) {
-            console.log('실패 - ', xhr);
+            //console.log('실패 - ', xhr);
         }
     });
 }
@@ -726,7 +722,7 @@ function startFaqListTransaction(url, type, dataType, callback) {
             callback(response);
         },
         error: function(xhr, textStatus, errorThrown) {
-            console.log('실패 - ', xhr);
+            //console.log('실패 - ', xhr);
         }
     });
 }
@@ -762,10 +758,10 @@ function parseFaqListTransaction(response) {
 
 			}
 		} else {
-			console.log("실패 사유 :"+response.resultMsg);
+			//console.log("실패 사유 :"+response.resultMsg);
 		}
 	} else {
-			console.log("System Fail");
+			//console.log("System Fail");
 	}
 }
 
@@ -789,6 +785,30 @@ function diff_day(value2){
 
 		//console.log("차이 일수 : " + (parseInt(diff/day)));
 	    return (parseInt(diff/day));
+		//console.log("차이 월수 : " + parseInt(diff/month));
+		// document.write("차이 년수 : " + parseInt(diff/year));
+	} else {
+		return;
+	}	
+}
+
+//개월수  
+function diff_month(sDate,eDate){
+
+	if(sDate && eDate) {
+
+		var arr1 = sDate.split('.');
+		var arr2 = eDate.split('.');
+
+		var dt1 = new Date(arr1[0], arr1[1], arr1[2]);
+		var dt2 = new Date(arr2[0], arr2[1], arr2[2]);
+
+		var diff = dt2 - dt1;
+		var day = 1000 * 60 * 60 *  24;
+		var month = day * 30;
+
+		//console.log("차이 일수 : " + (parseInt(diff/day)));
+	    return (parseInt(diff/month));
 		//console.log("차이 월수 : " + parseInt(diff/month));
 		// document.write("차이 년수 : " + parseInt(diff/year));
 	} else {

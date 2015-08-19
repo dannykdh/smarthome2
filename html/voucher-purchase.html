@@ -13,8 +13,12 @@
 <script type="text/javascript" src="../js/transaction.js"></script>
 <script type="text/javascript" src="../js/popUpProcess.js"></script>
 <script type="text/javascript" src="../js/paymentPop.js"></script>
+<script type="text/javascript" src="../js/placeholders.min.js"></script>
 <script>
 	$('document').ready(function(){
+
+ var url = "https://webstg.sktsmarthome.com/html/sync_rnm_result.html?pgresultnum=abcdefg";
+ 
 
 		if (isLoginCheck()) {	
 			var params = {}, url='v1/member/info', type='GET', dataType = 'json';
@@ -26,7 +30,9 @@
 			var params = {}, url='v1/payment/pay', type='GET', dataType = 'json';
 			startUseCouponTransaction(url, type, dataType, function(response){
 				parseUseCouponTransaction(response);		
-			});					
+			});		
+
+			console.log("실명인증 처리 여부 테스트 : "+getCookieInfo("rnmCertYn"));
 			
 		} else {
 			//$('body').removeClass('.reg-coupon-num');
@@ -761,7 +767,7 @@
 						</li>
 						<li>
 							<p class="agreement-sub-title">2. 무료 서비스 제공기간<p>
-							<p class="agreement-description">해당 쿠폰은 제공 받은 제품에만 서비스 제공이 가능하며, 이회의 제품은 서비스 제공이 불가능합니다.</p>
+							<p class="agreement-description">해당 쿠폰을 등록하면 서비스 이용이 가능하며, 별도의 서비스 이용 기간 제한은 없습니다.</p>
 						</li>
 					</ol>
 				</div>
@@ -1239,6 +1245,51 @@
 			<div class="dialog-control-panel">
 				<button type="button" class="bt-cancel">취소</button>
 				<button type="button" class="bt-change">변경하기</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="dialog-coupon-register-user-agreement-24" type="text/x-dialog-template">
+	<div class="dialog dialog-coupon-register-user-agreement">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-title-bar">
+			<p class="dialog-title">쿠폰 등록</p>
+		</div>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<div class="bg-coupon">
+					<div class="content">
+						<p class="coupon-title" id="title">경동 나비엔 보일러</p>
+						<p class="coupon-contents" id="peri">이용 쿠폰<p>
+						<p class="coupon-contents" id="contents">5인용 (정회원 1인 + 가족회원 4인)</p>
+						<p class="coupon-expiry" id="expiry">사용 유효기한 2015.03.15까지<p>
+					</div>
+				</div>
+			</div>
+			<div class="agreement-contents">
+				<div class="agreement-holder">
+					<p class="agreement-title">쿠폰 이용 약관</p>
+					<ol>
+						<li>
+							<p class="agreement-sub-title">1. 무료 서비스 대상 범위<p>
+							<p class="agreement-description">해당 쿠폰은 제공 받은 제품에만 서비스 제공이 가능하며, 이회의 제품은 서비스 제공이 불가능합니다.</p>
+						</li>
+						<li>
+							<p class="agreement-sub-title">2. 무료 서비스 제공기간<p>
+							<p class="agreement-description">해당 쿠폰을 등록한 날로부터 2년 간 무료 서비스가 제공됩니다.<br>
+							단, 서비스가 중단되기 전, 회사는 공지 또는 고지를 통해 서비스 유료 전환 여부를 고객이 결정할 수
+							있도록 합니다.<br>
+							(공지 또는 고지 시 전환하지 않았더라도, 서비스 유료 전환은 언제든지 가능합니다)</p>
+						</li>
+					</ol>
+				</div>
+			</div>
+			<div class="checkbox-area">
+				<input id="agree-service-coupon" type="checkbox" value="1"><label for="agree-service-coupon">쿠폰 이용약관에 동의합니다.</label>
+			</div>
+			<div class="dialog-control-panel">
+				<button type="button" class="bt-prev">이전</button>
+				<button type="button" class="bt-next">다음</button>
 			</div>
 		</div>
 	</div>

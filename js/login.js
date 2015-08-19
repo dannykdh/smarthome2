@@ -214,7 +214,7 @@ function loginComplete(response) {
 
 	//팝업 닫기
 	U.closeDialog();	
-	
+
 	//부모창 새로고침하기 위해 다시 리다이렉.
 	var goHref = location.href;
 	location.replace(goHref);	
@@ -335,9 +335,13 @@ function setLoginBeforeAfterVoucherUpdate() {
 
 //실명인증 완료 후 쿠키 정보 갱신처리(API팝업에서 창닫기 시 호출함)
 function setRealNmCertYn(resultCd) {
-	if(resultCd='Y') {
+	if(resultCd == 'Y') {
 		document.cookie='rnmCertYn = Y';
+	} else {
+		document.cookie='rnmCertYn = N';
 	}
+	var timer = setTimeout("location.reload(true)", 1000);
+   		clearTimeout(timer);
 }
 
 // 아이디 찾기 인증번호 요청

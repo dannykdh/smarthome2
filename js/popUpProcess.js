@@ -250,7 +250,6 @@ jQuery(function($) {
 					});
 
 					$('#authnum').keyup(function() {
-						console.log('$(#authnum).val().length : '+$('#authnum').val().length)
 						if($('#authnum').val().length >= 6) {
 							$('.bt-next').prop("disabled", false);
 							U.validate($('#authnum'));	
@@ -462,7 +461,7 @@ jQuery(function($) {
 									} else {
 										var $elPassre = $('#passre');
 										joinFail(false, $elPassre, response);
-										console.log('실패 : ' + response);
+										//console.log('실패 : ' + response);
 									}
 								});
 							});				
