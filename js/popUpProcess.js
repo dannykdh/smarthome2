@@ -336,7 +336,7 @@ jQuery(function($) {
 							chkValidate($('#pass'));
 						}
 
-						if (this.value == '' || this.value.length < 8) {
+						if (this.value == '' || this.value.length < 9) {
 							U.invalidate($(this));
 						}
 					});
@@ -354,7 +354,7 @@ jQuery(function($) {
 							U.invalidate($(this));
 						}
 
-						if (this.value == '' || this.value.length < 8) {
+						if (this.value == '' || this.value.length < 9) {
 							U.invalidate($(this));
 						}
 					});

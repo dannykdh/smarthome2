@@ -69,8 +69,6 @@
 						</div>
 					</div>
 				</fieldset>
-			</form>
-			<form>
 				<fieldset>
 					<legend>인증번호 전송</legend>
 					<div class="dialog-content-panel">
@@ -157,8 +155,6 @@
 						</div>
 					</div>
 				</fieldset>
-			</form>
-			<form>
 				<fieldset>
 					<legend>인증번호 전송</legend>
 					<div class="dialog-content-panel">
@@ -269,8 +265,6 @@
 						</div>
 					</div>
 				</fieldset>
-			</form>
-			<form>
 				<fieldset>
 					<legend>인증번호 전송</legend>
 					<div class="dialog-content-panel">
@@ -313,7 +307,7 @@
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
-							<input type="password" id="pass" name="pass" class="edit" placeholder="비밀번호 (대소문자 구분 영문, 숫자, 특수문자 포함 9자 이상)">
+							<input type="password" id="pass" name="pass" class="edit" placeholder="비밀번호 (영문, 숫자, 특수문자 포함 9자 이상)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
@@ -571,7 +565,7 @@
 					<legend class="displayed">새 비밀번호</legend>
 					<div class="dialog-content-panel">
 						<div class="field">
-							<input type="password" class="edit" id="js_new_password" placeholder="새 비밀번호 (대소문자 구분 영문, 숫자, 툭수문자 포함 9자 이상)">
+							<input type="password" class="edit" id="js_new_password" placeholder="새 비밀번호 (영문, 숫자, 특수문자 포함 9자 이상)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
@@ -674,7 +668,7 @@
 
 			return false;
 		});
-		console.log(U.browser);
+
 	});
 </script>
 
@@ -687,9 +681,9 @@
 			<ul class="menus h-item h-bar">
 				<li class="menu h-item"><a class="bt-products-and-services" href="products-and-services.html">제품 및 서비스</a></li>
 				<li class="menu h-item"><a class="bt-costumer-center" href="costumer-support.html">고객 지원</a></li>
-				<!-- 수정 시작 : 20150722_01 -->
-				<!--<li class="menu h-item"><a class="bt-event" href="#">이벤트</a></li>-->
-				<!--// 수정 종료 : 20150722_01 -->
+				<!-- 수정 시작 : 20150819_01 -->
+				<li class="menu h-item"><a class="bt-event" href="http://event.sktsmarthome.com/">이벤트</a></li>
+				<!--// 수정 종료 : 20150819_01 -->
 			</ul>
 		</div>
 		<div class="account-field">
@@ -715,19 +709,25 @@
 		<li><a class="bt-pager bt-pager-security" href="#security">4</a></li>
 	</ul>
 </nav>
+<!-- 수정 시작 : 20150819_01 -->
+<button id="bt-event-badge" type="button">Event</button>
+<!-- 수정 종료 : 20150819_01 -->
 <div id="event-holder">
 	<div class="event-ribbon"></div>
 	<button class="bt-event-close">Close</button>
 	<!-- .event-description 및 .event-duration은 내용이 앞으로 달라질 수 있으므로
 		또다른 이벤트가 필요할 때를 대비하여 css를 손대지 않고
 		유지보수가 가능하도록 하기 위해 스타일을 직접 기술함 -->
-	<div class="event-description" style="position:absolute;top:50%;left:50%;margin:-125px 0 0 -104px;width:208px;height:250px;background:url(../img/ex-event-description.png) no-repeat;text-indent:200%;white-space:nowrap;overflow:hidden;">
-		<p>7일 체험권</p>
-		<p>지금 스마트홈앱을 다운 받으시는 분들께 한여하 7일 체험권을 드립니다.</p>
+	<!-- 수정 시작 : 20150820_03 -->
+	<div class="event-description" style="position:absolute;top:0;right:0;bottom:0;left:0;background:url(../img/ex-event-banner-20150820_03.jpg) no-repeat;text-indent:200%;white-space:nowrap;overflow:hidden;">
+		<p>Let's [Home]</p>
+		<p>SKT 스마트홈 체험단 모집</p>
+		<p>기기 무료 증정</p>
+		<p>에어컨, 김치 냉장고, 보일러, 에어워셔, 도어락, 가스 차단기까지 최대 250만원 상당의 스마트홈 기기를 무료로 체험하세요.</p>
+		<p>기간 : 8.21~9.4</p>
 	</div>
-	<div class="event-duration" style="background-image:url(../img/ex-event-duration.png);">
-		<p>06.01 ~ 07.31</p>
-	</div>
+	<a class="bt-event-detail" href="http://event.sktsmarthome.com/?utm_source=etc2&utm_medium=banner&utm_campaign=SKTSmartHome" target="_blank">자세히 보기 Click</a>
+	<!-- 수정 시작 : 20150820_03 -->
 </div>
 <div id="prologue">
 	<section id="intro" class="card">
@@ -740,7 +740,16 @@
 						집안 환경을 조절할 수 있는 똑독한 서비스 입니다.
 					</p>
 				</div>
-				<a class="show-video" href="https://www.youtube.com/embed/QWNvC0GytDY?autoplay=1">영상으로 만나기</a>
+				<!-- 수정 시작 : 20150819_01 -->
+				<ul class="external-videos">
+					<li class="external-video">
+						<a class="show-cf" href="https://www.youtube.com/embed/QWNvC0GytDY?autoplay=1">CF 보러가기</a>
+					</li>
+					<li class="external-video">
+						<a class="show-video" href="https://www.youtube.com/embed/QWNvC0GytDY?autoplay=1">영상으로 만나기</a>
+					</li>
+				</ul>
+				<!-- 수정 종료 : 20150819_01 -->
 				<ul class="stores h-bar">
 					<li class="store h-item"><a class="bt-tstore" href="http://www.tstore.co.kr/userpoc/apps/view?pid=0000687485" target="_blank">TStore</a></li>
 					<li class="store h-item"><a class="bt-google-play" href="https://play.google.com/store/apps/details?id=com.skt.sh" target="_blank">Google Play</a></li>
@@ -749,8 +758,10 @@
 			</div>
 		</div>
 		<a class="bt-next-roller" href="#status">Next</a>
+		<!-- 수정 시작 : 20150819_01 -->
+		<!--<button id="bt-event-badge" type="button">Event</button>-->
+		<!-- 수정 종료 : 20150819_01 -->
 	</section>
-	<button id="bt-event-badge" type="button">Event</button>
 </div>
 <div id="main">
 	<section id="status" class="card">
@@ -807,8 +818,8 @@
 				<li class="security-network h-item">
 					<h1 class="title">보안 네트워크</h1>
 					<p class="text">
-						개인정보 노출은 걱정하지 마세요.
 						보안 네트워크로 개인정보를 안전하게 보호합니다.
+						개인정보 노출에 걱정하지 마세요.
 					</p>
 				</li>
 				<li class="security-service h-item">

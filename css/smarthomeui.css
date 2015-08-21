@@ -739,8 +739,8 @@ textarea {
 .service {
 	position: relative;
 	width: 296px;
-	height: 594px;
-	border: 1px solid #eaeaea;
+	height: 592px;
+	border: 1px solid #e0e0e0;
 	margin: 20px 0 0 30px;
 	background: #fff;
 }
@@ -765,25 +765,82 @@ textarea {
 	height: 270px;
 }
 .service-title {
-	padding: 26px 20px 14px;
+	padding: 26px 0 15px 28px;
 }
 .service-text {
-	padding: 0 20px;
+	padding: 0 20px 0 27px;
 	line-height: 20px;
 	color: #999;
 }
 .service-text.service-text-dimmed {
 	/*opacity: .4;*/
 }
+.service .control-payment {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 48px;
+	border-top: 1px solid #ededed;
+}
+.service .control-payment::after {
+	content: '';
+	display: block;
+	clear: both;
+}
+.service .control-payment .payment {
+	height: 100%;
+	float: left;
+	background: #fafafa;
+}
+.service .control-payment .payment.payment-11st {
+	width: 192px;
+	border-right: 1px solid #ededed;
+}
+.service .control-payment .payment.payment-t-world-direct {
+	width: 103px;
+}
+.service .control-payment .bt-payment {
+	display: block;
+	width: 100%;
+	height: 100%;
+	text-indent: 200%;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.service .control-payment .payment-11st .bt-payment {
+	background: #fafafa url(../img/bt-payment-11st.png) no-repeat center center;
+}
+.service .control-payment .payment-t-world-direct .bt-payment {
+	background: #fafafa url(../img/bt-payment-t-world-direct.png) no-repeat center center;
+}
+.service .control-payment .bt-payment:hover {
+	background-color: #e5e5e5;
+}
+.bt-quick-guide {
+	display: block;
+	width: 83px;
+	height: 18px;
+	padding: 0 0 0 8px;
+	margin: 22px 20px 0 28px;
+	background: url(../img/bt-buy.png) no-repeat 0 0;
+	line-height: 18px;
+	color: #333;
+	text-align: left;
+}
+.bt-quick-guide:hover {
+	background-position: 0 -18px;
+	color: #ff9f3e;
+}
 .bt-buy {
 	display: block;
 	width: 51px;
 	height: 18px;
-	padding: 0 0 0 7px;
-	margin: 21px 20px 0;
+	padding: 0 0 0 8px;
+	margin: 2px 20px 0;
 	background: url(../img/bt-buy.png) no-repeat 0 0;
 	line-height: 18px;
 	color: #333;
+	text-align: left;
 }
 .bt-buy:hover {
 	background-position: 0 -18px;
@@ -791,8 +848,16 @@ textarea {
 }
 .service-company-logo-holder {
 	position: absolute;
-	right: 12px;
-	bottom: 6px;
+	top: 0;
+	left: 0;
+}
+.service .powered-by-smarthome {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 139px;
+	height: 50px;
+	background: url(../img/bg-service-card.png) no-repeat right top;
 }
 
 .account-page .table {
@@ -886,21 +951,30 @@ textarea {
 	color: #666;
 }
 .account-page .no-coupon {
-	width: 894px;
-	height: 220px;
-	border: 1px solid #e5e5e5;
-	border-radius: 3px;
-	padding-top: 110px;
+	width: 896px;
+	height: 240px;
+	/*border: 1px solid #e5e5e5;
+	border-radius: 3px;*/
+	padding-top: 86px;
 }
 .account-page .coupon-empty { /* 2015.07.09 수정 */
-	padding-top: 80px;
-	font-size: 14px;
-	font-weight: bold;
-	color: #333;
+	width: 205px;
+	height: 82px;
+	margin: 0 auto;
 	background: url(../img/bg-coupon-empty.png) no-repeat center 0;
-	text-align: center;
+	text-indent: 200%;
+	white-space: nowrap;
+	overflow: hidden;
 }
-
+.account-page .add-coupon {
+	display: block;
+	width: 120px;
+	margin: 65px auto 0;
+	color: #000;
+	font-weight: bold;
+	text-align: center;
+	text-decoration: underline;
+}
 .account-page .coupons {
 	display: none;
 }
@@ -1125,7 +1199,9 @@ textarea {
 .dialog-withdraw-confirm .dialog-control-panel .bt-confirm,
 .dialog-ticket-purchase-info .dialog-control-panel .bt-confirm,
 .dialog-payment-cancel .dialog-control-panel .bt-confirm,
-.dialog-name-verify-info .dialog-control-panel .bt-confirm {
+.dialog-name-verify-info .dialog-control-panel .bt-confirm,
+.dialog-coupon-register-user-agreement .dialog-control-panel .bt-confirm,
+.dialog-confirm-use-coupon .dialog-control-panel .bt-confirm {
 	background-image: url(../img/bt-dialog-confirm.png);
 }
 .dialog-control-panel .bt-find-password {
@@ -1834,6 +1910,9 @@ textarea {
 }
 .dialog-coupon-register-user-agreement .agreement-contents .agreement-sub-title {
 	/*margin: 0;*/
+	font-weight: bold;
+	text-indent: -1.5em;
+	padding-left: 12px;
 }
 .dialog-coupon-register-user-agreement .agreement-contents .agreement-description {
 	margin-left: 12px;
@@ -1940,7 +2019,7 @@ textarea {
 	padding: 28px 0 37px;
 }
 .dialog-ticket-change .result {
-	padding: 11px 0 20px;
+	padding: 11px 0 10px;
 	line-height: 20px;
 }
 .dialog-ticket-change .result strong {
@@ -1950,13 +2029,25 @@ textarea {
 	color: #f78f2e;
 	margin-bottom: 26px;
 }
+.dialog-ticket-change .additional-info > span {
+	display: block;
+	height: 14px;
+	margin-top: 7px;
+	line-height: 14px;
+	font-size: 12px;
+}
+.dialog-ticket-change .additional-info .sep {
+	display: inline-block;
+	font-size: 12px;
+	color: #ddd;
+}
 .dialog-ticket-change .description {
 	width: 338px;
 	height: 80px;
 	border: 1px solid #f1f1f1;
 	color: #a7a7a7;
 	font-size: 11px;
-	margin: 45px 30px 9px;
+	margin: 67px 30px 9px;
 	background-color: #f6f6f6;
 	text-align: left;
 	overflow:hidden;
@@ -1978,7 +2069,7 @@ textarea {
 	height: 6px;
 	display: inline-block;
 	background: url(../img/bg-text-dot.png) no-repeat center center;
-	margin: 0 2px 1px 0px;
+	margin: 0 2px 1px 0;
 	text-indent: 200%;
 	overflow: hidden;
 	white-space: nowrap;
@@ -2005,7 +2096,7 @@ textarea {
 	padding: 28px 0 37px;
 }
 .dialog-family-ticket-change .result {
-	padding: 11px 0 20px;
+	padding: 11px 0 10px;
 	line-height: 20px;
 }
 .dialog-family-ticket-change .result strong {
@@ -2015,13 +2106,25 @@ textarea {
 	color: #f78f2e;
 	margin-bottom: 26px;
 }
+.dialog-family-ticket-change .additional-info > span {
+	display: block;
+	height: 14px;
+	margin-top: 7px;
+	line-height: 14px;
+	font-size: 12px;
+}
+.dialog-family-ticket-change .additional-info .sep {
+	display: inline-block;
+	font-size: 12px;
+	color: #ddd;
+}
 .dialog-family-ticket-change .description {
 	width: 338px;
 	height: 80px;
 	border: 1px solid #f1f1f1;
 	color: #a7a7a7;
 	font-size: 11px;
-	margin: 45px 30px 9px;
+	margin: 67px 30px 9px;
 	background-color: #f6f6f6;
 	text-align: left;
 	overflow:hidden;
@@ -2040,7 +2143,7 @@ textarea {
 	height: 6px;
 	display: inline-block;
 	background: url(../img/bg-text-dot.png) no-repeat center center;
-	margin: 0 2px 1px 0px;
+	margin: 0 2px 1px 0;
 	text-indent: 200%;
 	overflow: hidden;
 	white-space: nowrap;
@@ -2099,7 +2202,7 @@ textarea {
 	height: 6px;
 	display: inline-block;
 	background: url(../img/bg-text-dot.png) no-repeat center center;
-	margin: 0 2px 1px 0px;
+	margin: 0 2px 1px 0;
 	text-indent: 200%;
 	overflow: hidden;
 	white-space: nowrap;
@@ -2282,6 +2385,166 @@ textarea {
 	font-size: 11px;
 	letter-spacing: -1px;
 }
+.dialog-confirm-change-coupon {
+	width:380px;
+}
+.dialog-confirm-change-coupon .dialog-title {
+	background-image: url(../img/ti-dialog-coupon-purchase.png);
+}
+.dialog-confirm-change-coupon .dialog-control-panel{
+	padding: 42px 0 38px;
+}
+.dialog-confirm-change-coupon .result {
+	padding-top: 83px;
+	padding-bottom: 37px;
+	font-size: 14px;
+	line-height: 27px;
+}
+.dialog-confirm-change-coupon .result span {
+	color: #ff9020;
+	font-size: 12px;
+}
+.dialog-confirm-change-coupon .sub-result {
+	color: #ff9020;
+	font-size: 11px;
+}
+.dialog-confirm-change-coupon .dialog-content-panel {
+	margin: 0 auto;
+}
+.dialog-auth-failure {
+	width: 380px;
+}
+.dialog-auth-failure .dialog-title{
+	background-image: url(../img/ti-dialog-auth-failure.png);
+}
+.dialog-auth-failure .dialog-control-panel {
+	padding-bottom: 37px;
+}
+.dialog-auth-failure .result {
+	height: 62px;
+	padding: 97px 0 16px;
+	font-size: 12px;
+	line-height: 25px;
+	color: #999;
+}
+.dialog-auth-failure .result strong {
+	color: #333;
+	font-size: 14px;
+}
+.dialog-before-register-device {
+	width: 380px;
+}
+.dialog-before-register-device .dialog-title{
+	background-image: url(../img/ti-dialog-register-devices.png);
+}
+.dialog-before-register-device .dialog-control-panel {
+	padding-bottom: 37px;
+}
+.dialog-before-register-device .result {
+	height: 62px;
+	padding: 97px 0 16px;
+	font-size: 12px;
+	line-height: 25px;
+	color: #999;
+}
+.dialog-before-register-device .result strong {
+	color: #333;
+	font-size: 14px;
+}
+
+.dialog-confirm-use-coupon {
+	width: 380px;
+}
+.dialog-confirm-use-coupon .dialog-title{
+	background-image: url(../img/ti-dialog-confirm-coupon.png);
+}
+.dialog-confirm-use-coupon .dialog-control-panel {
+	padding-bottom: 37px;
+}
+.dialog-confirm-use-coupon .description {
+	margin: 96px auto 50px;
+}
+.dialog-confirm-use-coupon .description strong {
+	font-size: 14px;
+	color: #333;
+}
+
+.dialog-disable-in-used-duration {
+	width: 380px;
+}
+.dialog-disable-in-used-duration .dialog-title{
+	background-image: url(../img/ti-dialog-disable-in-used-duration.png);
+}
+.dialog-disable-in-used-duration .dialog-control-panel {
+	padding-bottom: 37px;
+}
+.dialog-disable-in-used-duration .result {
+	height: 62px;
+	padding: 97px 0 16px;
+	font-size: 12px;
+	line-height: 25px;
+	color: #999;
+}
+.dialog-disable-in-used-duration .result strong {
+	color: #333;
+	font-size: 14px;
+}
+.dialog-coupon-change-completed {
+	width:440px;
+}
+.dialog-coupon-change-completed .dialog-title {
+	background-image: url(../img/ti-dialog-coupon-change-completed.png);
+}
+.dialog-coupon-change-completed .dialog-control-panel{
+	padding: 30px 0 37px;
+}
+.dialog-coupon-change-completed .result {
+	padding-top: 73px;
+	padding-bottom: 13px;
+	font-size: 16px;
+	font-weight: bold;
+}
+.dialog-coupon-change-completed .sub-result {
+	color: #666;
+}
+.dialog-coupon-change-completed .sub-result span {
+	color: #ddd;
+}
+.dialog-coupon-change-completed .expiry {
+	margin-top: -1px;
+	color: #ff9020;
+}
+.dialog-coupon-change-completed .description {
+	color: #a7a7a7;
+	font-size: 11px;
+	margin: 62px 20px 8px 40px;
+	text-align: left;
+	overflow:hidden;
+}
+.dialog-coupon-change-completed .description li p {
+	height: 20px;
+	color: #999;
+	letter-spacing: -1px;
+}
+.dialog-coupon-change-completed .description li p span {
+	width: 6px;
+	height: 6px;
+	display: inline-block;
+	background: url(../img/bg-text-dot.png) no-repeat center center;
+	margin: 0 2px 1px 0;
+	text-indent: 200%;
+	overflow: hidden;
+	white-space: nowrap;
+}
+.dialog-coupon-change-completed .description li a {
+	font-size: 11px;
+	font-weight: bold;
+	text-decoration: underline;
+	color: #666666;
+}
+.dialog-coupon-change-completed .description li:first-child {
+	color: #666;
+}
 
 .term-holder .term-signature {
 	padding:20px 0;
@@ -2451,7 +2714,7 @@ textarea {
 }
 .table-item-header .used-amounts {
 	float: right;
-	padding-top: 23px;
+	padding-top: 25px;
 	line-height: normal;
 }
 .table-item-header .used-amounts a {

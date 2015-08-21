@@ -252,7 +252,7 @@ function ticketPopup(msgId,payNo,prodNm,userCnt,prodNum,svcEndDtm) {
 		switch (msgId) {
 			case 'ticketUsed': templateId = 'dialog-ticket-purchase-in-used';	//이용권 결제 시도 시 확인 팝업 : 이미 사용중 
 				break;	
-			case 'ticketChange': templateId = 'dialog-ticket-purchase-change';	//이용권 결제 시도 시 확인 팝업 : 변경 안내 팝업
+			case 'ticketChange': templateId = 'dialog-template-confirm-change-coupon';	//이용권 결제 시도 시 확인 팝업 : 변경 안내 팝업
 				break;		
 			default:
 		}	
@@ -263,11 +263,16 @@ function ticketPopup(msgId,payNo,prodNm,userCnt,prodNum,svcEndDtm) {
 
 			var $js_prodNm = $('#js_prodNm');
 			var $js_chgProdNm = $('#js_chgProdNm');
+			var $js_prodNmUse = $('#js_prodNmUse');
 
-			var chgProdNm = (userCnt > 1)?"1인 이용권":"가족 이용권 (5인)";			
+			var chgProdNm = (userCnt > 1)?"1인 이용권":"가족 이용권 (5인)";	
+			var prodNmDp = "["+decodeURIComponent(prodNm)+"]을 사용중입니다.";
+			var chgProdNmDp = "["+chgProdNm+"]으로 변경하시겠습니까?";
 
-			$js_prodNm.html(decodeURIComponent(prodNm));	
-			$js_chgProdNm.html(decodeURIComponent(chgProdNm));	
+			$js_prodNm.html(prodNmDp);	
+			$js_chgProdNm.html(chgProdNmDp);
+			
+			$js_prodNmUse.html(decodeURIComponent(prodNm));				
 
 			if(templateId == 'dialog-ticket-purchase-in-used') {
 				$(context).find('.bt-confirm').on('click', function() {
@@ -703,7 +708,7 @@ function confirmPopup(msgId,cpnPubNum,response) {
 //내 정보 관리에서 쿠폰사용 버튼 클릭해서 들어오는 경우)
 function couponUsePopup(cpnPubNo) {
 
-	var templateId = 'dialog-register-coupon-use';	//해당 쿠폰을 사용하시겠습니까? 확인 팝업
+	var templateId = 'dialog-template-confirm-use-coupon';	//해당 쿠폰을 사용하시겠습니까? 확인 팝업
 
 	U.dialog({
 		templateId: templateId,
@@ -711,7 +716,11 @@ function couponUsePopup(cpnPubNo) {
 			$(context).find('.bt-confirm').on('click', function() {
 				U.dialog();
 				couponRegproc(cpnPubNo);
-			});		
+			});
+			$(context).find('.bt-cancel').on('click', function() {
+				//팝업 취소 
+				U.closeDialog();
+			});						
 		}
 	})	
 }
@@ -1174,7 +1183,7 @@ function couponRegFail(msgId) {
 				break;
 			case '1304': templateId = 'dialog-coupon-expired';		//만료된 쿠폰 번호
 				break;
-			case 'USE': templateId = 'dialog-coupon-use';		//이용권이나 다른 쿠폰 사용중인 경우 불가 안내 
+			case 'USE': templateId = 'dialog-template-disable-in-used-duration';		//이용권이나 다른 쿠폰 사용중인 경우 불가 안내 
 				break;	
 			default:
 		}	

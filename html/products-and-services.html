@@ -14,8 +14,8 @@
 <script type="text/javascript" src="../js/transaction.js"></script>
 <script>
 	$('document').ready(function(){
-		//구매하기 버튼 감추기
-		$('.bt-buy').hide();
+		//퀵 설치 가이드 버튼 감추기
+		$('.bt-quick-guide').hide();
 	});
 </script>
 <script id="dialog-template-video" type="text/x-dialog-template">
@@ -291,7 +291,7 @@
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
-							<input type="password" id="pass" name="pass" class="edit" placeholder="비밀번호 (대소문자 구분 영문, 숫자, 툭수문자 포함 9자 이상)">
+							<input type="password" id="pass" name="pass" class="edit" placeholder="비밀번호 (영문, 숫자, 특수문자 포함 9자 이상)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
@@ -549,7 +549,7 @@
 					<legend class="displayed">새 비밀번호</legend>
 					<div class="dialog-content-panel">
 						<div class="field">
-							<input type="password" class="edit" id="js_new_password" placeholder="새 비밀번호 (대소문자 구분 영문, 숫자, 툭수문자 포함 9자 이상)">
+							<input type="password" class="edit" id="js_new_password" placeholder="새 비밀번호 (영문, 숫자, 특수문자 포함 9자 이상)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
@@ -613,9 +613,9 @@
 			<ul class="menus h-item h-bar">
 				<li class="menu h-item"><a class="bt-products-and-services selected" href="products-and-services.html">제품 및 서비스</a></li>
 				<li class="menu h-item"><a class="bt-costumer-center" href="costumer-support.html">고객 지원</a></li>
-				<!-- 수정 시작 : 20150722_01 -->
-				<!--<li class="menu h-item"><a class="bt-event" href="#">이벤트</a></li>-->
-				<!--// 수정 종료 : 20150722_01 -->
+				<!-- 수정 시작 : 20150819_01 -->
+				<li class="menu h-item"><a class="bt-event" href="http://event.sktsmarthome.com/">이벤트</a></li>
+				<!--// 수정 종료 : 20150819_01 -->
 			</ul>
 		</div>
 		<div class="account-field">
@@ -654,10 +654,24 @@
 					당신이 집에 도달하기 전, 집안을 따뜻하게<br>
 					 만들어 드립니다.
 				</p>
-				<a class="bt-buy" href="" target="_blank">구매하기</a>
+				<!-- 수정 시작 : 20150819_01 -->
+				<a class="bt-quick-guide" href="" target="_blank">설치 퀵가이드</a>
+				<!--<a class="bt-buy" href="" target="_blank">구매하기</a>-->
+				<!-- 수정 종료 : 20150819_01 -->
 				<div class="service-company-logo-holder">
 					<a href="http://www.kdnavien.co.kr" target="_blank"><img class="service-company-logo" src="../img/product/ex-logo-01.png" alt="경동 나비엔"></a>
 				</div>
+				<!-- 수정 시작 : 20150819_01 -->
+				<ul class="control-payment">
+					<li class="payment payment-11st">
+						<a href="http://www.11st.co.kr/browsing/MallPlanDetail.tmall?method=getMallPlanDetail&planDisplayNumber=907351" target="_blank" class="bt-payment">11번가</a>
+					</li>
+					<li class="payment payment-t-world-direct">
+						<a href="http://www.tworlddirect.com/handler/Plan-List?PLAN_ID=P00000074" target="_blank" class="bt-payment">T World Direct</a>
+					</li>
+				</ul>
+				<div class="powered-by-smarthome"></div>
+				<!-- 수정 종료 : 20150819_01 -->
 			</li>
 			<li class="service h-item">
 				<div class="service-thumb-holder">
@@ -671,10 +685,24 @@
 					파워 제습으로 더 빠르게! 습기 걱정 없는<br>
 					쾌적한 환경을 만들어 드립니다.
 				</p>
-				<a class="bt-buy" href="" target="_blank">구매하기</a>
+				<!-- 수정 시작 : 20150819_01 -->
+				<a class="bt-quick-guide" href="" target="_blank">설치 퀵가이드</a>
+				<!--<a class="bt-buy" href="" target="_blank">구매하기</a>-->
+				<!-- 수정 종료 : 20150819_01 -->
 				<div class="service-company-logo-holder">
 					<a href="http://www.winixcorp.com" target="_blank"><img class="service-company-logo" src="../img/product/ex-logo-02.png" alt="위니아"></a>
 				</div>
+				<!-- 수정 시작 : 20150819_01 -->
+				<ul class="control-payment">
+					<li class="payment payment-11st">
+						<a href="http://www.11st.co.kr/browsing/MallPlanDetail.tmall?method=getMallPlanDetail&planDisplayNumber=907351" target="_blank" class="bt-payment">11번가</a>
+					</li>
+					<li class="payment payment-t-world-direct">
+						<a href="http://www.tworlddirect.com/handler/Plan-List?PLAN_ID=P00000074" target="_blank" class="bt-payment">T World Direct</a>
+					</li>
+				</ul>
+				<div class="powered-by-smarthome"></div>
+				<!-- 수정 종료 : 20150819_01 -->
 			</li>
 			<li class="service h-item">
 				<div class="service-thumb-holder">
@@ -689,10 +717,24 @@
 					집안 구석 구석 시원한 우리집을<br>
 					만들어 드립니다.
 				</p>
-				<a class="bt-buy" href="" target="_blank">구매하기</a>
+				<!-- 수정 시작 : 20150819_01 -->
+				<a class="bt-quick-guide" href="" target="_blank">설치 퀵가이드</a>
+				<!--<a class="bt-buy" href="" target="_blank">구매하기</a>-->
+				<!-- 수정 종료 : 20150819_01 -->
 				<div class="service-company-logo-holder">
 					<a href="http://www.carrier.co.kr" target="_blank"><img class="service-company-logo" src="../img/product/ex-logo-03.png" alt="아이레보"></a>
 				</div>
+				<!-- 수정 시작 : 20150819_01 -->
+				<ul class="control-payment">
+					<li class="payment payment-11st">
+						<a href="http://www.11st.co.kr/browsing/MallPlanDetail.tmall?method=getMallPlanDetail&planDisplayNumber=907351" target="_blank" class="bt-payment">11번가</a>
+					</li>
+					<li class="payment payment-t-world-direct">
+						<a href="http://www.tworlddirect.com/handler/Plan-List?PLAN_ID=P00000074" target="_blank" class="bt-payment">T World Direct</a>
+					</li>
+				</ul>
+				<div class="powered-by-smarthome"></div>
+				<!-- 수정 종료 : 20150819_01 -->
 			</li>
 			<li class="service h-item">
 				<div class="service-thumb-holder">
@@ -707,10 +749,24 @@
 					가스 차단기가 스마트폰으로 안전한<br>
 					가정을 만들어 드립니다.
 				</p>
-				<a class="bt-buy" href="" target="_blank">구매하기</a>
+				<!-- 수정 시작 : 20150819_01 -->
+				<a class="bt-quick-guide" href="" target="_blank">설치 퀵가이드</a>
+				<!--<a class="bt-buy" href="" target="_blank">구매하기</a>-->
+				<!-- 수정 종료 : 20150819_01 -->
 				<div class="service-company-logo-holder">
 					<a href="http://www.timevalve.co.kr/main.html" target="_blank"><img class="service-company-logo" src="../img/product/ex-logo-04.png" alt="타임밸브 가스차단기"></a>
 				</div>
+				<!-- 수정 시작 : 20150819_01 -->
+				<ul class="control-payment">
+					<li class="payment payment-11st">
+						<a href="http://www.11st.co.kr/browsing/MallPlanDetail.tmall?method=getMallPlanDetail&planDisplayNumber=907351" target="_blank" class="bt-payment">11번가</a>
+					</li>
+					<li class="payment payment-t-world-direct">
+						<a href="http://www.tworlddirect.com/handler/Plan-List?PLAN_ID=P00000074" target="_blank" class="bt-payment">T World Direct</a>
+					</li>
+				</ul>
+				<div class="powered-by-smarthome"></div>
+				<!-- 수정 종료 : 20150819_01 -->
 			</li>
 			<li class="service h-item">
 				<div class="service-thumb-holder">
@@ -724,10 +780,24 @@
 					스마트폰으로 우리집 철통 보안! 도어락의<br>
 					상태를 실시간으로 알려 드립니다.                   
 				</p>
-				<a class="bt-buy" href="" target="_blank">구매하기</a>
+				<!-- 수정 시작 : 20150819_01 -->
+				<a class="bt-quick-guide" href="" target="_blank">설치 퀵가이드</a>
+				<!--<a class="bt-buy" href="" target="_blank">구매하기</a>-->
+				<!-- 수정 종료 : 20150819_01 -->
 				<div class="service-company-logo-holder">
 					<a href="http://www.irevo.com/ko/site/irevo/" target="_blank"><img class="service-company-logo" src="../img/product/ex-logo-05.png" alt="게이트맨 도어락"></a>
 				</div>
+				<!-- 수정 시작 : 20150819_01 -->
+				<ul class="control-payment">
+					<li class="payment payment-11st">
+						<a href="http://www.11st.co.kr/browsing/MallPlanDetail.tmall?method=getMallPlanDetail&planDisplayNumber=907351" target="_blank" class="bt-payment">11번가</a>
+					</li>
+					<li class="payment payment-t-world-direct">
+						<a href="http://www.tworlddirect.com/handler/Plan-List?PLAN_ID=P00000074" target="_blank" class="bt-payment">T World Direct</a>
+					</li>
+				</ul>
+				<div class="powered-by-smarthome"></div>
+				<!-- 수정 종료 : 20150819_01 -->
 			</li>
 			<li class="service h-item">
 				<div class="service-thumb-holder">
@@ -741,10 +811,24 @@
 					집안의 기기들이 말할 수 있는 세상,<br>
 					스마트한 홈 라이프를 만들어 드립니다.
 				</p>
-				<a class="bt-buy" href="" target="_blank">구매하기</a>
+				<!-- 수정 시작 : 20150819_01 -->
+				<a class="bt-quick-guide" href="" target="_blank">설치 퀵가이드</a>
+				<!--<a class="bt-buy" href="" target="_blank">구매하기</a>-->
+				<!-- 수정 종료 : 20150819_01 -->
 				<div class="service-company-logo-holder">
 					<a href="http://www.mctalk.co.kr" target="_blank"><img class="service-company-logo" src="../img/product/ex-logo-06.png" alt="coming soon"></a>
 				</div>
+				<!-- 수정 시작 : 20150819_01 -->
+				<ul class="control-payment">
+					<li class="payment payment-11st">
+						<a href="http://www.11st.co.kr/browsing/MallPlanDetail.tmall?method=getMallPlanDetail&planDisplayNumber=907351" target="_blank" class="bt-payment">11번가</a>
+					</li>
+					<li class="payment payment-t-world-direct">
+						<a href="http://www.tworlddirect.com/handler/Plan-List?PLAN_ID=P00000074" target="_blank" class="bt-payment">T World Direct</a>
+					</li>
+				</ul>
+				<div class="powered-by-smarthome"></div>
+				<!-- 수정 종료 : 20150819_01 -->
 			</li>
 			<!-- 수정시작 : 20150722_01 -->
 			<!--<li class="service h-item">

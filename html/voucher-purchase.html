@@ -17,9 +17,6 @@
 <script>
 	$('document').ready(function(){
 
- var url = "https://webstg.sktsmarthome.com/html/sync_rnm_result.html?pgresultnum=abcdefg";
- 
-
 		if (isLoginCheck()) {	
 			var params = {}, url='v1/member/info', type='GET', dataType = 'json';
 			startMyInfoTransaction(url, type, dataType, function(response){
@@ -31,8 +28,6 @@
 			startUseCouponTransaction(url, type, dataType, function(response){
 				parseUseCouponTransaction(response);		
 			});		
-
-			console.log("실명인증 처리 여부 테스트 : "+getCookieInfo("rnmCertYn"));
 			
 		} else {
 			//$('body').removeClass('.reg-coupon-num');
@@ -326,7 +321,7 @@
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
-							<input type="password" id="pass" name="pass" class="edit" placeholder="비밀번호 (대소문자 구분 영문, 숫자, 특수문자 포함 9자 이상)">
+							<input type="password" id="pass" name="pass" class="edit" placeholder="비밀번호 (영문, 숫자, 특수문자 포함 9자 이상)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
@@ -584,7 +579,7 @@
 					<legend class="displayed">새 비밀번호</legend>
 					<div class="dialog-content-panel">
 						<div class="field">
-							<input type="password" class="edit" id="js_new_password" placeholder="새 비밀번호 (대소문자 구분 영문, 숫자, 툭수문자 포함 9자 이상)">
+							<input type="password" class="edit" id="js_new_password" placeholder="새 비밀번호 (영문, 숫자, 특수문자 포함 9자 이상)">
 							<p class="err-msg"></p>
 						</div>
 						<div class="field">
@@ -776,8 +771,8 @@
 				<input id="agree-service-coupon" type="checkbox" value="1"><label for="agree-service-coupon">쿠폰 이용약관에 동의합니다.</label>
 			</div>
 			<div class="dialog-control-panel">
-				<button type="button" class="bt-prev">이전</button>
-				<button type="button" class="bt-next">다음</button>
+				<button type="button" class="bt-prev">취소</button>
+				<button type="button" class="bt-next">확인</button>
 			</div>
 		</div>
 	</div>
@@ -871,7 +866,7 @@
 		<div class="dialog-body">
 			<div class="dialog-content-panel">
 				<p class="result">
-					<strong>이미 <span id="js_prodNm">이용권 명</span>을 사용 중입니다.</strong>
+					<strong>이미 <span id="js_prodNmUse"></span>을 사용 중입니다.</strong>
 				</p>
 			</div>
 			<div class="dialog-control-panel">
@@ -1095,19 +1090,16 @@
 		</div>
 	</div>
 </script>
-<script id="dialog-coupon-use" type="text/x-dialog-template">
-	<div class="dialog dialog-coupon-duplicated">
+<script id="dialog-template-disable-in-used-duration" type="text/x-dialog-template">
+	<div class="dialog dialog-disable-in-used-duration">
 		<button class="bt-dialog-close" type="button">Close</button>
 		<div class="dialog-title-bar">
-			<p class="dialog-title">쿠폰 확인</p>
+			<p class="dialog-title">쿠폰 사용 불가</p>
 		</div>
 		<div class="dialog-body">
 			<div class="dialog-content-panel">
 				<p class="result">
-					<strong>이용권 사용 기간 중에는 <br>
-					<span>쿠폰을 사용할 수</span> 없습니다.</strong>
-				</p>
-				<p class="sub-result">
+					<strong>이용권 사용 기간 중에는<br>쿠폰을 사용할 수 없습니다.</strong><br>
 				</p>
 			</div>
 			<div class="dialog-control-panel">
@@ -1208,29 +1200,28 @@
 		</div>
 	</div>
 </script>
-<script id="dialog-register-coupon-use" type="text/x-dialog-template">
-	<div class="dialog dialog-coupon-duplicated">
+<script id="dialog-template-confirm-use-coupon" type="text/x-dialog-template">
+	<div class="dialog dialog-confirm-use-coupon">
 		<button class="bt-dialog-close" type="button">Close</button>
 		<div class="dialog-title-bar">
 			<p class="dialog-title">쿠폰 사용</p>
 		</div>
 		<div class="dialog-body">
 			<div class="dialog-content-panel">
-				<p class="result">
+				<p class="description">
 					<strong>해당 쿠폰을 사용하시겠습니까?</strong>
-				</p>
-				<p class="sub-result">
 				</p>
 			</div>
 			<div class="dialog-control-panel">
+				<button type="button" class="bt-cancel">취소</button>
 				<button type="button" class="bt-confirm">확인</button>
 			</div>
 		</div>
 	</div>
 </script>
 
-<script id="dialog-ticket-purchase-change" type="text/x-dialog-template">
-	<div class="dialog dialog-ticket-purchase-info">
+<script id="dialog-template-confirm-change-coupon" type="text/x-dialog-template">
+	<div class="dialog dialog-confirm-change-coupon">
 		<button class="bt-dialog-close" type="button">Close</button>
 		<div class="dialog-title-bar">
 			<p class="dialog-title">이용권 구매 안내</p>
@@ -1238,9 +1229,9 @@
 		<div class="dialog-body">
 			<div class="dialog-content-panel">
 				<p class="result">
-					<strong><span id="js_prodNm">이용권 명</span>을 사용 중입니다.</strong>
+					<strong id="js_prodNm">[사용 중인 이용권 명]을 사용 중입니다.</strong><br>
+					<span id ="js_chgProdNm">[선택한 이용권 명]으로 변경하시겠습니까?</span>
 				</p>
-				<p class="sub-result"><span id="js_chgProdNm">이용권 명</span>으로 변경하시겠습니까?</p>
 			</div>
 			<div class="dialog-control-panel">
 				<button type="button" class="bt-cancel">취소</button>
@@ -1288,8 +1279,8 @@
 				<input id="agree-service-coupon" type="checkbox" value="1"><label for="agree-service-coupon">쿠폰 이용약관에 동의합니다.</label>
 			</div>
 			<div class="dialog-control-panel">
-				<button type="button" class="bt-prev">이전</button>
-				<button type="button" class="bt-next">다음</button>
+				<button type="button" class="bt-prev">취소</button>
+				<button type="button" class="bt-next">확인</button>
 			</div>
 		</div>
 	</div>
