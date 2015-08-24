@@ -186,8 +186,10 @@ function setTicketList(dataList, kind) {
 				output += '		</div>';
 				output += '		<div class="voucher-card-buttons">';
 			if(rnmCertYn != "Y") {	//실명인증 전이면
-				output += '			<button class="bt-purchase-credit" type="button" onclick=payPopupFail("realName")>신용카드 결제</button>';
-				output += '			<button class="bt-purchase-cell" type="button" onclick=payPopupFail("realName")>휴대폰 결제</button>';	
+				// output += '			<button class="bt-purchase-credit" type="button" onclick=payPopupFail("realName")>신용카드 결제</button>';
+				// output += '			<button class="bt-purchase-cell" type="button" onclick=payPopupFail("realName")>휴대폰 결제</button>';	기
+				output += '			<button class="bt-purchase-credit" type="button" onclick=retryRealNm("'+cardHref[i]+'","CD")>신용카드 결제</button>';
+				output += '			<button class="bt-purchase-cell" type="button" onclick=retryRealNm("'+hphoneHref[i]+'","HP")>휴대폰 결제</button>';					
 			} else {
 
 				if(dataList[i].dvcRegYn !='Y') {	//등록된 기기가 없으면
@@ -294,6 +296,11 @@ function payPopupFail(msgId) {
 
 	var templateId;
 
+	//실명인증 여부를 다시 조회하기 
+	if(msgId == 'realName') {
+
+	}
+
 		switch (msgId) {
 			case 'realName': templateId = 'dialog-name-verify-info';	//실명 인증 안내
 				break;
@@ -317,6 +324,36 @@ function payPopupFail(msgId) {
 			});				
 		}
 	})
+}
+
+//실명인증 여부를 다시 조회
+function retryRealNm(pgLink,pgType) {
+	var params = {}, url='v1/member/info', type='GET', dataType = 'json';
+	startMyInfoTransaction(url, type, dataType, function(response){
+		parseRealNmTransaction(response,pgLink,pgType);		
+	});	
+}
+
+function parseRealNmTransaction(response,pgLink,pgType) {
+	if (response.resultCd && response.resultMsg) {
+		if (response.resultCd == '1' && response.resultMsg == '성공') {
+			var rnmCertYn = response.rnmCertYn;
+			setRealNmCertYn(rnmCertYn);
+
+			if(rnmCertYn != 'Y') {
+				payPopupFail("realName");
+			} else {
+				//결제 팝업 띄우기
+				if(pgType == 'CD') {
+					window.open(pgLink,"카드결제","width=450,height=620,toolbar=no,menubar=no,location=no,status=no,scrollbars=no,resizable=no");
+				} else {
+					window.open(pgLink,"휴대폰결제","width=480,height=750,toolbar=no,menubar=no,location=no,status=no,scrollbars=no,resizable=no");				
+				}
+			}
+		} else {
+		}
+	} else {
+	}
 }
 
 //기기 등록 안내, 자동결제 완료 확인 팝업 : 비슷한 포맷 

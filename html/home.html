@@ -15,25 +15,18 @@
 <script type="text/javascript" src="../js/showroom.js"></script>
 <script type="text/javascript" src="../js/transaction.js"></script>
 <script type="text/javascript" src="../js/placeholders.min.js"></script>
-<script>
-	function ieVersionChk() {
-		U.dialog({
-			templateId: 'dialog-template-ie-support',
-			onOpen: function(context) {
-				$(context).find('.bt-confirm').on('click', function() {
-					U.dialog();
-				});
-			}
-		})
-	}
-
-	$('document').ready(function(){
-		var a = navigator.userAgent;
-			if (/MSIE 9.|MSIE 8.|MSIE 7./i.test(a)) {
-				ieVersionChk();
-			}	
-	});	
+<!-- 수정 시작 : 20150821_01 -->
+<script id="dialog-template-cf" type="text/x-dialog-template">
+	<div class="dialog dialog-video">
+		<button class="bt-dialog-close" type="button">Close</button>
+		<div class="dialog-body">
+			<div class="dialog-content-panel">
+				<iframe class="video-viewer" src="https://www.youtube.com/embed/M0za4b65wLY?autoplay=1" allowfullscreen></iframe>
+			</div>
+		</div>
+	</div>
 </script>
+<!-- 수정 종료 : 20150821_01 -->
 <script id="dialog-template-video" type="text/x-dialog-template">
 	<div class="dialog dialog-video">
 		<button class="bt-dialog-close" type="button">Close</button>
@@ -669,6 +662,15 @@
 			return false;
 		});
 
+		// 수정 시작 : 20150821_01
+		$('.show-cf').on('click', function() {
+			U.dialog({
+				templateId: 'dialog-template-cf'
+			});
+
+			return false;
+		});
+		// 수정 종료 : 20150821_01
 	});
 </script>
 
