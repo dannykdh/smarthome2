@@ -15,11 +15,26 @@
 <script type="text/javascript" src="../js/paymentPop.js"></script>
 <script>
 	$('document').ready(function(){
-  
-  	//창을 그냥 닫을 경우가 있음으로 미리 새로고침 추가.
-	window.opener.location.reload();
 
-	window.close();
+		var urlInfo = location.href;
+		if(urlInfo.indexOf('61.250.21.180') > 0) {
+		  goHref = urlInfo.replace('61.250.21.180','webstg.sktsmarthome.com');
+		  location.replace(goHref);	
+		}
+		
+		if(urlInfo.indexOf('61.250.21.156') > 0) {
+		  goHref = urlInfo.replace('61.250.21.156','webdev.sktsmarthome.com');
+		  location.replace(goHref);	
+		}
+		
+		/*var payInfo =location.search.split("=");
+		var payNo = payInfo[2];
+		
+		  pgFinishPopup(payNo);*/
+	  
+		window.opener.location.reload();
+
+		window.close();
 	 	
 	});
 </script>

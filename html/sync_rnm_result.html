@@ -16,22 +16,22 @@
 <script>
 	$('document').ready(function(){
 	
-	var urlInfo = location.href;
-	if(urlInfo.indexOf('61.250.21.180') > 0) {
-	  goHref = urlInfo.replace('61.250.21.180','webstg.sktsmarthome.com');
-	  location.replace(goHref);	
-	}
-	
-	if(urlInfo.indexOf('61.250.21.156') > 0) {
-	  goHref = urlInfo.replace('61.250.21.156','webdev.sktsmarthome.com');
-	  location.replace(goHref);	
-	}
-	
-	setRealNmCertYn('Y');
+		var urlInfo = location.href;
+		if(urlInfo.indexOf('61.250.21.180') > 0) {
+		  goHref = urlInfo.replace('61.250.21.180','webstg.sktsmarthome.com');
+		  location.replace(goHref);	
+		}
+		
+		if(urlInfo.indexOf('61.250.21.156') > 0) {
+		  goHref = urlInfo.replace('61.250.21.156','webdev.sktsmarthome.com');
+		  location.replace(goHref);	
+		}
+		
+		setRealNmCertYn('Y');
 
-	window.opener.location.reload();
+		window.opener.location.reload();
 
-	window.close();
+		window.close();
 	 	
 	});
 </script>

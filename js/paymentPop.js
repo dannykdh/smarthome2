@@ -113,16 +113,75 @@ function setTicketList(dataList, kind) {
 		// salePrc: 2200
 		// userCnt: 5
 
+	var rnmCertYn = getCookieInfo("rnmCertYn");
+
+	for (var i=0; i<dataList.length; i++) {
+		if (kind == 'UP') { // 구매 가능 이용권
+
+ 		var hphoneHref = [];
+			hphoneHref[i] = urlpay+'pay/run?authToken='+encodeURIComponent(UserCertTknVal)+'&osType=W'+'&prodNo='+dataList[i].prodNo+'&prodNm='+encodeURIComponent(dataList[i].prodNm)+'&salePrc='+dataList[i].salePrc;
+		var cardHref = [];
+			cardHref[i] = urlpay+'pay/iniRun?authToken='+encodeURIComponent(UserCertTknVal)+'&osType=W'+'&prodNo='+dataList[i].prodNo+'&prodNm='+encodeURIComponent(dataList[i].prodNm)+'&salePrc='+dataList[i].salePrc;
+
+			if(i==0) {
+				output += '<div class="voucher-card" style="margin-right: 21px;">';
+			} else {
+				output += '<div class="voucher-card">';
+			}
+				output += '		<div class="voucher-card-content">';
+			if(dataList[i].prodKindCd == '002') {
+				output += '			<div class="voucher-type familly">';
+				output += '				<p class="voucher-payment">자동결제 ('+numComma(dataList[i].salePrc)+'원 / 월, VAT포함)</p>';
+				output += '				<p class="voucher-info">정회원 1인 + 가족회원 '+ (dataList[i].userCnt - 1) +'인</p>';
+			} else {
+				output += '			<div class="voucher-type one-man">';
+				output += '				<p class="voucher-payment">자동결제 ('+numComma(dataList[i].salePrc)+'원 / 월, VAT포함)</p>';
+				output += '				<p class="voucher-info">정회원 1인</p>';
+			}
+				output += '			</div>';
+				output += '		</div>';
+				output += '		<div class="voucher-card-buttons">';
+			if(rnmCertYn != "Y") {	//실명인증 전이면
+				output += '			<button class="bt-purchase-credit" type="button" onclick=retryRealNm("'+cardHref[i]+'","CD","'+dataList[i].dvcRegYn+'")>신용카드 결제</button>';
+				output += '			<button class="bt-purchase-cell" type="button" onclick=retryRealNm("'+hphoneHref[i]+'","HP","'+dataList[i].dvcRegYn+'")>휴대폰 결제</button>';					
+			} else {
+
+				if(dataList[i].dvcRegYn !='Y') {	//등록된 기기가 없으면
+					output += '		<button class="bt-purchase-credit" type="button" onclick=guidePopup("haveDevice")>신용카드 결제</button>';
+					output += '		<button class="bt-purchase-cell" type="button" onclick=guidePopup("haveDevice")>휴대폰 결제</button>';	
+				} else {	
+					//결제 후 화면을 새로 고쳐야 해서 다시 조회
+					output += '		<button class="bt-purchase-credit" type="button" onclick=retryPayment("'+cardHref[i]+'","CD")>신용카드 결제</button>';
+					output += '		<button class="bt-purchase-cell" type="button" onclick=retryPayment("'+hphoneHref[i]+'","HP")>휴대폰 결제</button>';					
+				}
+			}
+				output += '		</div>';
+				output += '</div>';			
+		} 
+    };
+
+	//$ticketContainer.html(output);
+	if ($ticketContainer.children().length > 0) {
+    	$ticketContainer.children().last().after($(output));
+    } else {
+    	$ticketContainer.append($(output));
+    }
+}
+
+//결제 후 재 시도 시 다시 체크
+function retryPayment(pgLink,pgType) {
+
 	//사용중인 이용권 정보
 	var params = {}, url='v1/payment/pay', type='GET', dataType = 'json';
 	var userCnt;
 	startUseTicketTransaction(url, type, dataType, function(payNo,userCnt,prodNm,prodNum,svcEndDtm){
-			if(userCnt) {	//사용중인 이용권이 존재하면 버튼 링크 교체(dialog-ticket-purchase-in-used) 
-				$('.voucher-card-buttons').remove()
-				var outputChg='';
-				var outputF='';
-				var outputO='';
-				var $ticketChgContainer = $('.voucher-cards');
+		if(userCnt) {	//사용중인 이용권이 존재하면 버튼 링크 교체(dialog-ticket-purchase-in-used) 
+		
+			$('.voucher-card-buttons').remove()
+			var outputChg='';
+			var outputF='';
+			var outputO='';
+			var $ticketChgContainer = $('.voucher-cards');
 
 			outputF += '<div class="voucher-card-buttons">';
 			outputF += '	<button class="bt-purchase-credit" type="button" onclick=ticketPopup("ticketUsed","","'+encodeURIComponent(prodNm)+'","","","")>신용카드 결제</button>';
@@ -155,63 +214,16 @@ function setTicketList(dataList, kind) {
 			    } else {
 			     	$ticketChgContainer.append($(outputChg));
 			    }
-			}
-	});	
 
-	var rnmCertYn = getCookieInfo("rnmCertYn");
-
-	for (var i=0; i<dataList.length; i++) {
-		if (kind == 'UP') { // 구매 가능 이용권
-
- 		var hphoneHref = [];
-			hphoneHref[i] = urlpay+'pay/run?authToken='+encodeURIComponent(UserCertTknVal)+'&osType=W'+'&prodNo='+dataList[i].prodNo+'&prodNm='+encodeURIComponent(dataList[i].prodNm)+'&salePrc='+dataList[i].salePrc;
-		var cardHref = [];
-			cardHref[i] = urlpay+'pay/iniRun?authToken='+encodeURIComponent(UserCertTknVal)+'&osType=W'+'&prodNo='+dataList[i].prodNo+'&prodNm='+encodeURIComponent(dataList[i].prodNm)+'&salePrc='+dataList[i].salePrc;
-
-			if(i==0) {
-				output += '<div class="voucher-card" style="margin-right: 21px;">';
+		} else {
+			//결제 팝업 띄우기
+			if(pgType == 'CD') {
+				window.open(pgLink,"카드결제","width=450,height=620,toolbar=no,menubar=no,location=no,status=no,scrollbars=no,resizable=no");
 			} else {
-				output += '<div class="voucher-card">';
+				window.open(pgLink,"휴대폰결제","width=480,height=750,toolbar=no,menubar=no,location=no,status=no,scrollbars=no,resizable=no");				
 			}
-				output += '		<div class="voucher-card-content">';
-			if(dataList[i].prodKindCd == '002') {
-				output += '			<div class="voucher-type familly">';
-				output += '				<p class="voucher-payment">자동결제 ('+numComma(dataList[i].salePrc)+'원 / 월, VAT포함)</p>';
-				output += '				<p class="voucher-info">정회원 1인 + 가족회원 '+ (dataList[i].userCnt - 1) +'인</p>';
-			} else {
-				output += '			<div class="voucher-type one-man">';
-				output += '				<p class="voucher-payment">자동결제 ('+numComma(dataList[i].salePrc)+'원 / 월, VAT포함)</p>';
-				output += '				<p class="voucher-info">정회원 1인</p>';
-			}
-				output += '			</div>';
-				output += '		</div>';
-				output += '		<div class="voucher-card-buttons">';
-			if(rnmCertYn != "Y") {	//실명인증 전이면
-				// output += '			<button class="bt-purchase-credit" type="button" onclick=payPopupFail("realName")>신용카드 결제</button>';
-				// output += '			<button class="bt-purchase-cell" type="button" onclick=payPopupFail("realName")>휴대폰 결제</button>';	기
-				output += '			<button class="bt-purchase-credit" type="button" onclick=retryRealNm("'+cardHref[i]+'","CD","'+dataList[i].dvcRegYn+'")>신용카드 결제</button>';
-				output += '			<button class="bt-purchase-cell" type="button" onclick=retryRealNm("'+hphoneHref[i]+'","HP","'+dataList[i].dvcRegYn+'")>휴대폰 결제</button>';					
-			} else {
-
-				if(dataList[i].dvcRegYn !='Y') {	//등록된 기기가 없으면
-					output += '		<button class="bt-purchase-credit" type="button" onclick=guidePopup("haveDevice")>신용카드 결제</button>';
-					output += '		<button class="bt-purchase-cell" type="button" onclick=guidePopup("haveDevice")>휴대폰 결제</button>';	
-				} else {				
-					output += '		<button class="bt-purchase-credit" type="button" onclick=window.open("'+cardHref[i]+'","카드결제","width=450,height=620,toolbar=no,menubar=no,location=no,status=no,scrollbars=no,resizable=no")>신용카드 결제</button>';
-					output += '		<button class="bt-purchase-cell" type="button" onclick=window.open("'+hphoneHref[i]+'","휴대폰결제","width=480,height=750,toolbar=no,menubar=no,location=no,status=no,scrollbars=no,resizable=no")>휴대폰 결제</button>';				
-				}
-			}
-				output += '		</div>';
-				output += '</div>';			
-		} 
-    };
-
-	//$ticketContainer.html(output);
-	if ($ticketContainer.children().length > 0) {
-    	$ticketContainer.children().last().after($(output));
-    } else {
-    	$ticketContainer.append($(output));
-    }
+		} 		
+	});			
 }
 
 function startUseTicketTransaction(url, type, dataType, callback) {
@@ -238,6 +250,8 @@ function startUseTicketTransaction(url, type, dataType, callback) {
 					var svcEndDtm = rsUseProdList[i].svcEndDtm;
 				}			
             	callback(payNo,userCnt,prodNm,prodNum,svcEndDtm);
+			} else {
+            	callback('','','','','');
 			}
 
         },
@@ -350,11 +364,7 @@ function parseRealNmTransaction(response,pgLink,pgType,dvcRegYn) {
 					guidePopup("haveDevice");
 				} else {
 					//결제 팝업 띄우기
-					if(pgType == 'CD') {
-						window.open(pgLink,"카드결제","width=450,height=620,toolbar=no,menubar=no,location=no,status=no,scrollbars=no,resizable=no");
-					} else {
-						window.open(pgLink,"휴대폰결제","width=480,height=750,toolbar=no,menubar=no,location=no,status=no,scrollbars=no,resizable=no");				
-					}
+					retryPayment(pgLink,pgType);
 				}	
 			}
 		} else {
