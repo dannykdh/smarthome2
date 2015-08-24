@@ -66,7 +66,8 @@ function startBargainousTicketTransaction(url, type, dataType, callback) {
             	//타 단말에서 로그인 시 쿠키 정보 삭제하고 재로그인, 쿠키 정보 만료(60분 초과)
             	//alert('로그인이 정보가 만료되어 재로그인이 필요합니다.');
             	deleteCookieInfo();
-            	reLogin();
+            	setLoginBeforeAfterVoucherUpdate();
+            	reLogin();         	
             }           
         }
     });
@@ -188,8 +189,8 @@ function setTicketList(dataList, kind) {
 			if(rnmCertYn != "Y") {	//실명인증 전이면
 				// output += '			<button class="bt-purchase-credit" type="button" onclick=payPopupFail("realName")>신용카드 결제</button>';
 				// output += '			<button class="bt-purchase-cell" type="button" onclick=payPopupFail("realName")>휴대폰 결제</button>';	기
-				output += '			<button class="bt-purchase-credit" type="button" onclick=retryRealNm("'+cardHref[i]+'","CD")>신용카드 결제</button>';
-				output += '			<button class="bt-purchase-cell" type="button" onclick=retryRealNm("'+hphoneHref[i]+'","HP")>휴대폰 결제</button>';					
+				output += '			<button class="bt-purchase-credit" type="button" onclick=retryRealNm("'+cardHref[i]+'","CD","'+dataList[i].dvcRegYn+'")>신용카드 결제</button>';
+				output += '			<button class="bt-purchase-cell" type="button" onclick=retryRealNm("'+hphoneHref[i]+'","HP","'+dataList[i].dvcRegYn+'")>휴대폰 결제</button>';					
 			} else {
 
 				if(dataList[i].dvcRegYn !='Y') {	//등록된 기기가 없으면
@@ -327,14 +328,14 @@ function payPopupFail(msgId) {
 }
 
 //실명인증 여부를 다시 조회
-function retryRealNm(pgLink,pgType) {
+function retryRealNm(pgLink,pgType,dvcRegYn) {
 	var params = {}, url='v1/member/info', type='GET', dataType = 'json';
 	startMyInfoTransaction(url, type, dataType, function(response){
-		parseRealNmTransaction(response,pgLink,pgType);		
+		parseRealNmTransaction(response,pgLink,pgType,dvcRegYn);		
 	});	
 }
 
-function parseRealNmTransaction(response,pgLink,pgType) {
+function parseRealNmTransaction(response,pgLink,pgType,dvcRegYn) {
 	if (response.resultCd && response.resultMsg) {
 		if (response.resultCd == '1' && response.resultMsg == '성공') {
 			var rnmCertYn = response.rnmCertYn;
@@ -343,12 +344,18 @@ function parseRealNmTransaction(response,pgLink,pgType) {
 			if(rnmCertYn != 'Y') {
 				payPopupFail("realName");
 			} else {
-				//결제 팝업 띄우기
-				if(pgType == 'CD') {
-					window.open(pgLink,"카드결제","width=450,height=620,toolbar=no,menubar=no,location=no,status=no,scrollbars=no,resizable=no");
+
+				if(dvcRegYn != 'Y') {
+					//기기 등록 안내 팝업 띄우기
+					guidePopup("haveDevice");
 				} else {
-					window.open(pgLink,"휴대폰결제","width=480,height=750,toolbar=no,menubar=no,location=no,status=no,scrollbars=no,resizable=no");				
-				}
+					//결제 팝업 띄우기
+					if(pgType == 'CD') {
+						window.open(pgLink,"카드결제","width=450,height=620,toolbar=no,menubar=no,location=no,status=no,scrollbars=no,resizable=no");
+					} else {
+						window.open(pgLink,"휴대폰결제","width=480,height=750,toolbar=no,menubar=no,location=no,status=no,scrollbars=no,resizable=no");				
+					}
+				}	
 			}
 		} else {
 		}
@@ -1062,39 +1069,40 @@ userCnt: 5
     });
  }
 
-//이용권 변경 완료 확인 팝업 : ticketChangeProc > 결제한 이용권 결과만 나와서 수정 필요함.
+//이용권 변경 완료 확인 팝업 : ticketChangeProc > 결제한 이용권 결과만 나와서 수정함.
 function finishPopup(msgId, payNo) {
 
-	var templateId = 'dialog-ticket-payment';	
+	var templateId = 'dialog-template-coupon-change-completed';	
 	var userCnt = msgId;
 
 	ticketChangeProc(payNo, function(prodNm, payWayCdDp, salePrc, svcStartDtm, svcEndDtm){
-		var $js_result = $('.result'); 		 
-		var $js_sub_result = $('.sub-result'); 	 
+		//var $js_result = $('.result'); 		 
+		//var $js_sub_result = $('.sub-result'); 	 
 		var $js_expiry = $('.expiry');	 
 
-		//천단위 ,콤마
+		/*천단위 ,콤마
 		var numComma = function(num){
 		   num = String(num);
 		   return num.replace(/(\d)(?=(?:\d{3})+(?!\d))/g,"$1,");
-		};
+		};*/
 
-		var rst, subRst, expiry;
-			//rst = prodNm;
-			//subRst = "자동결제 <span>|</span> "+payWayCdDp+" 결제 ("+numComma(salePrc)+"원/월)";
+			/*rst = prodNm;
+			subRst = "자동결제 <span>|</span> "+payWayCdDp+" 결제 ("+numComma(salePrc)+"원/월)";
 			if(userCnt > 1) {	//조회한 이용권 정보에 맞게 분기 처리
 				rst = "가족 이용권 (5인)";
 				subRst = "자동결제 <span>|</span> "+payWayCdDp+" 결제 (2,200원/월)";
 			} else {
 				rst = "1인 이용권";
 				subRst = "자동결제 <span>|</span> "+payWayCdDp+" 결제 (1,100원/월)";				
-			}
-			expiry = "이용 유효기간 "+svcStartDtm+" ~ "+svcEndDtm;
+			}*/
+		var startDtm;
+	    startDtm = new Date();
+	    startDtm = startDtm.getFullYear() + "." + (startDtm.getMonth() + 1) + "." + startDtm.getDate();
 
+		var	expiry = "이용 유효기간 "+startDtm+" ~ "+svcEndDtm;
 
-
-		$js_result.html(rst);
-		$js_sub_result.html(subRst);
+		//$js_result.html(rst);
+		//$js_sub_result.html(subRst);
 		$js_expiry.html(expiry);
 	}); 
 
