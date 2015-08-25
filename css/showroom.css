@@ -365,13 +365,13 @@ section {
 }
 #intro .title {
 	width: 595px;
-	height: 127px;
+	height: 132px;
 	margin: 0 auto;
 	background-image: url(../img/ti-intro.png);
 	background-position: 14px 0;
 }
 #intro .text {
-	margin: 26px auto 10px;
+	margin: 21px auto 10px;
 	width: 480px;
 	height: 50px;
 	background-image: url(../img/bg-intro-text.png);
