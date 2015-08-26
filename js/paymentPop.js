@@ -1,7 +1,6 @@
 var U = SmartHomeUI.init();
 
-/* 서버에 따른 URL 분기(모바일 링크를 사용해야 오류가 안남 - 실명인증과 결제가 모바일 URL로 협의됨.
- || urlInfo.indexOf('localhost') > 0  이 조건을 transaction과 아래에 추가해야 로컬 소스로 dev/stg 결제 테스트 가능함.	*/
+/* 서버에 따른 URL 분기(모바일 링크를 사용해야 오류가 안남 - 실명인증과 결제가 모바일 URL로 협의됨.*/
 var urlIp;
 //개발 서버
 if( urlInfo.indexOf('dev') > 0 || urlInfo.indexOf('61.250.21.156') > 0 ) {
@@ -18,7 +17,7 @@ if( urlInfo.indexOf('dev') > 0 || urlInfo.indexOf('61.250.21.156') > 0 ) {
 var UserCertTknVal = getCookieInfo('userCertTknVal');
 var UserCertTknValPay = encodeURIComponent(UserCertTknVal);
 
-//아이핀 실명인증 팝업 호출	rnmCertYn 실명인증 결과 업데이트 필요!!!(jsp에서?)
+//아이핀 실명인증 팝업 호출
 function realNmIpin() {
 	window.open(urlpay+'auth/ipin?authToken='+UserCertTknValPay+'&osType=W&kindCd=002','Ipin','width=420,height=420,toolbar=no,menubar=no,location=no,status=no,scrollbars=no,noresize');
 }
@@ -27,23 +26,6 @@ function realNmIpin() {
 function realNmHphone() {
 	window.open(urlpay+'auth/impay?authToken='+UserCertTknValPay+'&osType=W','Phone','width=450,height=650,toolbar=no,menubar=no,location=no,status=no,scrollbars=no,noresize');
 }
-		// dvcRegYn: "Y"
-		// grpUserCnt: 1
-		// prodKindCd: "001"
-		// prodNm: "1인 이용권"
-		// prodNo: "PRD0000001"
-		// prodTypeCd: "001"
-		// salePrc: 1100
-		// userCnt: 1
-
-		// dvcRegYn: "Y"
-		// grpUserCnt: 1
-		// prodKindCd: "002"
-		// prodNm: "가족 이용권 (5인)"
-		// prodNo: "PRD0000002"
-		// prodTypeCd: "001"
-		// salePrc: 2200
-		// userCnt: 5	
 
 //구매 가능한 쿠폰
 function startBargainousTicketTransaction(url, type, dataType, callback) {
@@ -95,24 +77,6 @@ function parseBargainousTicketTransaction(response) {
 function setTicketList(dataList, kind) {	
 	var output = '';
 	var $ticketContainer = $('.voucher-cards');
-		// dvcRegYn: "Y"
-		// grpUserCnt: 1
-		// prodKindCd: "001"
-		// prodNm: "1인 이용권"
-		// prodNo: "PRD0000001"
-		// prodTypeCd: "001"
-		// salePrc: 1100
-		// userCnt: 1
-
-		// dvcRegYn: "Y"
-		// grpUserCnt: 1
-		// prodKindCd: "002"
-		// prodNm: "가족 이용권 (5인)"
-		// prodNo: "PRD0000002"
-		// prodTypeCd: "001"
-		// salePrc: 2200
-		// userCnt: 5
-
 	var rnmCertYn = getCookieInfo("rnmCertYn");
 
 	for (var i=0; i<dataList.length; i++) {
@@ -142,8 +106,8 @@ function setTicketList(dataList, kind) {
 				output += '		</div>';
 				output += '		<div class="voucher-card-buttons">';
 			if(rnmCertYn != "Y") {	//실명인증 전이면
-				output += '			<button class="bt-purchase-credit" type="button" onclick=retryRealNm("'+cardHref[i]+'","CD","'+dataList[i].dvcRegYn+'")>신용카드 결제</button>';
-				output += '			<button class="bt-purchase-cell" type="button" onclick=retryRealNm("'+hphoneHref[i]+'","HP","'+dataList[i].dvcRegYn+'")>휴대폰 결제</button>';					
+				output += '			<button class="bt-purchase-credit" type="button" onclick=retryRealNm("'+cardHref[i]+'","CD","'+dataList[i].dvcRegYn+'","'+dataList[i].userCnt+'")>신용카드 결제</button>';
+				output += '			<button class="bt-purchase-cell" type="button" onclick=retryRealNm("'+hphoneHref[i]+'","HP","'+dataList[i].dvcRegYn+'","'+dataList[i].userCnt+'")>휴대폰 결제</button>';					
 			} else {
 
 				if(dataList[i].dvcRegYn !='Y') {	//등록된 기기가 없으면
@@ -151,8 +115,8 @@ function setTicketList(dataList, kind) {
 					output += '		<button class="bt-purchase-cell" type="button" onclick=guidePopup("haveDevice")>휴대폰 결제</button>';	
 				} else {	
 					//결제 후 화면을 새로 고쳐야 해서 다시 조회
-					output += '		<button class="bt-purchase-credit" type="button" onclick=retryPayment("'+cardHref[i]+'","CD")>신용카드 결제</button>';
-					output += '		<button class="bt-purchase-cell" type="button" onclick=retryPayment("'+hphoneHref[i]+'","HP")>휴대폰 결제</button>';					
+					output += '		<button class="bt-purchase-credit" type="button" onclick=retryPayment("'+cardHref[i]+'","CD","'+dataList[i].userCnt+'")>신용카드 결제</button>';
+					output += '		<button class="bt-purchase-cell" type="button" onclick=retryPayment("'+hphoneHref[i]+'","HP","'+dataList[i].userCnt+'")>휴대폰 결제</button>';					
 				}
 			}
 				output += '		</div>';
@@ -168,14 +132,14 @@ function setTicketList(dataList, kind) {
     }
 }
 
-//결제 후 재 시도 시 다시 체크
-function retryPayment(pgLink,pgType) {
+//결제 후 재시도 시 다시 체크하기 위해 먼저 결제 여부 조회 후 상황에 맞게 팝업 처리
+function retryPayment(pgLink,pgType,usrCnt) {
 
 	//사용중인 이용권 정보
 	var params = {}, url='v1/payment/pay', type='GET', dataType = 'json';
 	var userCnt;
 	startUseTicketTransaction(url, type, dataType, function(payNo,userCnt,prodNm,prodNum,svcEndDtm){
-		if(userCnt) {	//사용중인 이용권이 존재하면 버튼 링크 교체(dialog-ticket-purchase-in-used) 
+		if(userCnt) {	//사용중인 이용권이 존재하면 버튼 링크 교체 
 		
 			$('.voucher-card-buttons').remove()
 			var outputChg='';
@@ -193,7 +157,6 @@ function retryPayment(pgLink,pgType) {
 			outputO += '	<button class="bt-purchase-cell" type="button" onclick=ticketPopup("ticketUsed","","'+encodeURIComponent(prodNm)+'","","","")>휴대폰 결제</button>';							
 			outputO += '</div>';
 
-			//msgId,payNo,prodNm,userCnt
 			outputChg += '<div class="voucher-card-buttons">';					
 			outputChg += '	<button class="bt-purchase-credit" type="button" onclick=ticketPopup("ticketChange","'+payNo+'","'+encodeURIComponent(prodNm)+'","'+userCnt+'","'+prodNum+'","'+svcEndDtm+'")>신용카드 결제</button>';
 			outputChg += '	<button class="bt-purchase-cell" type="button" onclick=ticketPopup("ticketChange","'+payNo+'","'+encodeURIComponent(prodNm)+'","'+userCnt+'","'+prodNum+'","'+svcEndDtm+'")>휴대폰 결제</button>';							
@@ -203,16 +166,37 @@ function retryPayment(pgLink,pgType) {
 				if ($ticketChgContainer.children().length > 0) {
 					if(userCnt > 1) {
 			     		$('.voucher-type.familly').prepend($(outputF));
-			     		$('.voucher-type.one-man').prepend($(outputChg));				     		
+			     		$('.voucher-type.one-man').prepend($(outputChg));	
+			     		if(usrCnt > 1) {
+			     			ticketPopup("ticketUsed","",encodeURIComponent(prodNm),"","","");			     		
+			     		} else {
+			     			ticketPopup("ticketChange",payNo,encodeURIComponent(prodNm),userCnt,prodNum,svcEndDtm);
+			     		}		     	
 			     	} else if(userCnt == 1) {
 			     		$('.voucher-type.one-man').prepend($(outputO));	
-			     		$('.voucher-type.familly').prepend($(outputChg));				     						     					     	
+			     		$('.voucher-type.familly').prepend($(outputChg));
+			     		if(usrCnt == 1) {
+			     			ticketPopup("ticketUsed","",encodeURIComponent(prodNm),"","","");			     		
+			     		} else {
+			     			ticketPopup("ticketChange",payNo,encodeURIComponent(prodNm),userCnt,prodNum,svcEndDtm);
+			     		}
 			     	} else {
 			     		$('.voucher-card-content').prepend($(outputChg));
+						if(pgType == 'CD') {
+							window.open(pgLink,"카드결제","width=450,height=620,toolbar=no,menubar=no,location=no,status=no,scrollbars=no,resizable=no");
+						} else {
+							window.open(pgLink,"휴대폰결제","width=480,height=750,toolbar=no,menubar=no,location=no,status=no,scrollbars=no,resizable=no");				
+						}			     		
 			     	}	
 
 			    } else {
 			     	$ticketChgContainer.append($(outputChg));
+					//결제 팝업 띄우기(버튼을 두번 클릭하는 이슈로 추가함.)
+					if(pgType == 'CD') {
+						window.open(pgLink,"카드결제","width=450,height=620,toolbar=no,menubar=no,location=no,status=no,scrollbars=no,resizable=no");
+					} else {
+						window.open(pgLink,"휴대폰결제","width=480,height=750,toolbar=no,menubar=no,location=no,status=no,scrollbars=no,resizable=no");				
+					}
 			    }
 
 		} else {
@@ -311,11 +295,6 @@ function payPopupFail(msgId) {
 
 	var templateId;
 
-	//실명인증 여부를 다시 조회하기 
-	if(msgId == 'realName') {
-
-	}
-
 		switch (msgId) {
 			case 'realName': templateId = 'dialog-name-verify-info';	//실명 인증 안내
 				break;
@@ -342,14 +321,14 @@ function payPopupFail(msgId) {
 }
 
 //실명인증 여부를 다시 조회
-function retryRealNm(pgLink,pgType,dvcRegYn) {
+function retryRealNm(pgLink,pgType,dvcRegYn,usrCnt) {
 	var params = {}, url='v1/member/info', type='GET', dataType = 'json';
 	startMyInfoTransaction(url, type, dataType, function(response){
-		parseRealNmTransaction(response,pgLink,pgType,dvcRegYn);		
+		parseRealNmTransaction(response,pgLink,pgType,dvcRegYn,usrCnt);		
 	});	
 }
 
-function parseRealNmTransaction(response,pgLink,pgType,dvcRegYn) {
+function parseRealNmTransaction(response,pgLink,pgType,dvcRegYn,usrCnt) {
 	if (response.resultCd && response.resultMsg) {
 		if (response.resultCd == '1' && response.resultMsg == '성공') {
 			var rnmCertYn = response.rnmCertYn;
@@ -364,7 +343,7 @@ function parseRealNmTransaction(response,pgLink,pgType,dvcRegYn) {
 					guidePopup("haveDevice");
 				} else {
 					//결제 팝업 띄우기
-					retryPayment(pgLink,pgType);
+					retryPayment(pgLink,pgType,usrCnt);
 				}	
 			}
 		} else {
@@ -1041,21 +1020,6 @@ function ticketChangeProc(payNumber,callback) {
 	    contentType : "application/json;charset=UTF-8",         
         success: function(response) {
 
-/*
-grpUserCnt: 0
-payAmt: 2200
-payNo: "PAY00000002947"
-payWayCd: "MOB"
-payWayInfo: "01054668390"
-prodNm: "가족 이용권 (5인)"
-prodNo: "PRD0000002"
-resultCd: "1"
-resultMsg: "성공"
-salePrc: 2200
-svcEndDtm: "2015.09.04"
-svcStartDtm: "2015.08.04"
-userCnt: 5
-*/
 			var prodNm,payWayCd,salePrc,svcStartDtm,svcEndDtm,payWayCdDp;
 			prodNm = response.prodNm;
 			payWayCd = response.payWayCd;
@@ -1284,19 +1248,7 @@ function parseUseCouponHistoryTransaction(response) {
 				var output = '';
 				var $couponContainer = $('.usage-grid-list');
 				var dataList = response.resultList;
-				/*				
-					dvcNm: ""
-					grpUserCnt: 0
-					payAmt: 1100
-					payDtm: "2015.07.03"
-					payWayCd: "MOB"
-					payWayCdNm: "모바일"
-					prodNm: "1인 이용권"
-					salePrc: 0
-					svcEndDtm: "2015.08.03"
-					svcStartDtm: "2015.07.03"
-					userCnt: 1
-					*/
+
 				for (var i=0; i<dataList.length; i++) {
 					var j = dataList.length;
 					var k = j - i;
