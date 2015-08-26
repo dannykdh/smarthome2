@@ -156,25 +156,6 @@ function loginFail(response) {
 // 로그인 성공
 function loginComplete(response) {
 	// 쿠키에 담을 정보를 세팅한다.
-	/*
-		expEndDay: ""
-		loginId: "btb@btb.com"
-		modeSer: ""				: 
-		notifSetYn: ""			: 알림설정여부
-		resultCd: "1"			: 로그인 결과 코드
-		resultMsg: "성공"			: 로그인 결과 메세지
-		rnmCertYn: "N"			: 실명인증 여부
-		rsdcDefltAddr: null		: 거주지 상세주소
-		rsdcDetailAddr: null
-		rsdcLatLoca: null
-		rsdcLongLoca: null
-		svrfileUrl: "1"
-		userAuthCd: "GEN"
-		userCertTknVal: "vBVbrb88bK6Ns0EaKsTnPkYxoB3mG4U3HUlSZptaMMzqs1QGUXyrOmRbI5fFQ0cN"
-		userIdEncoded: "e1ygX943/2Wi0eb7NOoxC7AosV+r6FI8"
-		userMobileNo: "01032853908"
-		userNickNm: "비티비테스트"
-	*/
 	var loginId = response.loginId			// 이메일 아이디
 	var userNickNm = response.userNickNm		// 사용자 닉네임		
 	var userCertTknVal = response.userCertTknVal	// 인증토큰

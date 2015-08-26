@@ -439,16 +439,7 @@ jQuery(function($) {
 								pushTknVal:'',
 								dvcTknVal:ip,
 								dvcOsNm:'WEB',
-								certNo:userInfo.userCertNo
-								// loginId : "goodman@btb.com",
-								// loginPwd : "1010qpqp",
-								// userNickNm : "이종",
-								// userMobileNo : "01098877181",
-								// pushTknVal : "12345",
-								// dvcTknVal : "123456",
-								// dvcOsNm : "WEB",
-								// fileNm : '',
-								// certNo: "111111"							
+								certNo:userInfo.userCertNo					
 							};
 
 							var $addTxt = $('.err-Txt');
@@ -741,8 +732,6 @@ jQuery(function($) {
 							})
 						});
 					}
-
-
 					// 패스워드 분실 인증 번호 요청시 정보가 일치하지 않아도 인증번호가 전송 될 경우 사용
 					// $context.find('.bt-send-number').on('click', function() {
 					// 	findPWDCheckCellPhone($context);

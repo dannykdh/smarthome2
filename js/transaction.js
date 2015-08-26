@@ -5,9 +5,9 @@ var urlHeader;
 if (document.location.protocol !== 'https:') {
 	var sHref = location.href;
 	var goUrl = sHref.replace('http','https')
-	//개발기가 아닐 경우만 포워딩
-	if( urlInfo.indexOf('dev') == -1 && urlInfo.indexOf('61.250.21.156' ) == -1 ) {
-		//location.replace(goUrl);
+	//개발기가 아닐 경우만 포워딩(상용 패치 시 주의!!!)
+	if( urlInfo.indexOf('dev') == -1 && urlInfo.indexOf('61.250.21.156' ) == -1 && urlInfo.indexOf('localhost') == -1 ) {
+		location.replace(goUrl);
 	}	
 } else {
 	//console.log('HTTPS 접속중');
@@ -230,20 +230,6 @@ function parseJoinTransaction(response, callback) {
 function parseMyInfoTransaction(response) {
 	if (response.resultCd && response.resultMsg) {
 		if (response.resultCd == '1' && response.resultMsg == '성공') {
-			// userAuthCd		EXP 체험회원 / GEN 일반회원 / HST 호스트회원 / SUB 서브회원
-			// userNickNm		사용자 명
-			// svrfileUrl		사용자 프로필 이미지 URL
-			// rsdcLatLoca		거주지 위도위치
-			// rsdcLongLoca		거주지 경도위치
-			// rsdcDefltAddr	거주지 기본주소
-			// rsdcDetailAddr	거주지 상세주소
-			// rnmCertYn		실명인증 여부(Y , N)
-			// dvcChgMsg		기기변경메시지
-			// userMobileNo		이동전화 번호('-'없음)
-			// expEndDay		체험회원 남은 일수
-			// modeSer			귀가모드일련번호
-			// notifSetYn		#알림_설정_여부 귀가모드 - 귀가 알림 여부(Y : N)
-			// dvcOsNm			가입 기기
 			var rsMemType = response.userAuthCd;
 			var rsAddress = response.rsdcDefltAddr ? response.rsdcDefltAddr : '' + ' ' + response.rsdcDetailAddr ? response.rsdcDetailAddr : '';
 			var rsMemHPhone = response.userMobileNo;
@@ -444,7 +430,7 @@ function parseUseCouponTransaction(response) {
 				setEmptyCouponList();
 			}
 		} else {
-			// TODO : 계정관리 통신 오류 시 처리할 예외 상황에 대한 시나리오가 없어 '사용가능한 이용권/쿠폰이 없습니다'로 처리
+			// '사용가능한 이용권/쿠폰이 없습니다'로 처리
 			setEmptyCouponList();
 		}
 
@@ -452,7 +438,7 @@ function parseUseCouponTransaction(response) {
 	setBlankLi();
 
 	} else {
-		// TODO : 계정관리 통신 오류 시 처리할 예외 상황에 대한 시나리오가 없어 '사용가능한 이용권/쿠폰이 없습니다'로 처리
+		// '사용가능한 이용권/쿠폰이 없습니다'로 처리
 		setEmptyCouponList();
 	}
 }
@@ -476,18 +462,6 @@ function setCouponList(dataList, kind) {
 	var output = '';
 	var $couponContainer = $('.coupons.h-bar');
 	// $.each(dataList, function() {
-
-		// cpnAmt: 0
-		// cpnNm: "위닉스 쿠폰(24개월)"
-		// cpnNo: "CPN0000009"
-		// cpnPubNo: "tmndywsnryy9rq14"
-		// cpnQty: 0
-		// cpnUseYn: "N"
-		// dvcCd: "DVC0000031"
-		// dvcNm: "위닉스제습기(개발)"
-		// grpUserCnt: 0
-		// regValidEndDay: "2015.08.30"
-		// userCnt: 5
 
 	for (var i=0; i<dataList.length; i++) {
 
