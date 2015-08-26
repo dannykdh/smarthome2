@@ -613,29 +613,6 @@
 		</div>
 	</div>
 </script>
-<!-- 수정 시작 : 20150717_01 -->
-<script id="dialog-template-ie-support" type="text/x-dialog-template">
-	<div class="dialog dialog-ie-support">
-		<button class="bt-dialog-close" type="button">Close</button>
-		<div class="dialog-title-bar">
-			<p class="dialog-title">홈페이지 이용 안내</p>
-		</div>
-		<div class="dialog-body">
-			<div class="dialog-content-panel">
-				<p class="result">
-					<strong>
-						Internet Explorer10 이상에서<br>
-						최적화된 서비스 이용이 가능합니다.
-					</strong>
-				</p>
-			</div>
-			<div class="dialog-control-panel">
-				<button type="button" class="bt-confirm">확인</button>
-			</div>
-		</div>
-	</div>
-</script>
-<!-- 수정 끝 : 20150717_01 -->
 <script type="text/javascript">
 	jQuery(function($) {
 
@@ -720,16 +697,28 @@
 	<!-- .event-description 및 .event-duration은 내용이 앞으로 달라질 수 있으므로
 		또다른 이벤트가 필요할 때를 대비하여 css를 손대지 않고
 		유지보수가 가능하도록 하기 위해 스타일을 직접 기술함 -->
-	<!-- 수정 시작 : 20150820_03 -->
-	<div class="event-description" style="position:absolute;top:0;right:0;bottom:0;left:0;background:url(../img/ex-event-banner-20150820_03.jpg) no-repeat;text-indent:200%;white-space:nowrap;overflow:hidden;">
-		<p>Let's [Home]</p>
-		<p>SKT 스마트홈 체험단 모집</p>
-		<p>기기 무료 증정</p>
-		<p>에어컨, 김치 냉장고, 보일러, 에어워셔, 도어락, 가스 차단기까지 최대 250만원 상당의 스마트홈 기기를 무료로 체험하세요.</p>
-		<p>기간 : 8.21~9.4</p>
-	</div>
-	<a class="bt-event-detail" href="http://event.sktsmarthome.com/?utm_source=etc2&utm_medium=banner&utm_campaign=SKTSmartHome" target="_blank">자세히 보기 Click</a>
-	<!-- 수정 시작 : 20150820_03 -->
+	<!-- 수정 시작 : 20150826 -->
+	<table style="height: 100%;">
+		<tr>
+			<td class="event-description" style="background:url(../img/event/event_text_t.png) no-repeat; height:98px">
+			</td>
+		<tr>
+			<td style="vertical-align: middle;">
+				<div class="event-description" style="text-indent:200%; white-space:nowrap; oerflow:hidden; background:url(../img/event/event_text_b.png) no-repeat; height:293px;">
+					<p>Let's [Home]</p>
+					<p>SKT 스마트홈 체험단 모집</p>
+					<p>기기 무료 증정</p>
+					<p>에어컨, 김치 냉장고, 보일러, 에어워셔, 도어락, 가스 차단기까지 최대 250만원 상당의 스마트홈 기기를 무료로 체험하세요.</p>
+					<p>기간 : 8.21~9.4</p>
+				</div>
+				<a class="bt-event-detail" href="http://event.sktsmarthome.com/?utm_source=etc2&utm_medium=banner&utm_campaign=SKTSmartHome" target="_blank">자세히 보기 Click</a>
+			</td>
+		</tr>
+		<tr>
+			<td style="background:url(../img/event/event_img.png) no-repeat; height: 380px;"></td>
+		</tr>
+	</table>
+	<!-- 수정 끝 : 20150826 -->
 </div>
 <div id="prologue">
 	<section id="intro" class="card">

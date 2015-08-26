@@ -176,8 +176,10 @@ body {
 	bottom: 0;
 	z-index: 1200;
 	width: 250px;
-	background: url(../img/bg-event-holder.png);
+	/* background: url(../img/bg-event-holder.png); */	/* 20150825 : removed */
+	background-color: #fff;	/* 20150825 : added */
 	transition: right 1s ease-out;
+	min-height: 840px;	/* 20150825 : added */
 }
 .has-event #event-holder {
 	display: block;
@@ -229,18 +231,18 @@ body {
 }
 #event-holder .bt-event-detail {
 	display: block;
-	position: absolute;
-	top: 532px;
-	left: 63px;
-	width: 125px;
-	height: 22px;
-	background: url(../img/bt-event-detail-_20150820_03.jpg) no-repeat;
+	/* position: absolute; */	/* 20150826 : removed */
+	/* top: 391px; */	/* 20150826 : removed */
+	/* left: 0; */	/* 20150826 : removed */
+	/* width: 125px; */	/* 20150825 : removed */
+	height: 40px;	/* 20150825 : updated */
+	background: url(../img/event/event_btn_click.png) no-repeat;	/* 20150825 : updated */
 	text-indent: 200%;
 	white-space: nowrap;
 	overflow: hidden;
 }
 #event-holder .bt-event-detail:hover {
-	background-image: url(../img/bt-event-detail-_20150820_03-hover.jpg);
+	background-image: url(../img/event/event_btn_click_over.png);	/* 20150825 : updated */
 }
 
 #bt-event-badge {
@@ -365,13 +367,13 @@ section {
 }
 #intro .title {
 	width: 595px;
-	height: 132px;
+	height: 132px;	/* 20150826 : updated */
 	margin: 0 auto;
 	background-image: url(../img/ti-intro.png);
 	background-position: 14px 0;
 }
 #intro .text {
-	margin: 21px auto 10px;
+	margin: 21px auto 10px;	/* 20150826 : updated */
 	width: 480px;
 	height: 50px;
 	background-image: url(../img/bg-intro-text.png);
