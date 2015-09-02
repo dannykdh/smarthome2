@@ -3,6 +3,10 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta charset="utf-8">
+<meta http-equiv="pragma" content="no-cache"/>
+<meta http-equiv="pragma" content="no-store"/>
+<meta http-equiv="cache-control" content="no-cache"/>
+<meta http-equiv="Expires" content="-1"/>
 <title>이용 내역 - 스마트홈</title>
 <meta name="viewport" content="width=1349px">
 <link rel="stylesheet" type="text/css" href="../css/base.css">
@@ -31,7 +35,7 @@
 				parseUseCouponHistoryTransaction(response);		
 			});	
 		} else {
-			$('body').removeClass('has-coupon');
+			$('body').removeClass('has-usage');
 			location.replace('/html/home.html');
 		}
 	});

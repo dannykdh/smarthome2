@@ -343,6 +343,7 @@ function startUseCouponTransaction(url, type, dataType, callback) {
         url: urlHeader+url,
         data: '',
         type: type,
+        cache:false,        
         dataType: dataType,
         headers: {
             "Authorization":getCookieInfo('userCertTknVal')
